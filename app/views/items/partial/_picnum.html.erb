@@ -1,0 +1,12 @@
+<td class="picnum" style="text-align:right !important;">
+    <span style="white-space:nowrap;"><%= params[:search] ? emphasizePicnum(item,params[:search])  : item.picnum.gsub(' +', '<br>').html_safe %></span>
+    <% comment do %>
+    <%= highlight(item.picnum,['6984','11520']) %>
+    <span style="white-space:nowrap;"><%= item.picnum.gsub(' +', '<br>').html_safe %></span>
+    <% end %>
+</td>
+<td>
+    <%= link_to edit_item_path(item) do %>
+        <span id="apple"></span>
+    <% end %>
+</td>

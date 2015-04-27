@@ -1,0 +1,48 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>櫃位</th>
+      <th>品項</th>
+      <th>圖號</th>
+      <th></th>
+      <th>注意事項</th>
+      <th>成品數量</th>
+      <th>半成品數量</th>
+      <th>品檢項目</th>
+      <% comment do %>
+      <th>處理方式</th>
+      <th>檢測紀錄</th>
+      <th>動作</th>
+      <% end %>
+    </tr>
+  </thead>
+  <% @items.each do |item| %>
+    <tbody class="stock-item-form">
+      <%= form_for item do |f| %>
+        <tr style="<%= "background-color:#dff0d8;color:#3c763f;" if item.location.include? 'C' %>">
+          <td>
+            <%= f.text_field :location, size: 8 %>
+          </td>
+          <td>
+            <% @customerList = { '富暘'=>8 } %>
+            <%= emphasizeCustomer(item, @customerList ) %>
+          </td>
+          <%= render 'items/partial/picnum', item: item %>
+          <td>
+            nothing
+          </td>
+          <td>
+            <%= f.text_field :amount, size: 6 %>
+          </td>
+          <td>
+            <%= f.text_field :amount, size: 6 %>
+          </td>
+
+          <td class="hidden"><%= f.submit %></td>
+
+          <td><%= link_to 'Delete', item, method: :delete %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  <% end %>
+</table>

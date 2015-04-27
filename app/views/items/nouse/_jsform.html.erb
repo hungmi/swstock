@@ -1,0 +1,70 @@
+<div class="modal fade" id="contactFormModal" tabindex="-1" role="dialog" aria-labelledby="contactFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="contactFormModalLabel"><%= page_title %></h4>
+            </div>
+            <div class="modal-body">
+
+                <%= form_for @item do |f| %>
+                  <% if @item.errors.any? %>
+                    <div id="error_explanation">
+                      <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+                      <ul>
+                      <% @item.errors.full_messages.each do |message| %>
+                        <li><%= message %></li>
+                      <% end %>
+                      </ul>
+                    </div>
+                  <% end %>
+                  <fieldset>
+                    <div class="field form-group">
+                      <%= f.label :location %><br>
+                      <%= f.text_field :location %>
+                    </div>
+                    <div class="field form-group">
+                      <%= f.label :item_type %><br>
+                      <%= f.text_field :item_type %>
+                    </div>
+                    <div class="field form-group">
+                      <%= f.label :picnum %><br>
+                      <%= f.text_field :picnum %>
+                    </div>
+                    <div class="field form-group">
+                      <%= f.label :amount %><br>
+                      <%= f.text_field :amount %>
+                    </div>
+                    <div class="form-group">
+                      <%= f.submit %>
+                    </div>
+                  </fieldset>
+                <% end %>
+
+
+                <script type="text/javascript">
+                    $("#template-contactform").validate({
+                        submitHandler: function(form) {
+                            $('.form-process').fadeIn();
+                            $(form).ajaxSubmit({
+                                target: '#contact-form-result',
+                                success: function() {
+                                    $('.form-process').fadeOut();
+                                    $('#template-contactform').find('.sm-form-control').val('');
+                                    $('#contact-form-result').attr('data-notify-msg', $('#contact-form-result').html()).html('');
+                                    SEMICOLON.widget.notifications($('#contact-form-result'));
+                                }
+                            });
+                        }
+                    });
+                </script>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!-- Modal New Item Form End -->

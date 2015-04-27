@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-TW">
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="SemiColonWeb" />
+
+    <%= render 'partial/cssAndJs' %>
+
+    <!-- Document Title
+    ============================================= -->
+
+</head>
+
+<body class="dark stretched no-transition" data-no-turbolink="true">
+
+    <!-- Document Wrapper
+    ============================================= -->
+    <div id="wrapper" class="clearfix">
+
+        <%= render 'partial/header' %>
+
+        <!-- Content
+        ============================================= -->
+        <section id="content">
+
+            <%= yield %>
+
+        </section><!-- #content end -->
+
+    </div><!-- #wrapper end -->
+
+
+    <!-- Go To Top
+    ============================================= -->
+    <div id="gotoTop" class="icon-angle-up"></div>
+
+    <!-- Footer Scripts
+    ============================================= -->
+    <script type="text/javascript" src="../assets/functions.js"></script>
+    
+
+</body>
+</html>

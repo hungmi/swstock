@@ -1,0 +1,32 @@
+<%= form_for @item, :html => {:class => 'nobottommargin'} do |f| %>
+  <% if @item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@item.errors.count, "error") %> prohibited this item from being saved:</h2>
+
+      <ul>
+      <% @item.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+    <div class="col_half">
+      <%= f.label :location %>
+      <%= f.text_field :location, class:"sm-form-control"  %>
+    </div>
+    <div class="col_half col_last">
+      <%= f.label :item_type %>
+      <%= f.text_area :item_type, class:"sm-form-control"  %>
+    </div>
+    <div class="col_full">
+      <%= f.label :picnum %>
+      <%= f.text_field :picnum, class:"sm-form-control"  %>
+    </div>
+    <div class="col_one_third">
+      <%= f.label :amount %>
+      <%= f.text_field :amount, class:"sm-form-control"  %>
+    </div>
+    <div class="col_full">
+      <%= f.submit @submitText , :class => "button button-3d nomargin" %>
+    </div>
+<% end %>
