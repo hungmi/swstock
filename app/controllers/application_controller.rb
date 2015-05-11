@@ -5,4 +5,5 @@ class ApplicationController < ActionController::Base
   helper_method :comment
   def comment   
   end
+
 end

@@ -1,0 +1,90 @@
+$tableWidth: 1834px;
+
+/* 庫存表css專區 */
+table.scroll {
+    width: $tableWidth; /* 140px * 5 column + 16px scrollbar width */
+    border-spacing: 0;
+    thead { border: 2px solid black; }
+    font-size: 20px;
+}
+
+table.scroll tbody,
+table.scroll thead tr { display: block; }
+
+table.scroll tbody {
+    height: 780px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    form {margin-bottom: 0px;}
+}
+
+table.scroll tbody td,
+table.scroll tbody th {
+    border-bottom: 1px solid #aaa;
+    padding: 10px 0px;
+    input { text-align: center; }
+}
+
+table.scroll tbody td.smCell,
+table.scroll thead th.smCell {
+    width: 0.09*$tableWidth;
+}
+
+table.scroll tbody td.mdCell,
+table.scroll thead th.mdCell {
+    width: 0.18*$tableWidth;
+    textarea {width: 90%;}
+}
+
+table.scroll tbody td.lgCell,
+table.scroll thead th.lgCell {
+    width: 0.27*$tableWidth;
+    padding-right: 20px;
+}
+
+table.scroll thead th:last-child {
+    width: 0.09*$tableWidth + 16px; /* 140px + 16px scrollbar width */
+}
+
+thead tr th { 
+    height: 30px;
+    line-height: 30px;
+    /*text-align: left;*/
+}
+
+tbody { border-top: 2px solid black; }
+
+tbody td:last-child, thead th:last-child {
+    border-right: none !important;
+}
+div.stockTable {/*庫存表的table外圍的div*/
+    margin-right: 50px;
+    margin-left: 50px;
+    padding: 0px;
+    width: auto;
+}
+
+body.white {
+    th td {
+        color: black !important;
+    }
+    table.scroll > tbody > tr:hover > td {
+        background-color: #b3e5fc !important;
+    }
+}
+
+body.dark {
+    table.scroll {
+        th, td {
+        color: white !important;
+        font-weight: 400 !important;
+        }
+        td > input,textarea {background-color: #222;}
+    }
+    .table-hover > tbody > tr:hover > td {
+        box-shadow:1px 1px 3px 2px rgba(40%,20%,20%,0.5);
+    }
+}
+
+
+/* 庫存表css專區結束 */

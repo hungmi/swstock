@@ -7,7 +7,6 @@
         <div class="container clearfix">
 
             <div id="primary-menu-trigger"><i class="icon-reorder"></i></div>
-
             <!-- Logo
             ============================================= -->
             <div id="logo">
@@ -19,21 +18,18 @@
             <nav id="primary-menu" class="dark style-2">
 
                 <ul>
-                    <li class="current"><a href="/new_order" data-href="#header"><div>新訂單</div></a></li>
-                    <li><a href="#" data-href="#section-about"><div>出貨</div></a></li>
-                    <li><%= link_to '新品項', new_item_path %></li>
-                    <li><a href="#" data-href="#section-about"><div>設定</div></a></li>
+                    <li class="<%= 'current' if params[:controller] == 'items' and params[:action] == 'index' %>"><%= link_to '庫存表', items_path %></li>
+                    <li class="<%= 'current' if params[:controller] == 'items' and params[:action] == 'new' %>"><%= link_to '新品項', new_item_path %></li>
+
+                    <li class="hidden <%= 'current' if params[:controller] == 'orders' and params[:action] == '' %>"><%= link_to '新訂單', new_order_path %></li>
+                    <li class="hidden <%= 'current' if params[:controller] == 'items' and params[:action] == '' %>"><a href="#" data-href="#section-about"><div>設定</div></a></li>
+                    <li class="hidden <%= 'current' if params[:controller] == 'items' and params[:action] == '' %>"><a href="#" data-href="#section-about"><div>出貨</div></a></li>
                 </ul>
 
                 <!-- Top Search
                 ============================================= -->
                 <div id="top-search">
                     <a href="#" id="top-search-trigger"><i class="icon-search3"></i><i class="icon-line-cross"></i></a>
-                    <% comment do %>
-                    <form action="search.html" method="get">
-                        <input type="text" name="q" class="form-control" value="" placeholder="Type &amp; Hit Enter..">
-                    </form>
-                    <% end %>
                     <%= form_tag(items_path, :method => "get") do %>
                         <%= text_field_tag :search, params[:search], placeholder: "Search Items", class:'form-control' %>
                         <% submit_tag "Search", :name => nil, class:'btn btn-default pull-right' %>

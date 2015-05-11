@@ -12,7 +12,7 @@
 
 </head>
 
-<body class="dark stretched no-transition" data-no-turbolink="true">
+<body class="white stretched no-transition" data-no-turbolink="true">
 
     <!-- Document Wrapper
     ============================================= -->
@@ -20,11 +20,15 @@
 
         <%= render 'partial/header' %>
 
+        <% flash.each do |key, value| %>
+            <div class="alert alert-<%= key %>"><%= value %></div>
+        <% end %>
+
         <!-- Content
         ============================================= -->
         <section id="content">
 
-            <div class="content-wrap">
+            <div class="content-wrap nopadding">
 
                 <div class="container clearfix">
 

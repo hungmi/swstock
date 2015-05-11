@@ -20,72 +20,35 @@
  *= require responsive
  *= require_tree .
  */
+@import 'variable';
 
- #apple {
+ #itemForm > div > label {
+    font-size: 20px;
+    font-weight: 500;
+ }
+
+input[type="file"] {
+    display: none !important;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 10px 12px;
+    cursor: pointer;
+}
+
+#apple {
     background-image: url('/assets/Fish.png') !important;
     background-size: cover;
     //background-repeat: no-repeat;
-    padding: 30px 38px;
+    padding: 15px 25px;
 }
 
 body.white {
-    th td {
-        color: black !important;    
-    }
-    .table-hover > tbody > tr:hover {
-        background-color: #f5f5f5 !important;
-    }
-    .stock-item-form tr td input {
-        border:1px solid #eee;
-    }
     mark {
         background-color: #FFD700 !important;
     }
-}
-
-body.dark {
-    th td {
-        color: white !important;    
-    }
-    .table-hover > tbody > tr:hover {
-        background-color: #222 !important;
-    }
-    .stock-item-form tr td input {
-        border:1px solid #333;
-    }
-}
-
-th, td {
-    vertical-align: middle !important;
-    font-size: 20px;
-    text-align: center !important;
-}
-
-th {
-    font-weight: 300;
-    font-size: 24px;
-}
-td input {
-    padding: 15px !important;
-}
-td.picnum {
-    width:1%;
-    white-space:nowrap;
-}
-td.picnum input {
-    text-align: right !important;
-    padding-right: 10px;
-    font-size: 22px;
-}
-
-.picnum-lg {
-    font-size: 24px;
-    font-weight: bold;
-}
-
-.stock-item-form tr td input {
-    text-align: center;
-    background-color: rgba(0,0,0,0);
 }
 
 #top-search a {
