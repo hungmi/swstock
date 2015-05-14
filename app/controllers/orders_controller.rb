@@ -28,7 +28,7 @@ class OrdersController < ApplicationController
     @order = Order.new(order_params)
     if @order.save
       redirect_to @order
-      notice: 'Order was successfully created.'        
+      flash[:notice] = 'Order was successfully created!'
     else
       render :new       
     end    
@@ -39,7 +39,7 @@ class OrdersController < ApplicationController
   def update
     if @order.update(order_params)
       redirect_to @order
-      notice: 'Order was successfully updated.'        
+      flash[:notice] = 'Order was successfully updated!'
     else
       render :edit
     end
@@ -50,7 +50,7 @@ class OrdersController < ApplicationController
   def destroy
     @order.destroy
     redirect_to orders_url
-    notice: 'Order was successfully destroyed.'    
+    flash[:notice] = 'Order was successfully destroyed!'
   end
 
   private
