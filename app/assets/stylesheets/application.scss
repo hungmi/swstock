@@ -38,7 +38,7 @@ input[type="file"] {
 }
 
 #apple {
-    background-image: url('/assets/Fish.png') !important;
+    background-image: image-url('Fish.png') !important;
     background-size: cover;
     //background-repeat: no-repeat;
     padding: 15px 25px;
