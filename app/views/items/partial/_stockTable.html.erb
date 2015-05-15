@@ -24,8 +24,8 @@
             <%= link_to edit_item_path(item) do %><span id="apple"></span><% end %>
           </td>
           <td class="lgCell center">
-            <% if item.oldPicnum.present? %>
-              <%= params[:search] ? emphasizePicnum(item.oldPicnum,params[:search])  : formatPicnum(item.oldPicnum) %>
+            <% if item.oldpicnum.present? %>
+              <%= params[:search] ? emphasizePicnum(item.oldpicnum,params[:search])  : formatPicnum(item.oldpicnum) %>
             <% end %>
           </td>
           <td class="lgCell center">

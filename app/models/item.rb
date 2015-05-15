@@ -12,16 +12,16 @@ class Item < ActiveRecord::Base
       querySQL = ""
       queries.each do |query|
           if querySQL.blank? then
-              querySQL = where("location like ? OR item_type like ? OR picnum like ? OR oldPicnum like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
+              querySQL = where("location like ? OR item_type like ? OR picnum like ? OR oldpicnum like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
           else
-              querySQL = querySQL + where("location like ? OR item_type like ? OR picnum like ? OR oldPicnum like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
+              querySQL = querySQL + where("location like ? OR item_type like ? OR picnum like ? OR oldpicnum like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
           end
       end
       return querySQL0
   end
 
   def self.search(query)
-      where("location like ? OR item_type like ? OR picnum like ? OR oldPicnum like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
+      where("location like ? OR item_type like ? OR picnum like ? OR oldpicnum like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
   end
 
   def self.import(file)
@@ -32,7 +32,7 @@ class Item < ActiveRecord::Base
       row = Hash[[header, spreadsheet.row(i)].transpose]
       product = find_by_id(row["id"]) || new
       parameters = ActionController::Parameters.new(row.to_hash)
-      product.attributes = parameters.permit(:location, :item_type, :picnum, :oldPicnum, :note, :finishQty, :unfinishQty)
+      product.attributes = parameters.permit(:location, :item_type, :picnum, :oldpicnum, :note, :finishQty, :unfinishQty)
       invalidProductNum += 1 if !product.save
     end
     return invalidProductNum

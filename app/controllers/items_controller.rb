@@ -63,7 +63,7 @@ class ItemsController < ApplicationController
       #開始逐個過濾出純數字圖號
       @items.each do |item|
         picnums << item.picnum.scan(/[\d]{8,}/).flatten if item.picnum.present?
-        picnums << item.oldPicnum.scan(/[\d]{8,}/).flatten if item.oldPicnum.present?
+        picnums << item.oldpicnum.scan(/[\d]{8,}/).flatten if item.oldpicnum.present?
       end
       #本來item.picnum是拉桿123+活塞456(90長)的話
       #輸出的picnums會像[["123","456"]]
@@ -177,7 +177,7 @@ class ItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
-      params.require(:item).permit(:location, :item_type, :picnum, :oldPicnum, :note, :finishQty, :unfinishQty)
+      params.require(:item).permit(:location, :item_type, :picnum, :oldpicnum, :note, :finishQty, :unfinishQty)
     end
 
 end
