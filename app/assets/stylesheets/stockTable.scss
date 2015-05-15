@@ -6,7 +6,7 @@
 
 /* 庫存表css專區 */
 table.scroll {
-    width: $tableWidth; /* 1*lgCell + 2*mdCell + 3*smCell + 16px scrollbar width */
+    width: $tableWidth; /* 3*lgCell + 4*smCell + 16px scrollbar width */
     border-spacing: 0;
     font-size: 24px;
     margin-left: 10px;
@@ -32,23 +32,18 @@ table.scroll tbody th {
 
 table.scroll tbody td.smCell,
 table.scroll thead th.smCell {
-    width: 0.09*$tableWidth;
-}
-
-table.scroll tbody td.mdCell,
-table.scroll thead th.mdCell {
-    width: 0.18*$tableWidth;
-    textarea {width: 90%;}
+    width: 1*$tableWidth/16;
 }
 
 table.scroll tbody td.lgCell,
 table.scroll thead th.lgCell {
-    width: 0.27*$tableWidth;
-    padding-right: 10px;
+    width: 4*$tableWidth/16;
+    padding-right: 0px;
+    textarea {width: 100%;}
 }
 
 table.scroll thead th:last-child {
-    width: 0.09*$tableWidth + 16px; /* 140px + 16px scrollbar width */
+    width: 1*$tableWidth/16 + 16px; /* 140px + 16px scrollbar width */
 }
 
 thead tr th { 

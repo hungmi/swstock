@@ -88,8 +88,13 @@ class ItemsController < ApplicationController
   end
 
   def import
-    Item.import(params[:file])
-    redirect_to root_url, notice: "Items imported."
+    invalidProductNum = Item.import(params[:file])
+    if invalidProductNum
+      flash[:warning] = invalidProductNum +  ' items are missing picnum or location. Others are successfully loaded.'  
+    else
+      flash[:success] = 'Items are successfully loaded.'
+    end
+    redirect_to root_url
   end
 
   # GET /items

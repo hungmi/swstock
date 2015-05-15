@@ -1,13 +1,17 @@
 .navbar {
 	min-height: 96px;
-	line-height: 40px;
+	line-height: 80px;
 	vertical-align: middle;
+
 	.navbar-brand {
 		color: white;
 	}
 	a {
 		font-size: 20px;
-		line-height: 60px;
+		/* For navbar navs height */
+		line-height: 96px !important;
+		padding-top: 0px !important;
+		padding-bottom: 0px !important;
 	}
 	.navbar-form .input-group input {
 		height: 80px;

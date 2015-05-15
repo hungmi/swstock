@@ -1,7 +1,6 @@
 class Item < ActiveRecord::Base
-  validates_presence_of :picnum
   before_save :setDefaultValue
-
+  validates :picnum, presence: true
 
   def setDefaultValue
     self.finishQty ||= 0
@@ -26,6 +25,7 @@ class Item < ActiveRecord::Base
   end
 
   def self.import(file)
+    invalidProductNum = 0
     spreadsheet = open_spreadsheet(file)
     header = spreadsheet.row(1)
     (2..spreadsheet.last_row).each do |i|
@@ -33,8 +33,9 @@ class Item < ActiveRecord::Base
       product = find_by_id(row["id"]) || new
       parameters = ActionController::Parameters.new(row.to_hash)
       product.attributes = parameters.permit(:location, :item_type, :picnum, :oldPicnum, :note, :finishQty, :unfinishQty)
-      product.save!
+      invalidProductNum += 1 if !product.save
     end
+    return invalidProductNum
   end
 
   def self.open_spreadsheet(file)

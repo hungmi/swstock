@@ -4,8 +4,8 @@
       <th class="smCell center">櫃位</th>
       <th class="lgCell center">圖號</th>
       <th class="smCell"></th>
-      <th class="mdCell center">舊圖號</th>
-      <th class="mdCell center">提醒</th>
+      <th class="lgCell center">舊圖號</th>
+      <th class="lgCell center">提醒</th>
       <th class="smCell center">成品</th>
       <th class="smCell center">半成品</th>
     </tr>
@@ -14,7 +14,7 @@
     <% @items.each do |item| %>
       <%= form_for(item, remote: true) do |f| %>
         <tr>
-          <td class="smCell center"><%= f.text_field :location, size: 10 %></td>
+          <td class="smCell center"><%= f.text_field :location, size: 8 %></td>
           <td class="lgCell" style="text-align:right !important;">
             <% if item.picnum.present? %>
               <%= params[:search] ? emphasizePicnum(item.picnum,params[:search])  : formatPicnum(item.picnum) %>
@@ -23,12 +23,12 @@
           <td class="smCell">
             <%= link_to edit_item_path(item) do %><span id="apple"></span><% end %>
           </td>
-          <td class="mdCell center">
+          <td class="lgCell center">
             <% if item.oldPicnum.present? %>
               <%= params[:search] ? emphasizePicnum(item.oldPicnum,params[:search])  : formatPicnum(item.oldPicnum) %>
             <% end %>
           </td>
-          <td class="mdCell center">
+          <td class="lgCell center">
             <div>
             <% if item.note.present? then%>
               <%= f.text_area :note, :value => item.note.gsub(/\n$/,''), :rows => textAreaRowNum(item.note), class:'item-note' %>
@@ -37,8 +37,8 @@
             <% end %>
             </div>
           </td>
-          <td class="smCell center"><%= f.text_field :finishQty, size: 6 %></td>
-          <td class="smCell center"><%= f.text_field :unfinishQty, size: 6 %></td>
+          <td class="smCell center"><%= f.text_field :finishQty, size: 4 %></td>
+          <td class="smCell center"><%= f.text_field :unfinishQty, size: 4 %></td>
           <td class="hidden"><%= f.submit %></td>
         </tr>
       <% end %>

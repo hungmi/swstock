@@ -1,8 +1,26 @@
 <!-- Postcontent
 ============================================= -->
 <div class="container">
-
-    <h1>增加新品項</h1>    
-    <%= render 'items/partial/form' %>
+<div class="row">
+	<div class="col-sm-8">
+		<h1>增加新品項</h1>
+	</div>
+	<div class="col-sm-4">	
+		<div class="form-group <%= 'hidden' if params[:action] != 'new' %>">
+			<%= form_tag import_items_path, multipart: true do %>
+			<div class="col-sm-12">
+				<label for="file">選擇EXCEL檔案</label>
+			</div>
+			<div class="col-sm-8">
+				<%= file_field_tag "file" %>
+			</div>
+			<div class="col-sm-4">
+				<%= submit_tag "上傳", :class => "button button-3d nomargin"  %>
+			</div>
+			<% end %>
+		</div>	
+	</div>
+</div>
+<%= render 'items/partial/form' %>
 
 </div><!-- .postcontent end -->
