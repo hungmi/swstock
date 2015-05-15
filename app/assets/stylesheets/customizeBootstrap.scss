@@ -1,0 +1,45 @@
+.navbar {
+	min-height: 96px;
+	line-height: 40px;
+	vertical-align: middle;
+	.navbar-brand {
+		color: white;
+	}
+	a {
+		font-size: 20px;
+		line-height: 60px;
+	}
+	.navbar-form .input-group input {
+		height: 80px;
+		width: 950px;
+		font-size: 50px;
+		background-color: #222;
+		border: none;
+		color: white;
+	}
+	.navbar-form .input-group input:focus { box-shadow: none; }
+	button {
+		background: #222;
+		padding: 0px;
+		margin: 0px;
+		border: none;
+		.glyphicon-search {
+			background: #222;
+			font-size: 50px;
+			padding: 5px;
+			color: #999;
+		}
+	}
+}
+
+form#itemForm {
+	font-size: 20px;
+	label {
+		font-weight: 400;
+		padding: 0px;
+		line-height: 34px;
+	}
+	input,textarea {
+		font-size: 20px;
+	}
+}

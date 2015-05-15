@@ -1,7 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy, :updateViaForm]
   helper_method :emphasizePicnum, :emphasizeCustomer, :textAreaRowNum, :formatPicnum
-  layout :resolve_layout
 
   def formatPicnum(picnum)
     styles = '<br><span style="margin-right:3em; font-size: 26px; color:red;">+</span><br>'
@@ -174,15 +173,6 @@ class ItemsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
       params.require(:item).permit(:location, :item_type, :picnum, :oldPicnum, :note, :finishQty, :unfinishQty)
-    end
-
-    def resolve_layout
-      case action_name
-      when "index"
-        "noBodyContainer"
-      else
-        "application"
-      end
     end
 
 end

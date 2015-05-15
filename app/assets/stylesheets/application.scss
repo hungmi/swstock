@@ -9,39 +9,16 @@
  * compiled file so the styles you add here take precedence over styles defined in any styles
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
- *
- *= require_self
- *= require bootstrap
- *= require dark
- *= require font-icons
- *= require animate
- *= require magnific-popup
- *= require responsive
- *= require_tree .
  */
-@import 'variable';
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "variable";
+@import "stockTable";
+@import "stickyNavbar";
+@import "customizeBootstrap";
 
- #itemForm > div > label {
-    font-size: 20px;
-    font-weight: 500;
- }
-
-input[type="file"] {
-    display: none !important;
-}
-
-.custom-file-upload {
-    border: 1px solid #ccc;
-    display: inline-block;
-    padding: 10px 12px;
-    cursor: pointer;
-}
-
-#apple {
-    background-image: image-url('Fish.png') !important;
-    background-size: cover;
-    //background-repeat: no-repeat;
-    padding: 15px 25px;
+header {
+    height: 100px;
 }
 
 body.white {
@@ -50,44 +27,15 @@ body.white {
     }
 }
 
-#top-search a {
-    font-size: 40px !important;
-    .icon-line-cross {font-size: 40px !important;}
+/* 以下專門放自訂的快速class */
+.center {
+    text-align: center;
 }
 
-#primary-menu ul li a {
-    font-size: 20px !important;
-    font-weight: 400 !important;
+div.wideContainer {
+    margin: 0px;
+    margin-left: 100px;
+    margin-right: 100px;
+    padding: 0px;
+    width: 1600px;
 }
-
-
- /* Modifying Header Height */
-#header,
-#header-wrap,
-#logo,
-#logo img,
-#primary-menu:not(.style-2),
-#primary-menu:not(.style-2) > ul,
-#primary-menu,
-#primary-menu ul,
-#primary-menu ul li a { height: 80px !important; }
-
-#primary-menu ul li a { line-height: 80px !important; }
-
-#primary-menu ul li i { line-height: 79px !important; }
-
-#primary-menu ul ul,
-#primary-menu ul li .mega-menu-content,
-#primary-menu ul li.mega-menu .mega-menu-content { top: 80px; }
-
-#primary-menu.sub-title ul li a { padding: 27px 20px 32px; }
-
-#top-search,
-#top-cart { margin: 25px 0 40px 15px !important; }
-
-@media (max-width: 991px) {
-    #primary-menu-trigger { top: 25px; }
-    #top-search a { margin-top: 40px; }
-    #top-search form { height: 80px !important; }
-}
- /* Modifying Header Height END*/

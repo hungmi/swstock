@@ -1,18 +1,23 @@
-$tableWidth: 1834px;
+@import "variable";
+
+/* 為庫存表的預先準備，放在這裡方便不載入stockTable.scss時自動失效 */
+/* 也可利用action name控制class的載入 */
+
 
 /* 庫存表css專區 */
 table.scroll {
-    width: $tableWidth; /* 140px * 5 column + 16px scrollbar width */
+    width: $tableWidth; /* 1*lgCell + 2*mdCell + 3*smCell + 16px scrollbar width */
     border-spacing: 0;
+    font-size: 24px;
+    margin-left: 10px;
     thead { border: 2px solid black; }
-    font-size: 20px;
 }
 
 table.scroll tbody,
 table.scroll thead tr { display: block; }
 
 table.scroll tbody {
-    height: 780px;
+    height: 830px;
     overflow-y: auto;
     overflow-x: hidden;
     form {margin-bottom: 0px;}
@@ -39,7 +44,7 @@ table.scroll thead th.mdCell {
 table.scroll tbody td.lgCell,
 table.scroll thead th.lgCell {
     width: 0.27*$tableWidth;
-    padding-right: 20px;
+    padding-right: 10px;
 }
 
 table.scroll thead th:last-child {
@@ -57,16 +62,13 @@ tbody { border-top: 2px solid black; }
 tbody td:last-child, thead th:last-child {
     border-right: none !important;
 }
-div.stockTable {/*庫存表的table外圍的div*/
-    margin-right: 50px;
-    margin-left: 50px;
-    padding: 0px;
-    width: auto;
-}
 
 body.white {
-    th td {
-        color: black !important;
+    table.scroll {
+        th, td {
+            color: black !important;
+            font-weight: 400 !important;
+        }
     }
     table.scroll > tbody > tr:hover > td {
         background-color: #b3e5fc !important;
@@ -84,6 +86,15 @@ body.dark {
     .table-hover > tbody > tr:hover > td {
         box-shadow:1px 1px 3px 2px rgba(40%,20%,20%,0.5);
     }
+}
+
+
+/* image button for link to editing item */
+#apple {
+    background-image: image-url('Fish.png') !important;
+    background-size: cover;
+    //background-repeat: no-repeat;
+    padding: 15px 30px;
 }
 
 

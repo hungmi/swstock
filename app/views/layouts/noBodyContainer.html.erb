@@ -3,46 +3,27 @@
 <head>
 
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta name="author" content="SemiColonWeb" />
 
     <%= render 'partial/cssAndJs' %>
 
-    <!-- Document Title
-    ============================================= -->
-
 </head>
 
-<body class="dark stretched no-transition" data-no-turbolink="true">
+<body class="white">
 
-    <!-- Document Wrapper
+    <%= render 'partial/header' %>
+
+    <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>"><%= value %></div>
+    <% end %>
+
+    <!-- Content
     ============================================= -->
-    <div id="wrapper" class="clearfix">
+        <%= yield %>
+    <!-- #content end -->
 
-        <%= render 'partial/header' %>
-
-        <% flash.each do |key, value| %>
-            <div class="alert alert-<%= key %>"><%= value %></div>
-        <% end %>
-
-        <!-- Content
-        ============================================= -->
-        <section id="content">
-
-            <%= yield %>
-
-        </section><!-- #content end -->
-
-    </div><!-- #wrapper end -->
-
-
-    <!-- Go To Top
+    <!-- Footer
     ============================================= -->
-    <div id="gotoTop" class="icon-angle-up"></div>
-
-    <!-- Footer Scripts
-    ============================================= -->
-    <script type="text/javascript" src="../assets/functions.js"></script>
-    
+    <footer>I am footer</footer>    
 
 </body>
 </html>
