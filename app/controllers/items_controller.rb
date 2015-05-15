@@ -90,7 +90,7 @@ class ItemsController < ApplicationController
   def import
     invalidProductNum = Item.import(params[:file])
     if invalidProductNum
-      flash[:warning] = invalidProductNum +  ' items are missing picnum or location. Others are successfully loaded.'  
+      flash[:warning] = invalidProductNum.to_s + ' items are missing picnum or location. Others are successfully loaded.'  
     else
       flash[:success] = 'Items are successfully loaded.'
     end
