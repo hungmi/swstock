@@ -21,7 +21,7 @@ class Item < ActiveRecord::Base
   end
 
   def self.search(query)
-      where("location like ? OR item_type like ? OR picnum like ? OR oldpicnum like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
+      where("lower(location) like ? OR lower(item_type) like ? OR lower(picnum) like ? OR lower(oldpicnum) like ?", ("%#{query}%").downcase, ("%#{query}%").downcase, ("%#{query}%").downcase, ("%#{query}%").downcase)
   end
 
   def self.import(file)
