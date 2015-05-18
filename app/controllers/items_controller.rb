@@ -120,7 +120,7 @@ class ItemsController < ApplicationController
       end
       @items = (@itemsSearchUnion | @itemsSearchIntersection).sort_by{ |i| i[:location] } #Union of queries
     else
-      @items = Item.all.order(:location).paginate(:per_page => 30, :page => params[:page])
+      @items = Item.all.order(:location).paginate(:per_page => 20, :page => params[:page])
       @items_export = Item.order(:location)
       respond_to do |format|
         format.html
