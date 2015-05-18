@@ -43,5 +43,10 @@
         </tr>
       <% end %>
     <% end %>
-  </tbody>          
+  </tbody>
 </table>
+<div class="center">
+<% if params[:search].blank? %>
+<%= will_paginate @items, renderer: BootstrapPagination::Rails %>
+<% end %>
+</div>

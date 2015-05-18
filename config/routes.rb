@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :orders
   get 'stock' => 'items#index'
+  get 'item_destroy_all_page' => 'items#destroy_all_page'
+  delete 'item_destroy_all' => 'items#destroy_all'
   resources :items do
     collection { post :import }
   end

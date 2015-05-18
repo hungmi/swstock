@@ -42,6 +42,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'roo', '~> 2.0.0'
 
+gem 'will_paginate-bootstrap'
+gem "font-awesome-rails"
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

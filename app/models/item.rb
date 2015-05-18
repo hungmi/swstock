@@ -38,6 +38,16 @@ class Item < ActiveRecord::Base
     return invalidProductNum
   end
 
+  def self.export(options = {})
+    CSV.generate(options) do |csv|
+      export_column_names = ["id", "location", "item_type", "picnum", "oldpicnum", "note", "finishQty", "unfinishQty"]
+      csv << export_column_names
+      self.all.each do |product|
+        csv << product.attributes.values_at(*export_column_names)
+      end
+    end
+  end
+
   def self.open_spreadsheet(file)
     case File.extname(file.original_filename)
       when ".csv" then Roo::CSV.new(file.path)

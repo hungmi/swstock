@@ -97,6 +97,15 @@ class ItemsController < ApplicationController
     redirect_to root_url
   end
 
+  def destroy_all_page
+  end
+
+  def destroy_all
+    Item.destroy_all
+    flash[:success] = 'There are no items now.'
+    redirect_to root_url
+  end
+
   # GET /items
   # GET /items.json
   def index
@@ -111,7 +120,13 @@ class ItemsController < ApplicationController
       end
       @items = (@itemsSearchUnion | @itemsSearchIntersection).sort_by{ |i| i[:location] } #Union of queries
     else
-      @items = Item.all
+      @items = Item.all.order(:location).paginate(:per_page => 30, :page => params[:page])
+      @items_export = Item.order(:location)
+      respond_to do |format|
+        format.html
+        format.csv { send_data @items_export.export }
+        format.xls  { send_data @items_export.export(col_sep: "\t") }
+      end
     end
   end
 
