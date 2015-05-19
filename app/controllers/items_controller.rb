@@ -164,7 +164,7 @@ class ItemsController < ApplicationController
   # PATCH/PUT /items/1.json
   def update
     if @item.update(item_params)
-      flash[:success] = '資料更新成功!'
+      flash.now[:success] = '資料更新成功!'
       redirect_to :back
     else
       flash[:danger] = '資料更新失敗!'

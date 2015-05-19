@@ -30,6 +30,11 @@ table.scroll tbody th {
     input { text-align: center; }
 }
 
+table.scroll tbody td.xsCell,
+table.scroll thead th.xsCell {
+    width: 0.5*$tableWidth/16;
+}
+
 table.scroll tbody td.smCell,
 table.scroll thead th.smCell {
     width: 1*$tableWidth/16;
@@ -43,7 +48,7 @@ table.scroll thead th.lgCell {
 }
 
 table.scroll thead th:last-child {
-    width: 1*$tableWidth/16 + 16px; /* 140px + 16px scrollbar width */
+    width: 0.5*$tableWidth/16 + 16px; /* 140px + 16px scrollbar width */
 }
 
 thead tr th { 
