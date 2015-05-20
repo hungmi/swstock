@@ -24,16 +24,23 @@ targetHide = function(parent,target){
 	$(target + '#' + $(parent).attr("id") ).hide();
 }
 
+var notSavingColor = 'yellow';
+
 $(document).ready(function(){
-	$('button').hide();
+	$('tbody button').hide();
 	//中文輸入法會觸發keydown, 不會觸發keypress
-	$('input,textarea').keydown(function() {
+	$('form#itemForm input, textarea').keydown(function() {
 		targetShow(this,'button');
-		$(this).css("background-color" ,"yellow");
+		$(this).css("background-color" ,notSavingColor);
+	});
+	$('table.scroll textarea,input').keydown(function() {
+		targetShow(this,'button');
+		$(this).css("background-color" ,notSavingColor);
 	});
 	$('form').on('ajax:success', function() {
 		targetHide(this,'button');
-		$('input#' + $(this).attr("id") ).removeAttr( 'style' ); //this will remove all dynamic style
-		$('textarea#' + $(this).attr("id") ).removeAttr( 'style' ); //this will remove all dynamic style
+		$('input#' + $(this).attr("id") )
+		$('textarea#' + $(this).attr("id") )
+		.removeAttr( 'style' ); //this will remove all dynamic style
 	});
 });

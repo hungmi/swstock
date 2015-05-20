@@ -43,9 +43,9 @@
       </div>
     </div>    
     <div class="form-group">
-      <%= f.label :item_type, "富暘", class:"col-lg-2 col-md-2 col-sm-2 control-label" %>
+      <%= f.label :customer, "特定客戶", class:"col-lg-2 col-md-2 col-sm-2 control-label" %>
       <div class="col-lg-9 col-md-9 col-sm-9">
-        <%= f.check_box :item_type %>
+        <%= f.select(:customer,@customerList) %>
       </div>
     </div>
     <div class="form-group">

@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy, :updateViaForm]
+  before_action :set_customer
   helper_method :emphasizePicnum, :emphasizeCustomer, :textAreaRowNum, :formatPicnum
 
   def formatPicnum(picnum)
@@ -17,15 +18,9 @@ class ItemsController < ApplicationController
     return rowNum
   end
 
-  def emphasizeCustomer(item_type,customerList)
-    set_color
-    queries = customerList.keys #從view那邊定義好顧客清單，key為顧客名稱
-    colorInds = customerList.values #value為顧客對應的顏色號碼
-    queries.each_with_index do |query,queryInd|
-      styleCustomer = '<span style="color:' + @colors[colorInds[queryInd]] + ';font-size:30px;">\1</span>'
-      item_type = view_context.highlight(item_type,query,highlighter: styleCustomer)
-    end
-    return item_type.html_safe
+  def emphasizeCustomer(customer)
+    @customerColors = ['palegreen','lightcoral','steelblue','darkorange']
+    styleCustomer = 'background-color:' + @customerColors[@customerList.index(customer)] + ';' if @customerList.include?(customer)
   end
 
   def emphasizePicnum(picnum,queries)
@@ -185,6 +180,10 @@ class ItemsController < ApplicationController
       @colors = ['black','royalblue','darkviolet','darkorange','slatgray','saddlebrown','goldenrod','cyan','limegreen','red']
     end
 
+    def set_customer
+      @customerList = ['富暘','油機','東台','金玉']
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_item
       @item = Item.find(params[:id])
@@ -192,7 +191,7 @@ class ItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
-      params.require(:item).permit(:location, :item_type, :picnum, :oldpicnum, :note, :finishQty, :unfinishQty)
+      params.require(:item).permit(:location, :item_type, :picnum, :oldpicnum, :note, :finishQty, :unfinishQty, :customer)
     end
 
 end

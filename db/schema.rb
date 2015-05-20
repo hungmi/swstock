@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150515090215) do
+ActiveRecord::Schema.define(version: 20150520033237) do
 
   create_table "items", force: :cascade do |t|
     t.string   "location"
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20150515090215) do
     t.text     "note"
     t.integer  "finishQty"
     t.integer  "unfinishQty"
+    t.string   "customer"
   end
 
   create_table "orders", force: :cascade do |t|
