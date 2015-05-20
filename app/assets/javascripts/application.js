@@ -29,11 +29,17 @@ var notSavingColor = 'yellow';
 $(document).ready(function(){
 	$('tbody button').hide();
 	//中文輸入法會觸發keydown, 不會觸發keypress
-	$('form#itemForm input, textarea').keydown(function() {
+	/*
+	$('form#itemForm input')
+	$('form#itemForm textarea')
+	$('table.scroll textarea')
+	$('table.scroll input')
+	*/
+	$('#itemForm').find('input,textarea').keydown(function() {
 		targetShow(this,'button');
 		$(this).css("background-color" ,notSavingColor);
 	});
-	$('table.scroll textarea,input').keydown(function() {
+	$('table.scroll').find('input,textarea').keydown(function() {
 		targetShow(this,'button');
 		$(this).css("background-color" ,notSavingColor);
 	});

@@ -1,7 +1,12 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy, :updateViaForm]
   before_action :set_customer
+  before_action :previousPage, only: [:edit, :new]
   helper_method :emphasizePicnum, :emphasizeCustomer, :textAreaRowNum, :formatPicnum
+
+  def previousPage
+    session[:last_page] = request.env['HTTP_REFERER']
+  end
 
   def formatPicnum(picnum)
     styles = '<br><span style="margin-right:3em; font-size: 26px; color:red;">+</span><br>'
@@ -160,10 +165,10 @@ class ItemsController < ApplicationController
   def update
     if @item.update(item_params)
       flash[:success] = '資料更新成功!'
-      redirect_to :back
+      redirect_to session[:last_page]
     else
       flash[:danger] = '資料更新失敗!'
-      redirect_to :back
+      render 'edit'
     end
   end
 
