@@ -12,6 +12,28 @@
 //
 //= require jquery
 //= require bootstrap-sprockets
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+targetShow = function(parent,target){
+	$(target + '#' + $(parent).attr("id") ).show();
+}
+targetHide = function(parent,target){
+	$(target + '#' + $(parent).attr("id") ).hide();
+}
+
+$(document).ready(function(){
+	$('button').hide();
+	//中文輸入法會觸發keydown, 不會觸發keypress
+	$('input,textarea').keydown(function() {
+		targetShow(this,'button');
+		$(this).css("background-color" ,"yellow");
+	});
+	$('form').on('ajax:success', function() {
+		targetHide(this,'button');
+		$('input#' + $(this).attr("id") ).removeAttr( 'style' ); //this will remove all dynamic style
+		$('textarea#' + $(this).attr("id") ).removeAttr( 'style' ); //this will remove all dynamic style
+	});
+});

@@ -13,9 +13,9 @@
   </thead>
   <tbody>
     <% @items.each do |item| %>
-      <%= form_for item do |f| %>
+      <%= form_for(item, remote: true) do |f| %>
         <tr>
-          <td class="smCell center"><%= f.text_field :location, size: 7 %></td>
+          <td class="smCell center"><%= f.text_field :location, size: 7, id: "edit_item_" + item.id.to_s %></td>
           <td class="lgCell" style="text-align:right !important;">
             <% if item.picnum.present? %>
               <%= params[:search] ? emphasizePicnum(item.picnum,params[:search])  : formatPicnum(item.picnum) %>
@@ -31,25 +31,26 @@
           </td>
           <td class="lgCell center">
             <% if item.note.present? then%>
-              <%= f.text_area :note, :value => item.note.gsub(/\n$/,''), :rows => textAreaRowNum(item.note), class:'item-note' %>
+              <%= f.text_area :note, :value => item.note.gsub(/\n$/,''), :rows => textAreaRowNum(item.note), class:'item-note', id: "edit_item_" + item.id.to_s %>
             <% else %>
-              <%= f.text_area :note, :rows => 1, class:'item-note' %>
+              <%= f.text_area :note, :rows => 1, class:'item-note', id: "edit_item_" + item.id.to_s %>
             <% end %>
+            <i class="hidden" id="<%= 'note_edit_item_' + item.id.to_s %>"></i>
           </td>
-          <td class="smCell center"><%= f.text_field :finishQty, size: 4 %></td>
-          <td class="smCell center"><%= f.text_field :unfinishQty, size: 4 %></td>
+          <td class="smCell center"><%= f.text_field :finishQty, size: 4, id: "edit_item_" + item.id.to_s %></td>
+          <td class="smCell center"><%= f.text_field :unfinishQty, size: 4, id: "edit_item_" + item.id.to_s %></td>
           <td class="xsCell">
-            <%= button_tag(type: 'submit', class: "no-btn") do %>
+            <%= button_tag(type: 'submit', class: "no-btn", id: "edit_item_" + item.id.to_s) do %>
               <i class="fa fa-check"></i>
             <% end %>
           </td>
         </tr>
-      <% end %>
-    <% end %>
+      <% end %> <!-- end of form_for -->
+    <% end %> <!-- end of each -->
   </tbody>
 </table>
 <div class="center">
-<% if params[:search].blank? %>
-<%= will_paginate @items, renderer: BootstrapPagination::Rails %>
-<% end %>
+  <% if params[:search].blank? %>
+  <%= will_paginate @items, renderer: BootstrapPagination::Rails %>
+  <% end %>
 </div>
