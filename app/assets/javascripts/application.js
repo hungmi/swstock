@@ -45,8 +45,7 @@ $(document).ready(function(){
 	});
 	$('form').on('ajax:success', function() {
 		targetHide(this,'button');
-		$('input#' + $(this).attr("id") )
-		$('textarea#' + $(this).attr("id") )
-		.removeAttr( 'style' ); //this will remove all dynamic style
+		$('input#' + $(this).attr("id") ).removeAttr( 'style' ); //this will remove all dynamic style
+		$('textarea#' + $(this).attr("id") ).removeAttr( 'style' ); //this will remove all dynamic style
 	});
 });
