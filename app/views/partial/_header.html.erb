@@ -16,8 +16,8 @@
              <a class="navbar-brand visible-xs" href="/">SW</a>
              <%= form_tag items_path, method: "get", :class => "navbar-form pull-left" do %>
                 <div class="input-group">
-                  <%= text_field_tag :search, params[:search], :class => "form-control", :placeholder => 'Search' %>
-                  <div class="input-group-btn">
+                  <%= text_field_tag :search, params[:search], :class => "form-control", :placeholder => 'Search', :autofocus => 'true', :onClick => "this.select();" %>
+                  <div class="input-group-btn hidden" id="searchBtn">
                     <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
                       <span class="glyphicon glyphicon-search"></span>
                     <% end %>

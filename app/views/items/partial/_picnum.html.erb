@@ -4,5 +4,5 @@
             <span id="apple"></span>
         <% end %>
     <% end %>
-    <span><%= params[:search] ? emphasizePicnum(item.picnum,params[:search])  : formatPicnum(item.picnum) %></span>
+    <span><%= params[:search].present? ? emphasizePicnum(item.picnum,params[:search])  : formatPicnum(item.picnum) %></span>
 </td>

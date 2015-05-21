@@ -18,16 +18,25 @@
 //= require_tree .
 
 targetShow = function(parent,target){
-	$(target + '#' + $(parent).attr("id") ).show();
+	$(target + '#' + $(parent).attr("id") ).removeClass('hidden');
 }
 targetHide = function(parent,target){
-	$(target + '#' + $(parent).attr("id") ).hide();
+	$(target + '#' + $(parent).attr("id") ).addClass('hidden');
 }
 
 var notSavingColor = 'yellow';
 
 $(document).ready(function(){
-	$('tbody button').hide();
+	$('input#search').select();
+	$('input#search').keyup(function(){
+		if ($(this).val() != '') {
+			//console.log($(this).val());
+			$('#searchBtn').removeClass('hidden');
+		} else {
+			//console.log($(this).val());
+			$('#searchBtn').addClass('hidden');
+		}
+	});
 	//中文輸入法會觸發keydown, 不會觸發keypress
 	/*
 	$('form#itemForm input')

@@ -1,56 +1,69 @@
-<table class="scroll">
-  <thead>
-    <tr>
-      <th class="smCell center">櫃位</th>
-      <th class="lgCell center">圖號</th>
-      <th class="xsCell"></th>
-      <th class="lgCell center">舊圖號</th>
-      <th class="lgCell center">提醒</th>
-      <th class="smCell center">成品</th>
-      <th class="smCell center">半成品</th>
-      <th class="xsCell"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @items.each do |item| %>
-      <%= form_for(item, remote: true) do |f| %>
-        <tr style="<%= emphasizeCustomer(item.customer) %>">
-          <td class="smCell center"><%= f.text_field :location, size: 7, id: "edit_item_" + item.id.to_s %></td>
-          <td class="lgCell" style="text-align:right !important;">
-            <% if item.picnum.present? %>
-              <%= params[:search] ? emphasizePicnum(item.picnum,params[:search])  : formatPicnum(item.picnum) %>
-            <% end %>
-          </td>
-          <td class="xsCell">
-            <%= link_to edit_item_path(item) do %><span id="apple"></span><% end %>
-          </td>
-          <td class="lgCell center">
-            <% if item.oldpicnum.present? %>
-              <%= params[:search] ? emphasizePicnum(item.oldpicnum,params[:search])  : formatPicnum(item.oldpicnum) %>
-            <% end %>
-          </td>
-          <td class="lgCell center">
-            <% if item.note.present? then%>
-              <%= f.text_area :note, :value => item.note.gsub(/\n$/,''), :rows => textAreaRowNum(item.note), class:'item-note', id: "edit_item_" + item.id.to_s %>
-            <% else %>
-              <%= f.text_area :note, :rows => 1, class:'item-note', id: "edit_item_" + item.id.to_s %>
-            <% end %>
-            <i class="hidden" id="<%= 'note_edit_item_' + item.id.to_s %>"></i>
-          </td>
-          <td class="smCell center"><%= f.text_field :finishQty, size: 4, id: "edit_item_" + item.id.to_s %></td>
-          <td class="smCell center"><%= f.text_field :unfinishQty, size: 4, id: "edit_item_" + item.id.to_s %></td>
-          <td class="xsCell">
-            <%= button_tag(type: 'submit', class: "no-btn", id: "edit_item_" + item.id.to_s) do %>
-              <i class="fa fa-check"></i>
-            <% end %>
-          </td>
-        </tr>
-      <% end %> <!-- end of form_for -->
-    <% end %> <!-- end of each -->
-  </tbody>
-</table>
+<% if @items.is_a?(Array) %>
+  <% @found = true if @items.present? %>
+<% elsif @items.exists? %>
+  <% @found = true %>
+<% else %>
+  <% @found = false %>
+<% end %>
+<% if @found %>
+  <table class="scroll">
+    <thead>
+      <tr>
+        <th class="smCell center">櫃位</th>
+        <th class="lgCell center">圖號</th>
+        <th class="xsCell"></th>
+        <th class="lgCell center">舊圖號</th>
+        <th class="lgCell center">提醒</th>
+        <th class="smCell center">成品</th>
+        <th class="smCell center">半成品</th>
+        <th class="xsCell"></th>
+      </tr>
+    </thead>
+    <tbody>    
+        <% @items.each do |item| %>
+          <%= form_for(item, remote: true) do |f| %>
+            <tr style="<%= emphasizeCustomer(item.customer) %>">
+              <td class="smCell center"><%= f.text_field :location, size: 7, id: "edit_item_" + item.id.to_s %></td>
+              <td class="lgCell" style="text-align:right !important;">
+                <% if item.picnum.present? %>
+                  <%= params[:search] ? emphasizePicnum(item.picnum,params[:search])  : formatPicnum(item.picnum) %>
+                <% end %>
+              </td>
+              <td class="xsCell center">
+                <div><!-- this div is for chrome -->
+                <%= link_to edit_item_path(item) do %><span id="apple"></span><% end %>
+                </div><!-- this div is for chrome -->
+              </td>
+              <td class="lgCell center">
+                <% if item.oldpicnum.present? %>
+                  <%= params[:search] ? emphasizePicnum(item.oldpicnum,params[:search])  : formatPicnum(item.oldpicnum) %>
+                <% end %>
+              </td>
+              <td class="lgCell center">
+                <% if item.note.present? then%>
+                  <%= f.text_area :note, :value => item.note.gsub(/\n$/,''), :rows => textAreaRowNum(item.note), class:'item-note', id: "edit_item_" + item.id.to_s %>
+                <% else %>
+                  <%= f.text_area :note, :rows => 1, class:'item-note', id: "edit_item_" + item.id.to_s %>
+                <% end %>
+                <i class="hidden" id="<%= 'note_edit_item_' + item.id.to_s %>"></i>
+              </td>
+              <td class="smCell center"><%= f.text_field :finishQty, size: 4, id: "edit_item_" + item.id.to_s %></td>
+              <td class="smCell center"><%= f.text_field :unfinishQty, size: 4, id: "edit_item_" + item.id.to_s %></td>
+              <td class="xsCell">
+                <%= button_tag(type: 'submit', class: "no-btn hidden", id: "edit_item_" + item.id.to_s) do %>
+                  <i class="fa fa-check"></i>
+                <% end %>
+              </td>
+            </tr>
+          <% end %> <!-- end of form_for -->
+        <% end %> <!-- end of each -->
+    </tbody>
+  </table>
+<% else %>
+  <h3>沒有找到品項，是否要<%= link_to '新增',new_item_path %>呢？</h3>
+<% end %>
 <div class="center">
-  <% if params[:search].blank? %>
+  <% if !params[:search].present? %>
   <%= will_paginate @items, renderer: BootstrapPagination::Rails %>
   <% end %>
 </div>

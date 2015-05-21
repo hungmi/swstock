@@ -8,11 +8,6 @@ class ItemsController < ApplicationController
     session[:last_page] = request.env['HTTP_REFERER']
   end
 
-  def formatPicnum(picnum)
-    styles = '<br><span style="margin-right:3em; font-size: 26px; color:red;">+</span><br>'
-    editedPicnum = picnum.gsub('+', styles).html_safe
-  end
-
   def textAreaRowNum(text)
     rowNum = 0
     text = text.gsub(/\n$/,'')
@@ -26,6 +21,11 @@ class ItemsController < ApplicationController
   def emphasizeCustomer(customer)
     @customerColors = ['palegreen','lightcoral','steelblue','darkorange']
     styleCustomer = 'background-color:' + @customerColors[@customerList.index(customer)] + ';' if @customerList.include?(customer)
+  end
+
+  def formatPicnum(picnum)
+    styles = '<br><span style="margin-right:3em; font-size: 26px; color:red;">+</span><br>'
+    editedPicnum = picnum.gsub('+', styles).html_safe
   end
 
   def emphasizePicnum(picnum,queries)
@@ -109,7 +109,7 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
-    if params[:search]
+    if params[:search].present?
       params[:search] = params[:search].strip.split(/\s+/)
       @items = Item.all
       @itemsSearchUnion = Item.none
