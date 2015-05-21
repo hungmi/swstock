@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   get 'item_destroy_all_page' => 'items#destroy_all_page'
   delete 'item_destroy_all' => 'items#destroy_all'
   resources :items do
-    collection { post :import }
+    collection do 
+      post :import
+    end
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

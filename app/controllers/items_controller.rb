@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :edit, :update, :destroy, :updateViaForm]
+  before_action :set_item, only: [:show, :edit, :update, :destroy, :updateViaTable]
   before_action :set_customer
-  before_action :previousPage, only: [:edit, :new]
+  before_filter :previousPage, only: [:edit, :new]
   helper_method :emphasizePicnum, :emphasizeCustomer, :textAreaRowNum, :formatPicnum
 
   def previousPage
@@ -165,7 +165,7 @@ class ItemsController < ApplicationController
   def update
     if @item.update(item_params)
       flash[:success] = '資料更新成功!'
-      redirect_to session[:last_page]
+      #redirect_to session[:last_page] if action_name == 'update' or 'create'
     else
       flash[:danger] = '資料更新失敗!'
       render 'edit'

@@ -21,7 +21,7 @@
     </thead>
     <tbody>    
         <% @items.each do |item| %>
-          <%= form_for(item, remote: true) do |f| %>
+          <%= form_for(item, remote: true ) do |f| %>
             <tr style="<%= emphasizeCustomer(item.customer) %>">
               <td class="smCell center"><%= f.text_field :location, size: 7, id: "edit_item_" + item.id.to_s %></td>
               <td class="lgCell" style="text-align:right !important;">
