@@ -165,7 +165,7 @@ class ItemsController < ApplicationController
   def update
     if @item.update(item_params)
       flash[:success] = '資料更新成功!'
-      #redirect_to session[:last_page] if action_name == 'update' or 'create'
+      redirect_to session[:last_page]
     else
       flash[:danger] = '資料更新失敗!'
       render 'edit'
