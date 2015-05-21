@@ -65,8 +65,3 @@
     <%= image_tag 'found.gif' %>
   </div>
 <% end %>
-<div class="center">
-  <% if !params[:search].present? %>
-  <%= will_paginate @items, renderer: BootstrapPagination::Rails %>
-  <% end %>
-</div>

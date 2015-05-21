@@ -130,6 +130,10 @@ class ItemsController < ApplicationController
     end
   end
 
+  def newestIndex
+    @items = Item.all.order(created_at: :desc).take(5)
+  end
+
   # GET /items/1
   # GET /items/1.json
   def show

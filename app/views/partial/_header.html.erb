@@ -27,7 +27,7 @@
           </div>
           <div class="navbar-collapse collapse">
              <ul class="nav navbar-nav navbar-right">
-                <li class="<%= 'active' if params[:controller] == 'items' and params[:action] == 'index' %>"><%= link_to '庫存表', items_path %></li>
+                <li class="<%= 'active' if params[:controller] == 'items' and params[:action] == 'index' %>"><%= link_to '所有品項', items_path %></li>
                 <li class="<%= 'active' if params[:controller] == 'items' and params[:action] == 'new' %>"><%= link_to '新品項', new_item_path %></li>
 
                 <li class="hidden <%= 'current' if params[:controller] == 'orders' and params[:action] == '' %>"><%= link_to '新訂單', new_order_path %></li>
