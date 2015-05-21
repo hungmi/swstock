@@ -60,7 +60,10 @@
     </tbody>
   </table>
 <% else %>
-  <h3>沒有找到品項，是否要<%= link_to '新增',new_item_path %>呢？</h3>
+  <div class="container center">
+    <h3>沒有找到品項，是否要<%= link_to '新增',new_item_path %>呢？</h3>
+    <%= image_tag 'found.gif' %>
+  </div>
 <% end %>
 <div class="center">
   <% if !params[:search].present? %>
