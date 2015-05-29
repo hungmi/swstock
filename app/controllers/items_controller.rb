@@ -8,12 +8,12 @@ class ItemsController < ApplicationController
     session[:last_page] = request.env['HTTP_REFERER']
   end
 
-  def textAreaRowNum(text)
+  def textAreaRowNum(text,num)
     rowNum = 0
     text = text.gsub(/\n$/,'')
 
     text.each_line do |line|
-      line.length > 20 ? rowNum += 1 + (line.length/20) : rowNum += 1
+      line.length > num ? rowNum += 1 + (line.length/num) : rowNum += 1
     end
     return rowNum
   end
@@ -131,7 +131,7 @@ class ItemsController < ApplicationController
   end
 
   def newestIndex
-    @items = Item.all.order(created_at: :desc).take(5)
+    @items = Item.all.order(updated_at: :desc).take(5)
   end
 
   # GET /items/1
@@ -200,7 +200,7 @@ class ItemsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
-      params.require(:item).permit(:location, :item_type, :picnum, :oldpicnum, :note, :finishQty, :unfinishQty, :customer)
+      params.require(:item).permit(:location, :item_type, :picnum, :oldpicnum, :note, :finished, :unfinished, :customer)
     end
 
 end

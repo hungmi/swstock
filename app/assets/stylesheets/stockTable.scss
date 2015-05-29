@@ -10,6 +10,7 @@ table.scroll {
     border-spacing: 0;
     font-size: 24px;
     margin-left: 10px;
+
     thead { border: 2px solid black; }
 }
 
@@ -23,10 +24,9 @@ table.scroll tbody {
     form {margin-bottom: 0px;}
 }
 
-table.scroll tbody td,
-table.scroll tbody th {
+table.scroll tbody td {
     border-bottom: 1px solid #555;
-    padding: 50px 0px;
+    padding: 10px 5px;
     input { text-align: center; }
 }
 
@@ -35,20 +35,31 @@ table.scroll thead th.xsCell {
     width: 0.5*$tableWidth/16;
 }
 
-table.scroll tbody td.smCell,
 table.scroll thead th.smCell {
+    width: 1.3*$tableWidth/16;  
+}
+
+table.scroll tbody td.smCell {
     width: 1*$tableWidth/16;
 }
 
 table.scroll tbody td.lgCell,
 table.scroll thead th.lgCell {
-    width: 4*$tableWidth/16;
+    width: 3.5*$tableWidth/16;
     padding-right: 0px;
     textarea {width: 100%;}
 }
 
 table.scroll thead th:last-child {
-    width: 0.5*$tableWidth/16 + 16px; /* 140px + 16px scrollbar width */
+    width: 0.5*$tableWidth/16; /* 140px + 16px scrollbar width */
+}
+
+table.scroll thead th.scrollbar {
+    width: 0.5*$tableWidth/16 + 16px; /* 140px + 16px scrollbar width */   
+}
+
+thead tr th:first-child {
+    padding-left: 5px;
 }
 
 thead tr th { 
@@ -73,7 +84,13 @@ body.white {
         }
     }
     table.scroll > tbody > tr:hover > td {
-        background-color: #b3e5fc !important;
+        //background-color: #b3e5fc !important;
+        background-color: none !important;
+        //border: 3px solid black !important;
+    }
+    table.scroll > tbody > tr:hover {
+        box-shadow: inset 0px 0px 0px 5px rgba(0, 206, 209, 0.7);
+        //border: 6px solid darkturquoise !important;
     }
 }
 

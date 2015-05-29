@@ -25,15 +25,15 @@
       </div>
     </div>
     <div class="form-group">
-      <%= f.label :finishQty, '成品數量', class:"col-lg-2 col-md-2 col-sm-2 control-label" %>
+      <%= f.label :finished, '成品數量', class:"col-lg-2 col-md-2 col-sm-2 control-label" %>
       <div class="col-lg-9 col-md-9 col-sm-9">
-        <%= f.text_field :finishQty, class:"form-control", :type => 'number' %>
+        <%= f.text_area :finished, :rows => 4, class:"form-control"%>
       </div>
     </div>
     <div class="form-group">
-      <%= f.label :unfinishQty, '半成品數量', class:"col-lg-2 col-md-2 col-sm-2 control-label" %>
+      <%= f.label :unfinished, '半成品數量', class:"col-lg-2 col-md-2 col-sm-2 control-label" %>
       <div class="col-lg-9 col-md-9 col-sm-9">
-        <%= f.text_field :unfinishQty, class:"form-control", :type => 'number'   %>
+        <%= f.text_area :unfinished, :rows => 4, class:"form-control" %>
       </div>
     </div>
     <div class="form-group">

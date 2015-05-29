@@ -3,8 +3,8 @@ class Item < ActiveRecord::Base
   validates :picnum, presence: true
 
   def setDefaultValue
-    self.finishQty ||= 0
-    self.unfinishQty ||= 0
+    self.finished ||= '0'
+    self.unfinished ||= '0'
   end
 
   def self.multiSearch(queries)
@@ -32,7 +32,19 @@ class Item < ActiveRecord::Base
       row = Hash[[header, spreadsheet.row(i)].transpose]
       product = find_by_id(row["id"]) || new
       parameters = ActionController::Parameters.new(row.to_hash)
-      product.attributes = parameters.permit(:location, :item_type, :picnum, :oldpicnum, :note, :finishQty, :unfinishQty)
+      #之後要匯入ID的話要修改這邊
+      #product.attributes = parameters.permit(:id, :location, :item_type, :picnum, :oldpicnum, :note, :finished, :unfinished, :customer)
+      product.attributes = parameters.permit(:location, :item_type, :picnum, :oldpicnum, :note, :finished, :unfinished, :customer)
+      
+      #Float('1.0') => 1.0  , but Float('a1.0') => raise erorr, so we need to rescue that.
+      if (Float(product.finished) rescue false) then
+        product.finished = product.finished.to_i.to_s
+      end
+      
+      if (Float(product.unfinished) rescue false) then
+        product.unfinished = product.unfinished.to_i.to_s
+      end
+
       invalidProductNum += 1 if !product.save
     end
     return invalidProductNum
@@ -40,7 +52,7 @@ class Item < ActiveRecord::Base
 
   def self.export(options = {})
     CSV.generate(options) do |csv|
-      export_column_names = ["id", "location", "item_type", "picnum", "oldpicnum", "note", "finishQty", "unfinishQty"]
+      export_column_names = ["id", "location", "item_type", "picnum", "oldpicnum", "note", "finished", "unfinished", "customer"]
       csv << export_column_names
       self.all.each do |product|
         csv << product.attributes.values_at(*export_column_names)

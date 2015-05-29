@@ -1,4 +1,4 @@
-<% if @items.is_a?(Array) %>
+<% if @items.is_a?(Array) %> <!-- Array condition is for search -->
   <% @found = true if @items.present? %>
 <% elsif @items.exists? %>
   <% @found = true %>
@@ -16,7 +16,7 @@
         <th class="lgCell center">提醒</th>
         <th class="smCell center">成品</th>
         <th class="smCell center">半成品</th>
-        <th class="xsCell"></th>
+        <th class="xsCell <%= 'scrollbar' if action_name == 'index' %>"></th>
       </tr>
     </thead>
     <tbody>    
@@ -41,14 +41,14 @@
               </td>
               <td class="lgCell center">
                 <% if item.note.present? then%>
-                  <%= f.text_area :note, :value => item.note.gsub(/\n$/,''), :rows => textAreaRowNum(item.note), class:'item-note', id: "edit_item_" + item.id.to_s %>
+                  <%= f.text_area :note, :value => item.note.gsub(/\n$/,''), :size => '3x' + textAreaRowNum(item.note,20).to_s, class:'item-note', id: "edit_item_" + item.id.to_s %>
                 <% else %>
-                  <%= f.text_area :note, :rows => 1, class:'item-note', id: "edit_item_" + item.id.to_s %>
+                  <%= f.text_area :note, :size => '1x1' %>
                 <% end %>
                 <i class="hidden" id="<%= 'note_edit_item_' + item.id.to_s %>"></i>
               </td>
-              <td class="smCell center"><%= f.text_field :finishQty, size: 4, id: "edit_item_" + item.id.to_s %></td>
-              <td class="smCell center"><%= f.text_field :unfinishQty, size: 4, id: "edit_item_" + item.id.to_s %></td>
+              <td class="smCell center"><%= f.text_area :finished, :size => '10x' + textAreaRowNum(item.finished,6).to_s, id: "edit_item_" + item.id.to_s %></td>
+              <td class="smCell center"><%= f.text_area :unfinished, :size => '10x' + textAreaRowNum(item.finished,6).to_s, id: "edit_item_" + item.id.to_s %></td>
               <td class="xsCell">
                 <%= button_tag(type: 'submit', class: "no-btn hidden", id: "edit_item_" + item.id.to_s) do %>
                   <i class="fa fa-check"></i>
