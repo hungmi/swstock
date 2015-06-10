@@ -1,6 +1,7 @@
 class Item < ActiveRecord::Base
   before_save :setDefaultValue
   validates :picnum, presence: true
+  validates :location, presence: true
 
   def setDefaultValue
     self.finished ||= '0'

@@ -1,15 +1,5 @@
 <div class="row">
-  <%= simple_form_for(@item, html: { class: 'form-horizontal well', :id => 'itemForm'} ,:wrapper => :horizontal_form) do |f| %>
-    <%= f.input :location, :label => '櫃位', :hint => "此欄位為必填" %>
-    <%= f.input :item_type, :label => '品項' %>
-    <%= f.input :picnum, :label => '圖號', :hint => "此欄位為必填" %>
-    <%= f.input :oldpicnum, :label => '舊圖號' %>
-    <%= f.input :finished, :label => '成品數量', as: :text %>
-    <%= f.input :unfinished, :label => '半成品數量', as: :text %>
-    <%= f.input :note, :label => '提醒', as: :text, :input_html => { :rows => 10, :data => { :provide => "markdown"} } %>
-    <%= f.input :customer, :collection => @customerList, as: :select %>
-
-    <% comment do %>
+  <%= form_for @item, :html => {:class => 'form-horizontal well', :id => 'itemForm'} do |f| %>
     <div class="form-group">
       <%= f.label :location, '櫃位', class:"col-lg-2 col-md-2 col-sm-2 control-label" %>
       <div class="col-lg-9 col-md-9 col-sm-9">
@@ -58,8 +48,6 @@
         <%= f.select(:customer,@customerList, {:include_blank => '不指定'}) %>
       </div>
     </div>
-    <% end %>
-
     <div class="form-group">
       <div class="col-lg-12 col-md-12 col-sm-12 center">
         <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
