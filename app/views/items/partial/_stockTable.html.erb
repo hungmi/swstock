@@ -48,7 +48,7 @@
                 <i class="hidden" id="<%= 'note_edit_item_' + item.id.to_s %>"></i>
               </td>
               <td class="smCell center"><%= f.text_area :finished, :size => '10x' + textAreaRowNum(item.finished,6).to_s, id: "edit_item_" + item.id.to_s %></td>
-              <td class="smCell center"><%= f.text_area :unfinished, :size => '10x' + textAreaRowNum(item.finished,6).to_s, id: "edit_item_" + item.id.to_s %></td>
+              <td class="smCell center"><%= f.text_area :unfinished, :size => '10x' + textAreaRowNum(item.unfinished,6).to_s, id: "edit_item_" + item.id.to_s %></td>
               <td class="xsCell">
                 <%= button_tag(type: 'submit', class: "no-btn hidden", id: "edit_item_" + item.id.to_s) do %>
                   <i class="fa fa-check"></i>
