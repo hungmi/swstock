@@ -19,24 +19,28 @@
 @import "customizeBootstrap";
 
 header {
-    height: 100px;
+  height: 100px;
 }
 
 body.white {
-    mark {
-        background-color: #FFD700 !important;
-    }
+  mark {
+      background-color: #FFD700 !important;
+  }
 }
 
 /* 以下專門放自訂的快速class */
 .center {
-    text-align: center;
+  text-align: center;
+}
+
+.right {
+  text-align: right !important;   
 }
 
 div.wideContainer {
-    margin: 0px;
-    margin-left: 100px;
-    margin-right: 100px;
-    padding: 0px;
-    width: 1600px;
+  margin: 0px;
+  margin-left: 100px;
+  margin-right: 100px;
+  padding: 0px;
+  width: 1600px;
 }

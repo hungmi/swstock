@@ -1,0 +1,57 @@
+<% @items.each do |item| %>
+
+  <% submit_id = item_id_to_tag_id(item) %>
+        
+  <%= form_for(item, remote: true ) do |f| %>
+
+    <tr style="<%= style_customer(item.customer) %>">
+
+      <td class="smCell center">
+        <%= f.text_field :location, size: 7, id: submit_id %>
+      </td>
+
+      <td class="lgCell right">
+        <% if item.picnum.present? %>
+          <%= params[:search] ? emphasize_picnum(item.picnum,params[:search]) : render_picnum(item.picnum) %>
+        <% end %>
+      </td>
+
+      <td class="xsCell center">
+        <div><!-- this div is for chrome -->
+        <%= link_to edit_item_path(item) do %><span id="apple"></span><% end %>
+        </div><!-- this div is for chrome -->
+      </td>
+
+      <td class="lgCell center">
+        <% if item.oldpicnum.present? %>
+          <%= params[:search] ? emphasize_picnum(item.oldpicnum,params[:search]) : render_picnum(item.oldpicnum) %>
+        <% end %>
+      </td>
+
+      <td class="lgCell center">
+        <% if item.note.present? then %>
+          <%= f.text_area :note, :value => item.note.gsub(/\n$/,''), rows: count_row(item.note,20), class:'item-note', id: submit_id %>
+        <% else %>
+          <%= f.text_area :note, rows: 1, id: submit_id %>
+        <% end %>
+      </td>
+
+      <td class="smCell center">
+        <%= f.text_area :finished, cols: 10, rows: count_row(item.note,6), id: submit_id %>
+      </td>
+
+      <td class="smCell center">
+        <%= f.text_area :unfinished, cols: 10, rows: count_row(item.unfinished,6), id: submit_id %>
+      </td>
+
+      <td class="xsCell">
+        <%= button_tag(type: 'submit', class: "no-btn hidden", id: submit_id) do %>
+          <i class="fa fa-check"></i>
+        <% end %>
+      </td>
+
+    </tr>
+
+  <% end %> <!-- end of form_for -->
+
+<% end %>

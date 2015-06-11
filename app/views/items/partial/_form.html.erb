@@ -1,78 +1,23 @@
-<div class="row">
-  <%= simple_form_for(@item, html: { class: 'form-horizontal well', :id => 'itemForm'} ,:wrapper => :horizontal_form) do |f| %>
-    <%= f.input :location, :label => '櫃位', :hint => "此欄位為必填" %>
-    <%= f.input :item_type, :label => '品項' %>
-    <%= f.input :picnum, :label => '圖號', :hint => "此欄位為必填" %>
-    <%= f.input :oldpicnum, :label => '舊圖號' %>
-    <%= f.input :finished, :label => '成品數量', as: :text %>
-    <%= f.input :unfinished, :label => '半成品數量', as: :text %>
-    <%= f.input :note, :label => '提醒', as: :text, :input_html => { :rows => 10, :data => { :provide => "markdown"} } %>
-    <%= f.input :customer, :collection => @customerList, as: :select %>
+<%= simple_form_for(@item, html: { class: 'form-horizontal well', :id => 'itemForm'} ) do |f| %>
 
-    <% comment do %>
-    <div class="form-group">
-      <%= f.label :location, '櫃位', class:"col-lg-2 col-md-2 col-sm-2 control-label" %>
-      <div class="col-lg-9 col-md-9 col-sm-9">
-        <%= f.text_field :location, class:"form-control",  required: true  %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label :item_type, '品項', class:"col-lg-2 col-md-2 col-sm-2 control-label" %>
-      <div class="col-lg-9 col-md-9 col-sm-9">
-        <%= f.text_field :item_type, class:"form-control"  %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label :picnum, '圖號', class:"col-lg-2 col-md-2 col-sm-2 control-label" %>
-      <div class="col-lg-9 col-md-9 col-sm-9">
-        <%= f.text_field :picnum, class:"form-control",  required: true %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label :oldpicnum, '舊圖號', class:"col-lg-2 col-md-2 col-sm-2 control-label" %>
-      <div class="col-lg-9 col-md-9 col-sm-9">
-        <%= f.text_field :oldpicnum, class:"form-control"  %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label :finished, '成品數量', class:"col-lg-2 col-md-2 col-sm-2 control-label" %>
-      <div class="col-lg-9 col-md-9 col-sm-9">
-        <%= f.text_area :finished, :rows => 4, class:"form-control"%>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label :unfinished, '半成品數量', class:"col-lg-2 col-md-2 col-sm-2 control-label" %>
-      <div class="col-lg-9 col-md-9 col-sm-9">
-        <%= f.text_area :unfinished, :rows => 4, class:"form-control" %>
-      </div>
-    </div>
-    <div class="form-group">
-      <%= f.label :note, '提醒', class:"col-lg-2 col-md-2 col-sm-2 control-label" %>
-      <div class="col-lg-9 col-md-9 col-sm-9">
-        <%= f.text_area :note, :rows => 10, class:"form-control"  %>
-      </div>
-    </div>    
-    <div class="form-group">
-      <%= f.label :customer, "特定客戶", class:"col-lg-2 col-md-2 col-sm-2 control-label" %>
-      <div class="col-lg-9 col-md-9 col-sm-9">
-        <%= f.select(:customer,@customerList, {:include_blank => '不指定'}) %>
-      </div>
-    </div>
+  <%= f.input :location, :label => '櫃位', :hint => "此欄位為必填" %>
+  <%= f.input :item_type, :label => '品項' %>
+  <%= f.input :picnum, :label => '圖號', :hint => "此欄位為必填" %>
+  <%= f.input :oldpicnum, :label => '舊圖號' %>
+  <%= f.input :finished, :label => '成品數量', as: :text %>
+  <%= f.input :unfinished, :label => '半成品數量', as: :text %>
+  <%= f.input :note, :label => '提醒', as: :text, :input_html => { :rows => 7 } %>
+  <%= f.input :customer, :collection => @customerList, as: :select, include_blank: '不指定' %>
+
+  <div class="form-group center">
+    <%= f.button :button, :class => "btn btn-primary" do %>
+      <%= @submitText %><i class="fa fa-check"></i>
     <% end %>
+    <% if params[:action] == 'edit' %>
+      <%= link_to item_path(@item), method: :delete, data: {confirm: '確定要刪除嗎？'}, class:'btn btn-danger' do %>
+        刪除<i class="fa fa-times"></i>
+      <% end %>
+    <% end %>
+  </div>
 
-    <div class="form-group">
-      <div class="col-lg-12 col-md-12 col-sm-12 center">
-        <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
-          <%= @submitText %> <i class="fa fa-check"></i>
-        <% end %>
-        <% if params[:action] == 'edit' %>
-          <%= link_to raw('刪除<i class="fa fa-times"></i>'), item_path(@item), method: :delete, data: {confirm: '確定要刪除嗎？'}, class:'btn btn-danger' %>
-        <% end %>
-        <%= link_to '返回', session[:last_page] %>
-      </div>
-    </div>
-  <% end %>
-
-
-
-</div>
+<% end %><!-- simple_form_for end -->

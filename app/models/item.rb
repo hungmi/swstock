@@ -3,22 +3,11 @@ class Item < ActiveRecord::Base
   validates :picnum, presence: true
   validates :location, presence: true
 
+
+
   def setDefaultValue
     self.finished ||= '0'
     self.unfinished ||= '0'
-  end
-
-  def self.multiSearch(queries)
-      queries = queries.strip.split(/\s+/)
-      querySQL = ""
-      queries.each do |query|
-          if querySQL.blank? then
-              querySQL = where("location like ? OR item_type like ? OR picnum like ? OR oldpicnum like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
-          else
-              querySQL = querySQL + where("location like ? OR item_type like ? OR picnum like ? OR oldpicnum like ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%")
-          end
-      end
-      return querySQL0
   end
 
   def self.search(query)

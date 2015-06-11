@@ -1,42 +1,27 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy, :updateViaTable]
   before_action :set_customer
-  before_filter :previousPage, only: [:edit, :new]
-  helper_method :emphasizePicnum, :emphasizeCustomer, :textAreaRowNum, :formatPicnum
+  before_filter :previous_page, only: [:edit, :new]
+  helper_method :emphasize_picnum, :style_customer
 
-  def previousPage
+  def previous_page
     session[:last_page] = request.env['HTTP_REFERER']
   end
 
-  def textAreaRowNum(text,num)
-    rowNum = 0
-    text = text.gsub(/\n$/,'')
-
-    text.each_line do |line|
-      line.length > num ? rowNum += 1 + (line.length/num) : rowNum += 1
-    end
-    return rowNum
-  end
-
-  def emphasizeCustomer(customer)
+  def style_customer(customer)
     @customerColors = ['palegreen','lightcoral','steelblue','darkorange']
     styleCustomer = 'background-color:' + @customerColors[@customerList.index(customer)] + ';' if @customerList.include?(customer)
   end
 
-  def formatPicnum(picnum)
-    styles = '<br><span style="margin-right:3em; font-size: 26px; color:red;">+</span><br>'
-    editedPicnum = picnum.gsub('+', styles).html_safe
-  end
-
-  def emphasizePicnum(picnum,queries)
+  def emphasize_picnum(picnum,queries)
     set_color #取得顏色array
     highlightedPicnum = view_context.highlight(picnum,queries) #使用內建highlight標注出搜尋字串
-    editedPicnum = customizedHighlight(highlightedPicnum,getUniqPicnum(queries))
-    editedPicnum ? formatPicnum(editedPicnum) : formatPicnum(highlightedPicnum)
+    editedPicnum = customized_highlight(highlightedPicnum,getUniqPicnum(queries))
+    #editedPicnum ? formatPicnum(editedPicnum) : formatPicnum(highlightedPicnum)
     #item.picnum.html_safe
   end
 
-  def customizedHighlight(picnum,targets)
+  def customized_highlight(picnum,targets)
     if targets.present? then
       @picnum = picnum
       targets.each_with_index do |target,targetInd|
@@ -90,7 +75,7 @@ class ItemsController < ApplicationController
   def import
     invalidProductNum = Item.import(params[:file])
     if invalidProductNum != 0
-      flash[:warning] = invalidProductNum.to_s + ' items are missing picnum or location. Others are successfully loaded.'  
+      flash[:warning] = '#{ invalidProductNum } items are missing picnum or location. Others are successfully loaded.'  
     else
       flash[:success] = 'Items are successfully loaded.'
     end
@@ -109,6 +94,7 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
+    @table_titles = { '櫃位' => 'sm', '圖號'=>'lg', ''=>'xs', '舊圖號'=>'lg', '提醒'=>'lg', '成品'=>'sm', '半成品'=>'sm' }
     if params[:search].present?
       params[:search] = params[:search].strip.split(/\s+/)
       @items = Item.all
@@ -131,6 +117,7 @@ class ItemsController < ApplicationController
   end
 
   def newestIndex
+    @table_titles = { '櫃位' => 'sm', '圖號'=>'lg', ''=>'xs', '舊圖號'=>'lg', '提醒'=>'lg', '成品'=>'sm', '半成品'=>'sm' }
     @items = Item.all.order(updated_at: :desc).take(5)
   end
 
@@ -186,11 +173,11 @@ class ItemsController < ApplicationController
 
   private
     def set_color
-      @colors = ['black','royalblue','darkviolet','darkorange','slatgray','saddlebrown','goldenrod','cyan','limegreen','red']
+      @colors = ['royalblue', 'black', 'darkviolet', 'darkorange', 'slatgray', 'saddlebrown', 'goldenrod', 'cyan', 'limegreen', 'red']
     end
 
     def set_customer
-      @customerList = ['富暘','油機','東台','金玉']
+      @customerList = ['富暘', '油機', '東台', '金玉']
     end
 
     # Use callbacks to share common setup or constraints between actions.
