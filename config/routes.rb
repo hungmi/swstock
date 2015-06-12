@@ -1,18 +1,20 @@
 Rails.application.routes.draw do
-  resources :orders
-  get 'stock' => 'items#index'
-  get 'item_destroy_all_page' => 'items#destroy_all_page'
-  delete 'item_destroy_all' => 'items#destroy_all'
+
+  root 'items#newest'
+  
   resources :items do
-    collection do 
+    collection do
       post :import
+      get 'destroy_all_page', to: :destroy_all_page
+      delete 'destroy_all', to: :destroy_all
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'items#newestIndex'
+
+  resources :orders
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

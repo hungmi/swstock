@@ -22,7 +22,7 @@ class ItemsController < ApplicationController
   end
 
   def customized_highlight(picnum,targets)
-    if targets.present? then
+    if targets.present?
       @picnum = picnum
       targets.each_with_index do |target,targetInd|
         stylePicnum = '<span style="color:' + @colors[targetInd] + ';font-size:30px;">\1</span>'
@@ -59,9 +59,9 @@ class ItemsController < ApplicationController
           p.each do |x|
               #先確定有沒有找到要找的，例如"11520"
               strInd = x.index(query)
-              if strInd and !x[ strInd-4 .. strInd-1 ].blank? then
+              if strInd and !x[ strInd-4 .. strInd-1 ].blank?
                 @targets << x[ strInd-4 .. strInd-1 ] #取得找到的位置的前四碼
-              elsif strInd then
+              elsif strInd
                 @targets << x[ 0 .. strInd-1 ] #取得找到的位置之前所有號碼
               end
               #依序塞進targets裡，最後targets會像["9475","7945","7945"]
@@ -73,9 +73,9 @@ class ItemsController < ApplicationController
   end
 
   def import
-    invalidProductNum = Item.import(params[:file])
-    if invalidProductNum != 0
-      flash[:warning] = '#{ invalidProductNum } items are missing picnum or location. Others are successfully loaded.'  
+    invalid_product_num = Item.import(params[:file])
+    if invalid_product_num != 0
+      flash[:warning] = '#{ invalid_product_num } items are missing picnum or location. Others are successfully loaded.'  
     else
       flash[:success] = 'Items are successfully loaded.'
     end
@@ -116,9 +116,9 @@ class ItemsController < ApplicationController
     end
   end
 
-  def newestIndex
+  def newest
     @table_titles = { '櫃位' => 'sm', '圖號'=>'lg', ''=>'xs', '舊圖號'=>'lg', '提醒'=>'lg', '成品'=>'sm', '半成品'=>'sm' }
-    @items = Item.all.order(updated_at: :desc).take(5)
+    @items = Item.all.order(updated_at: :desc).limit(5) #limit will return ActiveRecord_Relation
   end
 
   # GET /items/1

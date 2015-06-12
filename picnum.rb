@@ -15,7 +15,7 @@ def emphasizePicnum(items,string)
         p.each do |x|
             #先確定有沒有找到
             strInd = x.index(string)
-             if strInd then
+             if strInd
                 # puts x.to_s.index(string) # + 1 if x.to_s.index(string).presence
                 strInd = strInd - x.size
                 styleDetail = "<span style='color:" + colors[foundTimes] + ";font-size:30px;'>"

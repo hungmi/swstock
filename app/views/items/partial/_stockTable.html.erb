@@ -5,7 +5,7 @@
       <tr>
         <% @table_titles.each do |title, size| %>
           <%= render_table_header(title, size, 'center') %>
-        <% end %>        
+        <% end %>      
         <th class="xsCell <%= 'scrollbar' if action_name == 'index' %>"></th>
       </tr>
     </thead>
