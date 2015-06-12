@@ -51,7 +51,7 @@
     <div class="form-group">
       <div class="col-lg-12 col-md-12 col-sm-12 center">
         <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
-          <%= @submitText %> <i class="fa fa-check"></i>
+          <%= @submit_text %> <i class="fa fa-check"></i>
         <% end %>
         <% if params[:action] == 'edit' %>
           <%= link_to raw('刪除<i class="fa fa-times"></i>'), item_path(@item), method: :delete, data: {confirm: '確定要刪除嗎？'}, class:'btn btn-danger' %>

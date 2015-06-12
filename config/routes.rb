@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
 
   root 'items#newest'
-  
+
   resources :items do
     collection do
       post :import
+      get :export
+      get :search
       get 'destroy_all_page', to: :destroy_all_page
       delete 'destroy_all', to: :destroy_all
     end

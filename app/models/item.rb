@@ -1,13 +1,10 @@
 class Item < ActiveRecord::Base
-  before_save :setDefaultValue
   validates :picnum, presence: true
   validates :location, presence: true
+  scope :recent, -> { order(updated_at: :desc) }
+  scope :paginated, -> (page) { paginate(:per_page => 20, :page => page) }
 
   class << self
-
-    def search(query)
-      where("lower(location) like ? OR lower(item_type) like ? OR lower(picnum) like ? OR lower(oldpicnum) like ?", ("%#{query}%").downcase, ("%#{query}%").downcase, ("%#{query}%").downcase, ("%#{query}%").downcase)
-    end
 
     def import(file)
       invalid_product_num = 0
@@ -19,7 +16,7 @@ class Item < ActiveRecord::Base
         parameters = ActionController::Parameters.new(row.to_hash)
         #之後要匯入ID的話要修改這邊
         #product.attributes = parameters.permit(:id, :location, :item_type, :picnum, :oldpicnum, :note, :finished, :unfinished, :customer)
-        product.attributes = parameters.permit(:location, :item_type, :picnum, :oldpicnum, :note, :finished, :unfinished, :customer)
+        product.attributes = parameters.permit(:id, :location, :item_type, :picnum, :oldpicnum, :note, :finished, :unfinished, :customer)
         
         #Float('1.0') => 1.0  , but Float('a1.0') => raise erorr, so we need to rescue that.
         
@@ -57,10 +54,5 @@ class Item < ActiveRecord::Base
   end
 
   # end of self method class
-
-  def setDefaultValue
-    self.finished ||= '0'
-    self.unfinished ||= '0'
-  end
 
 end

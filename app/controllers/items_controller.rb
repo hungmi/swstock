@@ -1,7 +1,9 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy, :updateViaTable]
+  before_action :previous_page, only: [:edit, :new]
   before_action :set_customer
-  before_filter :previous_page, only: [:edit, :new]
+  before_action :set_table_titles, only: [:index, :newest, :search]
+  before_action :validate_search_key, only: [:search]
   helper_method :emphasize_picnum, :style_customer
 
   def previous_page
@@ -75,50 +77,39 @@ class ItemsController < ApplicationController
   def import
     invalid_product_num = Item.import(params[:file])
     if invalid_product_num != 0
-      flash[:warning] = '#{ invalid_product_num } items are missing picnum or location. Others are successfully loaded.'  
+      flash[:warning] = "#{ invalid_product_num } items are missing picnum or location. Others are successfully loaded."
     else
       flash[:success] = 'Items are successfully loaded.'
     end
     redirect_to root_url
   end
 
-  def destroy_all_page
+  def export
+    @items_export = Item.order(:location)
+    respond_to do |format|
+      #format.csv { send_data @items_export.export }
+      format.xls { send_data @items_export.export(col_sep: "\t") }
+    end
   end
 
-  def destroy_all
-    Item.destroy_all
-    flash[:success] = 'There are no items now.'
-    redirect_to root_url
+  def newest
+    @items = Item.recent.limit(5) #limit will return ActiveRecord_Relation
+  end
+
+  def search    
+    if params[:q].present?
+      @items = Item.none
+      @search_criteria_array.each do |search_criteria|
+        search_result = Item.ransack(search_criteria).result
+        @items += search_result
+      end
+    end
   end
 
   # GET /items
   # GET /items.json
   def index
-    @table_titles = { '櫃位' => 'sm', '圖號'=>'lg', ''=>'xs', '舊圖號'=>'lg', '提醒'=>'lg', '成品'=>'sm', '半成品'=>'sm' }
-    if params[:search].present?
-      params[:search] = params[:search].strip.split(/\s+/)
-      @items = Item.all
-      @itemsSearchUnion = Item.none
-      @itemsSearchIntersection = Item.all
-      params[:search].each do |query|
-        @itemsSearchUnion = @itemsSearchUnion + @items.search(query).all
-        @itemsSearchIntersection = @itemsSearchIntersection.search(query).all
-      end
-      @items = (@itemsSearchUnion | @itemsSearchIntersection).sort_by{ |i| i[:location] } #Union of queries
-    else
-      @items = Item.all.order(:location).paginate(:per_page => 20, :page => params[:page])
-      @items_export = Item.order(:location)
-      respond_to do |format|
-        format.html
-        format.csv { send_data @items_export.export }
-        format.xls  { send_data @items_export.export(col_sep: "\t") }
-      end
-    end
-  end
-
-  def newest
-    @table_titles = { '櫃位' => 'sm', '圖號'=>'lg', ''=>'xs', '舊圖號'=>'lg', '提醒'=>'lg', '成品'=>'sm', '半成品'=>'sm' }
-    @items = Item.all.order(updated_at: :desc).limit(5) #limit will return ActiveRecord_Relation
+    @items = Item.order(:location).paginated(params[:page])
   end
 
   # GET /items/1
@@ -129,12 +120,7 @@ class ItemsController < ApplicationController
   # GET /items/new
   def new
     @item = Item.new
-    @submitText = "新增"
-  end
-
-  # GET /items/1/edit
-  def edit
-    @submitText = "更新"
+    @submit_text = "新增"
   end
 
   # POST /items
@@ -142,23 +128,28 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
       if @item.save
-        flash[:success] = '項目已新增!'
+        flash[:success] = "項目已新增!"
         redirect_to items_path
       else
-        flash[:danger] = '新增失敗!'
-        @submitText = "新增"
+        flash[:danger] = "新增失敗!"
+        @submit_text = "新增"
         render 'new'
       end
+  end
+
+  # GET /items/1/edit
+  def edit
+    @submit_text = "更新"
   end
 
   # PATCH/PUT /items/1
   # PATCH/PUT /items/1.json
   def update
     if @item.update(item_params)
-      flash[:success] = '資料更新成功!'
+      flash[:success] = "資料更新成功!"
       redirect_to session[:last_page]
     else
-      flash[:danger] = '資料更新失敗!'
+      flash[:danger] = "資料更新失敗!"
       render 'edit'
     end
   end
@@ -167,8 +158,16 @@ class ItemsController < ApplicationController
   # DELETE /items/1.json
   def destroy
     @item.destroy
-    flash[:success] = '項目已刪除!'
-    redirect_to items_url
+    flash[:success] = "項目已刪除!"
+    redirect_to session[:last_page]
+  end
+
+  def destroy_all_page; end
+
+  def destroy_all
+    Item.destroy_all
+    flash[:success] = 'There are no items now.'
+    redirect_to root_url
   end
 
   private
@@ -177,7 +176,7 @@ class ItemsController < ApplicationController
     end
 
     def set_customer
-      @customerList = ['富暘', '油機', '東台', '金玉']
+      @customerList = ["富暘", "油機", "東台", "金玉"]
     end
 
     # Use callbacks to share common setup or constraints between actions.
@@ -185,9 +184,27 @@ class ItemsController < ApplicationController
       @item = Item.find(params[:id])
     end
 
+    def set_table_titles
+      @table_titles = { '櫃位' => 'sm', '圖號'=>'lg', ''=>'xs', '舊圖號'=>'lg', '提醒'=>'lg', '成品'=>'sm', '半成品'=>'sm' }
+    end
+
+    def validate_search_key
+      # params[:q].class => string
+      @query_array = params[:q].gsub(/\\|\'|\/|\?/, "").strip.split(/\s+/) if params[:q].present?
+      @search_criteria_array = Array.new
+      @query_array.each do |query|
+        @search_criteria_array << search_criteria(query)
+      end
+    end
+
+    def search_criteria(query_string)
+      { :location_or_picnum_cont => query_string }
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def item_params
       params.require(:item).permit(:location, :item_type, :picnum, :oldpicnum, :note, :finished, :unfinished, :customer)
     end
+    
 
 end

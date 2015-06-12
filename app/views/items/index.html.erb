@@ -1,4 +1,4 @@
-<%= render 'items/partial/stockTable' %>
+<%= render 'items/partial/stock_table' %>
 <div class="center">
   <% if !params[:search].present? %>
     <%= will_paginate @items, renderer: BootstrapPagination::Rails %>

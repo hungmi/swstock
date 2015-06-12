@@ -11,8 +11,8 @@ module ItemsHelper
   end
 
   def items_available?
-    # Search result is an array, present? is for array.
-    params[:search].nil? ? @items.exists? : @items.present?
+    # Search result is an array, present? is for array.Array(@items)
+    params[:q].nil? ? @items.exists? : @items.present?
   end
 
   def render_picnum_if(picnum, condition)

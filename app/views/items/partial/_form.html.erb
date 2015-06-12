@@ -11,7 +11,7 @@
 
   <div class="form-group center">
     <%= f.button :button, :class => "btn btn-primary" do %>
-      <%= @submitText %><i class="fa fa-check"></i>
+      <%= @submit_text %><i class="fa fa-check"></i>
     <% end %>
     <% if params[:action] == 'edit' %>
       <%= link_to item_path(@item), method: :delete, data: {confirm: '確定要刪除嗎？'}, class:'btn btn-danger' do %>

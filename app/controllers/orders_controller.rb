@@ -14,8 +14,8 @@ class OrdersController < ApplicationController
 
   # GET /orders/new
   def new
-    @submitText = 'GOGOGO'
     @order = Order.new
+    @submit_text = 'GOGOGO'
   end
 
   # GET /orders/1/edit
