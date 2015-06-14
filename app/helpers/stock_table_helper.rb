@@ -1,18 +1,44 @@
-module StockTableHelper
-  def set_customers
-    # items/partial/_form.html.erb need
-    @customer_colors = {'富暘' => 'palegreen', '油機' => 'lightcoral', '東台' => 'steelblue', '金玉' => 'darkorange'}
-    @customer_names =  ['富暘', '油機', '東台', '金玉']
-    # Not to use one hash because when select customer, the stored value would be colors.
-    #   which results in unsearchable customers.
+module StockTableHelper  
+
+  def clear_format(text)
+    text.gsub(/\r+|\n+/, "\n").squeeze("\n").squeeze(" ").tr('（），。','(), ') if text
   end
 
-  def set_table_titles
-    # items/partial/_stock_table.html.erb need @table_titles
-    @table_titles = { '櫃位' => 'sm', '圖號'=>'lg', ''=>'xs', '舊圖號'=>'lg', '提醒'=>'lg', '成品'=>'sm', '半成品'=>'sm' }
+  def count_row(text, num)
+    row_num = 0
+    #if !text.nil?
+      #text = text.gsub(/\n$/,'')
+      clear_format(text)
+      text.each_line { |line| line.length > num ? row_num += 1 + (line.length / num) : row_num += 1 }
+    #end
+    return row_num
   end
 
-  def set_colors
-    @colors = ['royalblue', 'ORANGERED', 'darkviolet', 'darkorange', 'slatgray', 'saddlebrown', 'goldenrod', 'darkcyan', 'limegreen', 'red']
+  def render_table_header(text, size, addtonal_class)
+    content_tag(:th, text, :class => "#{size}Cell #{addtonal_class}")
   end
+=begin
+  def render_table_data(&block)
+    content_tag(:td, :class => "aaaa") do
+      block
+    end
+  end
+
+  def render_item_note(note)
+    if note.present?
+    raw("<%= f.text_area :note, :value => item.note.gsub(/\n$/,''), rows: count_row(item.note,20), id: submit_id %>")
+    else
+      raw("<%= f.text_area :note, rows: 1, id: submit_id %>")
+    end
+    
+  end
+=end
+  def style_customer(customer_name)
+    style_customer = "background-color:#{@customer_colors[customer_name]}"
+  end
+  
+  def item_id_to_tag_id(item)
+    "edit_item_#{item.id}"
+  end
+
 end

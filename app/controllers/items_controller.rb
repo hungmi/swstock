@@ -1,10 +1,11 @@
 class ItemsController < ApplicationController
+  
+  include StockTableInitializer
+  
   before_action :set_item, only: [:show, :edit, :update, :destroy]
-  before_action :initialize_lists
-  before_action :previous_page, only: [:edit]
+  before_action :previous_page, only: [:newest, :index, :edit]
   before_action :validate_search_key, only: [:search]
 
-  include StockTableHelper
 
   def previous_page
     session[:last_page] = request.env['HTTP_REFERER']
@@ -76,7 +77,7 @@ class ItemsController < ApplicationController
   def update
     if @item.update(item_params)
       flash[:success] = "資料更新成功!"
-      redirect_to session[:last_page]
+      redirect_to session[:last_page]  # ajax
     else
       flash[:danger] = "資料更新失敗!"
       render 'edit'
@@ -105,12 +106,6 @@ class ItemsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_item
       @item = Item.find(params[:id])
-    end
-
-    def initialize_lists
-      set_customers
-      set_table_titles
-      set_colors
     end
 
     def validate_search_key

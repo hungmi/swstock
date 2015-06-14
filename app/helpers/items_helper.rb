@@ -1,26 +1,4 @@
 module ItemsHelper
-
-  include PicnumHelper
-
-  def item_id_to_tag_id(item)
-    "edit_item_#{item.id}"
-  end
-
-  # step 1
-
-  def render_item_note(note)
-    if note.present?
-    raw("<%= f.text_area :note, :value => item.note.gsub(/\n$/,''), rows: count_row(item.note,20), id: submit_id %>")
-    else
-      raw("<%= f.text_area :note, rows: 1, id: submit_id %>")
-    end
-    
-  end
-
-  def style_customer(customer_name)
-    style_customer = "background-color:#{@customer_colors[customer_name]}"
-  end
-
 end
 
   # step 2
