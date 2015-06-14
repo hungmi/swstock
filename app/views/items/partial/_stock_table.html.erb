@@ -1,5 +1,7 @@
-<% if items_available? %>
+<% if @items.exists? %>
+  <% @items_initial = @items %>
   <table class="scroll">
+
     <thead>
       <tr>
         <% @table_titles.each do |title, size| %>
@@ -8,9 +10,11 @@
         <th class="xsCell <%= 'scrollbar' if action_name == 'index' %>"></th>
       </tr>
     </thead>
+
     <tbody>
       <%= render 'items/partial/item' %>
     </tbody>
+
   </table>
 
 <% else %>
@@ -20,3 +24,5 @@
   </div>
 
 <% end %>
+
+<%= console %>

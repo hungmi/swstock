@@ -1,3 +1,5 @@
+<% render_picnums %>
+
 <% @items.each do |item| %>
 
   <% submit_id = item_id_to_tag_id(item) %>
@@ -11,7 +13,7 @@
       </td>
 
       <td class="lgCell right">
-        <%= render_picnum_if(item.picnum, params[:search]) %>
+        <%= item.picnum.html_safe %>
       </td>
 
       <td class="xsCell center">
@@ -21,7 +23,7 @@
       </td>
 
       <td class="lgCell center">
-        <%= render_picnum_if(item.oldpicnum, params[:search]) %>
+        <%= item.oldpicnum %>
       </td>
 
       <td class="lgCell center">

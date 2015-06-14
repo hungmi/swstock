@@ -20,16 +20,14 @@ class Item < ActiveRecord::Base
         
         #Float('1.0') => 1.0  , but Float('a1.0') => raise erorr, so we need to rescue that.
         
-        product.finished = product.finished.to_i.to_s if is_number?(product.finished)
-        product.unfinished = product.unfinished.to_i.to_s if is_number?(product.unfinished)
+        product.picnum = is_number?(product.picnum)
+        product.oldpicnum = is_number?(product.oldpicnum)
+        product.finished = is_number?(product.finished)
+        product.unfinished = is_number?(product.unfinished)
 
         invalid_product_num += 1 if !product.save
       end
       return invalid_product_num
-    end
-
-    def is_number?(string)
-      Float(string) rescue false
     end
 
     def export(options = {})
@@ -51,8 +49,10 @@ class Item < ActiveRecord::Base
       end
     end
 
-  end
+    def is_number?(string)
+      string.to_i.to_s if Float(string) rescue string
+    end
 
-  # end of self method class
+  end # of class methods
 
 end

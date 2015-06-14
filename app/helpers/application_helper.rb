@@ -3,7 +3,7 @@ module ApplicationHelper
   def comment; end
 
   def active_when(link_path)
-    "active" if request.fullpath == link_path    
+    "active" if request.fullpath == link_path
   end
 
   def render_nav_link(text, link_path)
@@ -11,7 +11,7 @@ module ApplicationHelper
   end
 
   def clear_format(text)
-    text.gsub(/^$\n/,'').tr('（），。','(), ')
+    text.gsub(/^$\n/,'').tr('（），。','(), ') if !text.nil?
   end
 
   def count_row(text, num)

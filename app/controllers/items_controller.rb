@@ -1,86 +1,24 @@
 class ItemsController < ApplicationController
-  before_action :set_item, only: [:show, :edit, :update, :destroy, :updateViaTable]
-  before_action :previous_page, only: [:edit, :new]
-  before_action :set_customer
-  before_action :set_table_titles, only: [:index, :newest, :search]
+  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :initialize_lists
+  before_action :previous_page, only: [:edit]
   before_action :validate_search_key, only: [:search]
-  helper_method :emphasize_picnum, :style_customer
+
+  include StockTableHelper
 
   def previous_page
     session[:last_page] = request.env['HTTP_REFERER']
   end
 
-  def style_customer(customer)
-    @customerColors = ['palegreen','lightcoral','steelblue','darkorange']
-    styleCustomer = 'background-color:' + @customerColors[@customerList.index(customer)] + ';' if @customerList.include?(customer)
-  end
-
-  def emphasize_picnum(picnum,queries)
-    set_color #取得顏色array
-    highlightedPicnum = view_context.highlight(picnum,queries) #使用內建highlight標注出搜尋字串
-    editedPicnum = customized_highlight(highlightedPicnum,getUniqPicnum(queries))
-    #editedPicnum ? formatPicnum(editedPicnum) : formatPicnum(highlightedPicnum)
-    #item.picnum.html_safe
-  end
-
-  def customized_highlight(picnum,targets)
-    if targets.present?
-      @picnum = picnum
-      targets.each_with_index do |target,targetInd|
-        stylePicnum = '<span style="color:' + @colors[targetInd] + ';font-size:30px;">\1</span>'
-        @picnum = view_context.highlight(@picnum ,target ,highlighter: stylePicnum)
-      end
-
-    !@picnum.blank? ? @picnum : picnum
-
-    end  # if targets.present? then
-
-  end
-  
-  #為了取得可能的四碼，也就是9475及7945，
-  def getUniqPicnum(queries)
-    @targets = []
-    queries.each do |query|
-      #首先為了避免比對太多，要先取出搜尋後的結果
-      @items = Item.search(query).all
-      #picnums用來裝regex過濾出的純數字圖號
-      picnums = []
-      #targets則用來裝9475及7945
-
-      #開始逐個過濾出純數字圖號
-      @items.each do |item|
-        picnums << item.picnum.scan(/[\d]{8,}/).flatten if item.picnum.present?
-        picnums << item.oldpicnum.scan(/[\d]{8,}/).flatten if item.oldpicnum.present?
-      end
-      #本來item.picnum是拉桿123+活塞456(90長)的話
-      #輸出的picnums會像[["123","456"]]
-      #下一個item.picnum是拉桿789的話
-      #輸出的picnums就變[["123","456"],["789"]]
-      #所以底下會需要兩層迴圈，避免同一欄有多圖號
-      picnums.each do |p|
-          p.each do |x|
-              #先確定有沒有找到要找的，例如"11520"
-              strInd = x.index(query)
-              if strInd and !x[ strInd-4 .. strInd-1 ].blank?
-                @targets << x[ strInd-4 .. strInd-1 ] #取得找到的位置的前四碼
-              elsif strInd
-                @targets << x[ 0 .. strInd-1 ] #取得找到的位置之前所有號碼
-              end
-              #依序塞進targets裡，最後targets會像["9475","7945","7945"]
-          end
-      end
-    end
-    return @targets.uniq.select(&:present?)
-    #把重複的篩選掉，最後targets會像["9475","7945"]
+  def search
+    @items = Item.ransack(validate_search_key).result if params[:q].present?
   end
 
   def import
     invalid_product_num = Item.import(params[:file])
-    if invalid_product_num != 0
-      flash[:warning] = "#{ invalid_product_num } items are missing picnum or location. Others are successfully loaded."
-    else
-      flash[:success] = 'Items are successfully loaded.'
-    end
+    return flash[:success] = '已成功載入所有項目' if invalid_product_num == 0
+
+    flash[:warning] = "#{ invalid_product_num }個項目的櫃位或圖號不完整"
     redirect_to root_url
   end
 
@@ -89,21 +27,12 @@ class ItemsController < ApplicationController
     respond_to do |format|
       #format.csv { send_data @items_export.export }
       format.xls { send_data @items_export.export(col_sep: "\t") }
+      format.xlsx { send_data @items_export.export(col_sep: "\t") }
     end
   end
 
   def newest
     @items = Item.recent.limit(5) #limit will return ActiveRecord_Relation
-  end
-
-  def search    
-    if params[:q].present?
-      @items = Item.none
-      @search_criteria_array.each do |search_criteria|
-        search_result = Item.ransack(search_criteria).result
-        @items += search_result
-      end
-    end
   end
 
   # GET /items
@@ -129,7 +58,7 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params)
       if @item.save
         flash[:success] = "項目已新增!"
-        redirect_to items_path
+        redirect_to root_url
       else
         flash[:danger] = "新增失敗!"
         @submit_text = "新增"
@@ -170,35 +99,29 @@ class ItemsController < ApplicationController
     redirect_to root_url
   end
 
-  private
-    def set_color
-      @colors = ['royalblue', 'black', 'darkviolet', 'darkorange', 'slatgray', 'saddlebrown', 'goldenrod', 'cyan', 'limegreen', 'red']
-    end
 
-    def set_customer
-      @customerList = ["富暘", "油機", "東台", "金玉"]
-    end
+  private
 
     # Use callbacks to share common setup or constraints between actions.
     def set_item
       @item = Item.find(params[:id])
     end
 
-    def set_table_titles
-      @table_titles = { '櫃位' => 'sm', '圖號'=>'lg', ''=>'xs', '舊圖號'=>'lg', '提醒'=>'lg', '成品'=>'sm', '半成品'=>'sm' }
+    def initialize_lists
+      set_customers
+      set_table_titles
+      set_colors
     end
 
     def validate_search_key
       # params[:q].class => string
+      # Items_helper need @query_array
       @query_array = params[:q].gsub(/\\|\'|\/|\?/, "").strip.split(/\s+/) if params[:q].present?
-      @search_criteria_array = Array.new
-      @query_array.each do |query|
-        @search_criteria_array << search_criteria(query)
-      end
+      search_criteria(@query_array) if @query_array.present? # !!!
     end
 
     def search_criteria(query_string)
-      { :location_or_picnum_cont => query_string }
+      { :location_or_item_type_or_picnum_or_oldpicnum_or_note_or_finished_or_unfinished_or_customer_cont_any => query_string }
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -53,14 +53,11 @@
         <%= button_tag(type: 'submit', class: "btn btn-primary") do %>
           <%= @submit_text %> <i class="fa fa-check"></i>
         <% end %>
-        <% if params[:action] == 'edit' %>
+        <% if action_name == 'edit' %>
           <%= link_to raw('刪除<i class="fa fa-times"></i>'), item_path(@item), method: :delete, data: {confirm: '確定要刪除嗎？'}, class:'btn btn-danger' %>
         <% end %>
         <%= link_to '返回', session[:last_page] %>
       </div>
     </div>
   <% end %>
-
-
-
 </div>

@@ -1,22 +1,14 @@
 source 'https://rubygems.org'
-ruby "2.2.1"
 
-gem 'simple_form'
+ruby "2.2.1"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.1'
 # Use sqlite3 as the database for Active Record
-group :development, :test do
 gem 'sqlite3'
-end
- 
-group :production do
-gem 'pg'
-gem 'rails_12factor'
-end
 # Use SCSS for stylesheets
-gem 'bootstrap-sass', '~> 3.3.4'
 gem 'sass-rails', '~> 5.0'
+gem 'bootstrap-sass', '~> 3.3.4'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -43,9 +35,14 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+
+gem 'simple_form'
+
 gem 'roo', '~> 2.0.0'
+gem 'roo-xls'
 
 gem 'will_paginate-bootstrap'
+
 gem "font-awesome-rails"
 
 gem "ransack"
@@ -59,4 +56,12 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+
+  gem "better_errors"
+  gem "binding_of_caller"
+end
+
+group :production do
+  gem 'pg'
+  gem 'rails_12factor'
 end
