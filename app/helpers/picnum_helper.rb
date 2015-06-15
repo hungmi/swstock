@@ -56,7 +56,7 @@ module PicnumHelper
   def highlight_picnum_differences(picnum)
     @targets.each do |key, value|
       styles = content_tag(:span, '\1', style:"color:#{value};font-size:30px;")
-      picnum = highlight(picnum, key, highlighter: styles)
+      picnum = highlight(picnum, key, highlighter: styles) # the most expensive part
     end
     return picnum
   end

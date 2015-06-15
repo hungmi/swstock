@@ -7,8 +7,8 @@ Rails.application.routes.draw do
       post :import
       get :export
       get :search
-      get 'destroy_all_page', to: :destroy_all_page
-      delete 'destroy_all', to: :destroy_all
+      get 'destroy_all_page', action: :destroy_all_page
+      delete 'destroy_all', action: :destroy_all
     end
   end
   # The priority is based upon order of creation: first created -> highest priority.

@@ -6,12 +6,12 @@ module StockTableHelper
 
   def count_row(text, num)
     row_num = 0
-    #if !text.nil?
-      #text = text.gsub(/\n$/,'')
+    if text
       clear_format(text)
       text.each_line { |line| line.length > num ? row_num += 1 + (line.length / num) : row_num += 1 }
-    #end
-    return row_num
+      return row_num
+    end
+    return 1
   end
 
   def render_table_header(text, size, addtonal_class)

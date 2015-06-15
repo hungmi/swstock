@@ -1,4 +1,28 @@
 <% render_picnums %>
+<% comment do %>
+  <% if @query_array %>
+
+    <% @targets = {} %>
+
+    <% benchmark 'get_4_before_query' do %>
+      <% @items.each { |item| get_4_before_query(item.picnum) } # 此方法只針對新圖號作前四碼加強 # 1.3ms %>
+    <% end %>
+    <% benchmark 'assign_different_colors' do %>
+      <% assign_different_colors # 0 %>
+    <% end %>
+    <% benchmark 'highlight_picnum_differences' do %>
+      <%# if @targets.size > 1 %>
+        <% @items.each do |item| %>
+          <% item.picnum = highlight_picnum_differences(item.picnum) # 此方法只針對新圖號作前四碼加強 #21.5ms %>
+          <% item.picnum = break_into_lines(item.picnum) # 23.6-21.5 %>
+          <% item.oldpicnum = break_into_lines(item.oldpicnum) if item.oldpicnum # 23.6-21.5 %>
+        <% end %>
+
+        <%# return @items %>
+      <%# end %>
+    <% end %>
+  <% end %>
+<% end %>
 
 <% @items.each do |item| %>
 
@@ -28,11 +52,7 @@
 
       <td class="lgCell center">
         <%# render_item_note(item.note) %>
-        <% if item.note.present? %>
-          <%= f.text_area :note, :value => clear_format(item.note), rows: count_row(item.note,20), class:'item-note', id: submit_id %>
-        <% else %>
-          <%= f.text_area :note, rows: 1, id: submit_id %>
-        <% end %>
+        <%= f.text_area :note, :value => clear_format(item.note), rows: count_row(item.note,20), class:'item-note', id: submit_id %>
       </td>
 
       <td class="smCell center">
