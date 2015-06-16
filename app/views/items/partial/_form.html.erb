@@ -7,7 +7,7 @@
   <%= f.input :finished, :label => '成品數量', as: :text %>
   <%= f.input :unfinished, :label => '半成品數量', as: :text %>
   <%= f.input :note, :label => '提醒', as: :text, :input_html => { :rows => 7 } %>
-  <%= f.input :customer, :label => '客戶', :collection => @customer_names, as: :select %>
+  <%= f.input :customer, :label => '客戶', :collection => @customer_names, as: :select, include_blank: '不指定' %>
 
   <div class="form-group center">
 

@@ -1,28 +1,4 @@
 <% render_picnums %>
-<% comment do %>
-  <% if @query_array %>
-
-    <% @targets = {} %>
-
-    <% benchmark 'get_4_before_query' do %>
-      <% @items.each { |item| get_4_before_query(item.picnum) } # 此方法只針對新圖號作前四碼加強 # 1.3ms %>
-    <% end %>
-    <% benchmark 'assign_different_colors' do %>
-      <% assign_different_colors # 0 %>
-    <% end %>
-    <% benchmark 'highlight_picnum_differences' do %>
-      <%# if @targets.size > 1 %>
-        <% @items.each do |item| %>
-          <% item.picnum = highlight_picnum_differences(item.picnum) # 此方法只針對新圖號作前四碼加強 #21.5ms %>
-          <% item.picnum = break_into_lines(item.picnum) # 23.6-21.5 %>
-          <% item.oldpicnum = break_into_lines(item.oldpicnum) if item.oldpicnum # 23.6-21.5 %>
-        <% end %>
-
-        <%# return @items %>
-      <%# end %>
-    <% end %>
-  <% end %>
-<% end %>
 
 <% @items.each do |item| %>
 
@@ -37,7 +13,7 @@
       </td>
 
       <td class="lgCell right">
-        <%= item.picnum.html_safe %>
+        <%= sanitize item.picnum, tags: %w(mark span br) %>
       </td>
 
       <td class="xsCell center">
@@ -47,7 +23,7 @@
       </td>
 
       <td class="lgCell center">
-        <%= item.oldpicnum.html_safe unless item.oldpicnum.nil? %>
+        <%= sanitize item.oldpicnum, tags: %w(mark span br) unless item.oldpicnum %>
       </td>
 
       <td class="lgCell center">
