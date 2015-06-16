@@ -40,7 +40,7 @@ table.scroll thead th.smCell {
 }
 
 table.scroll tbody td.smCell {
-    width: 1*$tableWidth/16;
+    width: 1*$tableWidth/16 !important;
 }
 
 table.scroll tbody td.lgCell,
