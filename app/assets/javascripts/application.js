@@ -44,11 +44,21 @@ $(document).ready(function(){
 	$('table.scroll textarea')
 	$('table.scroll input')
 	*/
+	
 	$('#itemForm').find('input,textarea').keydown(function() {
 		targetShow(this,'button');
 		$(this).css("background-color" ,notSavingColor);
 	});
 	$('table.scroll').find('input,textarea').keydown(function() {
+		targetShow(this,'button');
+		$(this).css("background-color" ,notSavingColor);
+	});
+	// change event is for no keydown situations
+	$('#itemForm').find('input,textarea').change(function() {
+		targetShow(this,'button');
+		$(this).css("background-color" ,notSavingColor);
+	});
+	$('table.scroll').find('input,textarea').change(function() {
 		targetShow(this,'button');
 		$(this).css("background-color" ,notSavingColor);
 	});

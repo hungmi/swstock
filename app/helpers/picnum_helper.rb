@@ -5,7 +5,7 @@ module PicnumHelper
     # Don't use nil? because nil? is true only when nil.
     #   "".nil? => false
     #   !"".present? && !nil.present? => true.
-    return @items = [] if @items.size <= 1 # @items沒找到的時候= #<ActiveRecord::Relation []>.size == 0
+    return @items if @items.size == 0 # use @items.size <= 1 will result in not showing anything when search result is exactly one item.
 
     if @query_array # Check if available. Get from validate_search_key in items_controller
 
