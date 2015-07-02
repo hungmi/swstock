@@ -2,6 +2,12 @@ Rails.application.routes.draw do
 
   root 'items#newest'
 
+  namespace :pc do
+    resources :items, only: [:index] do
+      get :search, on: :collection
+    end
+  end
+
   resources :items do
     collection do
       post :import

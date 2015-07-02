@@ -1,6 +1,6 @@
 <% if @items.exists? %>
   <% @items_initial = @items %>
-  <table class="scroll" id="stock_table">
+  <table class="scroll" id="pc_stock_table">
 
     <thead>
       <tr>
@@ -12,7 +12,7 @@
     </thead>
 
     <tbody>
-      <%= render 'items/partial/item' %>
+      <%= render 'pc/items/partial/item' %>
     </tbody>
 
   </table>
