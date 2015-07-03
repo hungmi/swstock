@@ -1,25 +1,42 @@
 @import "variable";
 
-table#pc_stock_table {
+#pc_header {
+  margin-bottom: $table_header_height;
+}
+
+body.dark #pc_stock_table {
+
+  #stock_table_header {
+    margin-right: 0px;
+    margin-left: 0px;
+    width: $pc_table_width;
+    height: $table_header_height;
+    margin-top: -$table_header_height;
+    position: fixed;
+    z-index: 99;
+    font-size: 20px;
+    color: whitesmoke;
+    background-color: #111;
+  }
+
   width: $pc_table_width;
+  font-size: 22px;
+  color: whitesmoke;
 
-  tbody td.xsCell,
-  thead th.xsCell {
-    width: 0.5*$pc_table_width/16;
+  .stock_table_datarow {
+    margin: 0px;
+    background-color: #111;
+
+    textarea {
+      margin-top: 3%;
+      background-color: #111;
+    }
+
   }
 
-  thead th.smCell {
-    width: 1.3*$pc_table_width/16;  
+  .stock_table_datarow:hover {
+    background-color: #333;
+    color: #fff;
   }
 
-  tbody td.smCell {
-    width: 1*$pc_table_width/16 !important;
-  }
-
-  tbody td.lgCell,
-  thead th.lgCell {
-    width: 3.5*$pc_table_width/16;
-    padding-right: 0px;
-    textarea {width: 100%;}
-  }
 }

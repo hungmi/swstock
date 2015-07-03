@@ -1,0 +1,37 @@
+- if @items.exists?
+  - render_picnums
+
+  div#pc_stock_table
+    div.row.text-center.border#stock_table_header
+      div.col-md-1 櫃位
+      div.col-md-3 圖號
+      div.col-md-2 舊圖號
+      div.col-md-2 提醒
+      div.col-md-1 成品
+      div.col-md-1 半成品
+      div.col-md-2 剪貼板
+
+    - @items.each do |item|
+      div.row.text-center.border.stock_table_datarow style='#{style_customer(item.customer)};'
+        div.col-md-1 = item.location
+        div.col-md-3.text-right = sanitize item.picnum
+        div.col-md-2 = sanitize item.oldpicnum, tags: %w(mark span br) if item.oldpicnum
+        div.col-md-2 = item.note
+        div.col-md-1 = item.finished
+        div.col-md-1 = item.unfinished
+        div.col-md-2 = render_clipboard_content(item)
+
+    div.center
+      = will_paginate @items, renderer: BootstrapPagination::Rails if params[:q].nil?  
+
+
+//style=#{style_customer(item.customer)}
+
+- else
+  div.container.center
+    h3 沒有找到品項，是否要
+      = link_to '新增',new_item_path
+      | 呢？
+    = image_tag 'found.gif'
+
+/= console

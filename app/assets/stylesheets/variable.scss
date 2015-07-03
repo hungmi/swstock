@@ -1,2 +1,16 @@
 $tableWidth: 1900px;
-$pc_table_width: 1850px;
+$pc_table_width: 1900px;
+$table_header_height: 30px;
+
+$navbar_height: 119px;
+$content_height: 800px - $navbar_height;
+
+$content_padding: 0%; //single side
+$content_width: 100% - $content_padding;
+$offset: 65%;
+
+$brand_left_margin: 35px;
+$nav_title_left_margin: 0px;
+$nav_list_left_margin: 0px;
+
+//$grid_gallery_inside_margin: 0.01*$content_width;

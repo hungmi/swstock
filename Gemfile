@@ -35,7 +35,8 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-
+gem 'slim'
+gem "slim-rails"
 gem 'simple_form'
 
 gem 'roo', '~> 2.0.0'

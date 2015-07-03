@@ -1,6 +1,0 @@
-<%= render 'pc/items/partial/stock_table' %>
-<div class="center">
-  <% if !params[:q].present? %>
-    <%= will_paginate @items, renderer: BootstrapPagination::Rails %>
-  <% end %>
-</div>

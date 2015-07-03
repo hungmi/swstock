@@ -1,0 +1,36 @@
+@import 'variable';
+
+.no_padding {
+  padding: 0px !important;
+}
+
+div.border {
+  border: 1px solid whitesmoke;//LEMONCHIFFON;
+  //border-radius: 6px;
+}
+
+
+// 沒有用底下來垂直分割表格，因為垂直高度會因內容而自動調整
+.full_screen {
+  height: $content_height;
+
+  div.row_12 {
+    height: 100%;
+  }
+
+  div.row_9 {
+    height: 75%;
+  }
+
+  div.row_6 {
+    height: 50%;
+  }
+
+  div.row_3 {
+    height: 25%;
+  }
+}
+
+div.container-fluid.full_screen {
+  width: $content_width;
+}
