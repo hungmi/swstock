@@ -12,7 +12,7 @@
       div.col-md-2 剪貼板
 
     - @items.each do |item|
-      div.row.text-center.border.stock_table_datarow style='#{style_customer(item.customer)};'
+      div.row.text-center.border.stock_table_datarow style="#{black_style_customer(item.customer)}"
         div.col-md-1 = item.location
         div.col-md-3.text-right = sanitize item.picnum
         div.col-md-2 = sanitize item.oldpicnum, tags: %w(mark span br) if item.oldpicnum
