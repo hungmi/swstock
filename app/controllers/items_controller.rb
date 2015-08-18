@@ -16,7 +16,7 @@ class ItemsController < ApplicationController
   end
 
   def import
-    invalid_product_num = Item.import(params[:file])
+    invalid_product_num = Item.import_stock(params[:file])
     redirect_to root_url
     return flash[:success] = '已成功載入所有項目' if invalid_product_num == 0
     flash[:warning] = "#{ invalid_product_num }個項目的櫃位或圖號不完整"    

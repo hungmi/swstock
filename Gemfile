@@ -37,6 +37,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'slim'
 gem "slim-rails"
+gem "haml-rails", "~> 0.9"
 gem 'simple_form'
 
 gem 'roo', '~> 2.0.0'

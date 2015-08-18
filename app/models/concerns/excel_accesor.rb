@@ -3,7 +3,20 @@ module ExcelAccesor
 
   module ClassMethods
 
-    def import(file)
+    def import_sourcing(file)
+      spreadsheet = open_spreadsheet(file)
+      header = spreadsheet.row(1)
+      (2..spreadsheet.last_row).each do |i|
+        row = Hash[[header, spreadsheet.row(i)].transpose]
+        stage = find_by_id(row["id"]) || new
+        parameters = ActionController::Parameters.new(row.to_hash)
+        #之後要匯入ID的話要修改這邊
+        stage.attributes = parameters.permit(:id, :sourcing_type, :order_date, :customer, :material_spec, :order_amount, :item_type, :picnum, :stage_amount, :factory, :arrival_date, :estimated_date, :note, :finish_date, :finished, :broken)
+        stage.save
+      end
+    end
+
+    def import_stock(file)
       invalid_product_num = 0
       spreadsheet = open_spreadsheet(file)
       header = spreadsheet.row(1)
@@ -12,7 +25,6 @@ module ExcelAccesor
         product = find_by_id(row["id"]) || new
         parameters = ActionController::Parameters.new(row.to_hash)
         #之後要匯入ID的話要修改這邊
-        #product.attributes = parameters.permit(:id, :location, :item_type, :picnum, :oldpicnum, :note, :finished, :unfinished, :customer)
         product.attributes = parameters.permit(:id, :location, :item_type, :picnum, :oldpicnum, :note, :finished, :unfinished, :customer)
         
         #Float('1.0') => 1.0  , but Float('a1.0') => raise erorr, so we need to rescue that.

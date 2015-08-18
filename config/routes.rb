@@ -6,6 +6,9 @@ Rails.application.routes.draw do
     resources :items, only: [:index] do
       get :search, on: :collection
     end
+    resources :stages do
+      post :import, on: :collection
+    end
   end
 
   resources :items do

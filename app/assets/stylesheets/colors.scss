@@ -23,3 +23,15 @@ hr.black_sm {
 .well.green {
   border: 2px solid green;
 }
+
+.dark {
+  color: black;
+  a {
+    color: blue;
+  }
+  a:hover {
+    background-color: rgba(255,255,255,0);
+    color: CYAN;
+    text-decoration: none;
+  }
+}

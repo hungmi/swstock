@@ -1,0 +1,28 @@
+- if @stages.exists?
+
+  #pc_stock_table
+    .row.text-center.border#stock_table_header
+      .col-md-1 櫃位
+      .col-md-3 圖號
+      .col-md-2 提醒
+      .col-md-1 製程
+      .col-md-1 半成品
+      .col-md-2 剪貼板
+
+    - @stages.each do |stage|
+      .row.text-center.border.stock_table_datarow
+        .col-md-1= stage.item_type
+        .col-md-3.text-right= sanitize stage.picnum
+        .col-md-2= stage.note
+        .col-md-1= stage.stage_factory
+        .col-md-1= stage.broken
+
+    .center
+      = will_paginate @stages, renderer: BootstrapPagination::Rails if params[:q].nil?  
+
+- else
+  .container.center
+    %h3 沒有找到品項，是否要
+    = link_to '新增',new_pc_stage_path
+    | 呢？
+    = image_tag 'found.gif'
