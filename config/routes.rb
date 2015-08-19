@@ -1,13 +1,17 @@
 Rails.application.routes.draw do
-
   root 'items#newest'
+  
+  resources :factories
 
   namespace :pc do
     resources :items, only: [:index] do
       get :search, on: :collection
     end
-    resources :stages do
+    resources :workpieces do
       post :import, on: :collection
+    end
+    resources :procedures do
+      resources :stages
     end
   end
 
@@ -25,7 +29,6 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
 
-  resources :orders
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

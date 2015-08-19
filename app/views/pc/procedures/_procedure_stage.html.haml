@@ -1,0 +1,22 @@
+%thead
+  %tr.text-center
+    %th arrival_date
+    %th amount
+    %th factory
+    %th estimated
+    %th finish_date
+    %th 提醒
+    %th 成品
+    %th 半成品
+
+%tbody
+  - pc_procedure.stages.each do |stage|
+    %tr
+      %td= stage.arrival_date
+      %td= stage.amount
+      %td= stage.factory_name
+      %td= stage.estimated_date
+      %td= stage.finish_date
+      %td= stage.note
+      %td= stage.finished
+      %td= stage.broken

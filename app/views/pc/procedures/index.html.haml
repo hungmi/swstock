@@ -1,0 +1,29 @@
+- @pc_procedures.each do |pc_procedure|
+  .well{ style: 'background-color: black; color: whitesmoke;' }
+    %table.table.table-bordered
+      %thead
+        %tr
+          %th sourcing type
+          %th start_date
+          %th customer
+          %th material_spec
+          %th procedure_amount
+          %th picnum
+          %th
+          %th
+
+      %tbody
+        %tr
+          %td= pc_procedure.sourcing_type
+          %td= pc_procedure.start_date
+          %td= pc_procedure.customer
+          %td= pc_procedure.material_spec
+          %td= pc_procedure.procedure_amount
+          %td= pc_procedure.workpiece.picnum
+          %td= link_to 'Edit', edit_pc_procedure_path(pc_procedure)
+          %td= link_to 'Destroy', pc_procedure, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        - if pc_procedure.stages.exists?
+          .table-responsive
+            = render 'procedure_stage', pc_procedure: pc_procedure
+
+= link_to 'New Procedure', new_pc_procedure_path

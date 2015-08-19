@@ -8,10 +8,25 @@ module ExcelAccesor
       header = spreadsheet.row(1)
       (2..spreadsheet.last_row).each do |i|
         row = Hash[[header, spreadsheet.row(i)].transpose]
-        stage = find_by_id(row["id"]) || new
         parameters = ActionController::Parameters.new(row.to_hash)
+        next if parameters[:start_date].include?('接單日期')
+        # w = first || second, w will = first if first is executable
+        workpiece = Pc::Workpiece.find_by_picnum(parameters[:picnum]) || Pc::Workpiece.new
+        unless workpiece.persisted?
+          workpiece.attributes = parameters.permit(:wp_type, :picnum, :spec)
+          workpiece.save
+        end
+
+        procedure = workpiece.procedures.find_by_start_date(parameters[:start_date]) || workpiece.procedures.new
+        unless procedure.persisted?
+          procedure.attributes = parameters.permit(:sourcing_type, :start_date, :customer, :material_spec, :procedure_amount)
+          #procedure.pc_workpiece_id = workpiece.id
+          procedure.save
+        end
+
+        stage = procedure.stages.new#find_by_id(row["id"]) || new
         #之後要匯入ID的話要修改這邊
-        stage.attributes = parameters.permit(:id, :sourcing_type, :order_date, :customer, :material_spec, :order_amount, :item_type, :picnum, :stage_amount, :factory, :arrival_date, :estimated_date, :note, :finish_date, :finished, :broken)
+        stage.attributes = parameters.permit(:factory_name, :amount, :arrival_date, :estimated_date, :note, :finish_date, :finished, :broken)
         stage.save
       end
     end

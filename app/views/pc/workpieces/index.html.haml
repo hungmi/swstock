@@ -1,0 +1,25 @@
+%h1 Listing pc_workpieces
+
+%table
+  %thead
+    %tr
+      %th wp_type
+      %th picnum
+      %th spec
+      %th
+      %th
+      %th
+
+  %tbody
+    - @pc_workpieces.each do |pc_workpiece|
+      %tr
+        %td= pc_workpiece.wp_type
+        %td= pc_workpiece.picnum
+        %td= pc_workpiece.spec
+        %td= link_to 'Show', pc_workpiece
+        %td= link_to 'Edit', edit_pc_workpiece_path(pc_workpiece)
+        %td= link_to 'Destroy', pc_workpiece, :method => :delete, :data => { :confirm => 'Are you sure?' }
+
+%br
+
+= link_to 'New Workpiece', new_pc_workpiece_path

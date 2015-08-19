@@ -1,0 +1,16 @@
+= simple_form_for @pc_procedure do |f|
+  - if @pc_procedure.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pc_procedure.errors.count, "error")} prohibited this pc_procedure from being saved:"
+      %ul
+        - @pc_procedure.errors.full_messages.each do |msg|
+          %li= msg
+
+  = f.input :sourcing_type
+  = f.input :start_date
+  = f.input :customer
+  = f.input :material_spec
+  = f.input :amount
+
+  .actions
+    = f.submit 'Save'

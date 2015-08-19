@@ -6,13 +6,19 @@ class ItemsController < ApplicationController
   before_action :previous_page, only: [:newest, :index, :edit]
   before_action :validate_search_key, only: [:search]
 
-
   def previous_page
     session[:last_page] = request.env['HTTP_REFERER']
   end
 
   def search
     @items = Item.ransack(validate_search_key).result if params[:q].present?
+    render :index
+  end
+
+  # GET /items
+  # GET /items.json
+  def index
+    @items = Item.order(:location).paginated(params[:page])
   end
 
   def import
@@ -33,12 +39,6 @@ class ItemsController < ApplicationController
 
   def newest
     @items = Item.recent.limit(5) #limit will return ActiveRecord_Relation
-  end
-
-  # GET /items
-  # GET /items.json
-  def index
-    @items = Item.order(:location).paginated(params[:page])
   end
 
   # GET /items/1

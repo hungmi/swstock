@@ -11,7 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150818145826) do
+ActiveRecord::Schema.define(version: 20150819052121) do
+
+  create_table "factories", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "items", force: :cascade do |t|
     t.string   "location"
@@ -26,31 +32,41 @@ ActiveRecord::Schema.define(version: 20150818145826) do
     t.string   "customer"
   end
 
-  create_table "orders", force: :cascade do |t|
-    t.string   "picnum"
-    t.string   "amount"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table "pc_procedures", force: :cascade do |t|
+    t.string   "sourcing_type"
+    t.string   "start_date"
+    t.string   "customer"
+    t.string   "material_spec"
+    t.integer  "procedure_amount"
+    t.integer  "workpiece_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
-  create_table "stages", force: :cascade do |t|
-    t.text     "sourcing_type"
-    t.text     "order_date"
-    t.text     "customer"
-    t.text     "material_spec"
-    t.text     "order_amount"
-    t.text     "item_type"
-    t.text     "picnum"
-    t.text     "stage_amount"
-    t.text     "stage_factory"
-    t.text     "stage_date"
-    t.text     "estimated_date"
+  add_index "pc_procedures", ["workpiece_id"], name: "index_pc_procedures_on_workpiece_id"
+
+  create_table "pc_stages", force: :cascade do |t|
+    t.string   "factory_name"
+    t.string   "arrival_date"
+    t.string   "estimated_date"
+    t.string   "finish_date"
+    t.integer  "amount"
+    t.integer  "finished"
+    t.integer  "broken"
     t.text     "note"
-    t.text     "finish_date"
-    t.text     "finished"
-    t.text     "broken"
+    t.integer  "procedure_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+  end
+
+  add_index "pc_stages", ["procedure_id"], name: "index_pc_stages_on_procedure_id"
+
+  create_table "pc_workpieces", force: :cascade do |t|
+    t.string   "wp_type"
+    t.string   "picnum"
+    t.string   "spec"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

@@ -1,28 +1,39 @@
-- if @stages.exists?
+- if @pc_stages.exists?
+  .container-fluid
+    %table{ style: 'width:100%;' }
+      %tr.text-center
+        %th 製程id
+        %th 圖號
+        %th arrival_date
+        %th amount
+        %th factory
+        %th estimated
+        %th finish_date
+        %th 提醒
+        %th 成品
+        %th 半成品
+        %th
 
-  #pc_stock_table
-    .row.text-center.border#stock_table_header
-      .col-md-1 櫃位
-      .col-md-3 圖號
-      .col-md-2 提醒
-      .col-md-1 製程
-      .col-md-1 半成品
-      .col-md-2 剪貼板
-
-    - @stages.each do |stage|
-      .row.text-center.border.stock_table_datarow
-        .col-md-1= stage.item_type
-        .col-md-3.text-right= sanitize stage.picnum
-        .col-md-2= stage.note
-        .col-md-1= stage.stage_factory
-        .col-md-1= stage.broken
-
-    .center
-      = will_paginate @stages, renderer: BootstrapPagination::Rails if params[:q].nil?  
+      - @pc_stages.each do |stage|
+        %tr
+          %td= stage.procedure_id
+          %td= stage.procedure.workpiece.picnum
+          %td= stage.arrival_date
+          %td= stage.amount
+          %td= stage.factory_name
+          %td= stage.estimated_date
+          %td= stage.finish_date
+          %td= stage.note
+          %td= stage.finished
+          %td= stage.broken
+          %td
+  .center
+    /= will_paginate @pc_stages, renderer: BootstrapPagination::Rails if params[:q].nil?  
 
 - else
   .container.center
-    %h3 沒有找到品項，是否要
-    = link_to '新增',new_pc_stage_path
-    | 呢？
+    %h3
+      沒有找到品項，是否要
+      = link_to '新增',new_pc_stage_path
+      呢？
     = image_tag 'found.gif'

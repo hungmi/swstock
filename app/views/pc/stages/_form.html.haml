@@ -1,0 +1,10 @@
+= form_for @pc_stage do |f|
+  - if @pc_stage.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pc_stage.errors.count, "error")} prohibited this pc_stage from being saved:"
+      %ul
+        - @pc_stage.errors.full_messages.each do |msg|
+          %li= msg
+
+  .actions
+    = f.submit 'Save'

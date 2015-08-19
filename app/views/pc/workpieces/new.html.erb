@@ -1,0 +1,29 @@
+<!-- Postcontent
+============================================= -->
+<div class="container dark">
+  <h1>增加新品項</h1>
+
+  <%#= render 'items/partial/form' %>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <%= form_tag import_pc_workpieces_path, multipart: true do %>
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title"><label for="file">上傳EXCEL檔案</label></h3>
+          </div>
+          <div class="panel-body">
+            <div class="col-sm-8">
+              <%= file_field_tag "file" %>
+            </div>
+            <div class="col-sm-4">
+              <%= submit_tag "上傳", :class => "btn btn-primary"  %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+  </div><!-- row end -->
+
+</div><!-- .postcontent end -->
