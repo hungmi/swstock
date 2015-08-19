@@ -11,7 +11,8 @@
 
 %tbody
   - pc_procedure.stages.each do |stage|
-    %tr
+    - status = stage.finish_date.present? ? 'success' : ''
+    %tr{ class: status }
       %td= stage.arrival_date
       %td= stage.amount
       %td= stage.factory_name

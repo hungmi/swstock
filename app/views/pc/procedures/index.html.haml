@@ -1,5 +1,7 @@
 - @pc_procedures.each do |pc_procedure|
-  .well{ style: 'background-color: black; color: whitesmoke;' }
+  / if a procedure has no stage then skip it !!!
+  - if pc_procedure.stages.exists?
+    - status = pc_procedure.stages.where(finish_date: nil).present? ? '' : 'danger'
     %table.table.table-bordered
       %thead
         %tr
@@ -13,7 +15,7 @@
           %th
 
       %tbody
-        %tr
+        %tr{ class: status }
           %td= pc_procedure.sourcing_type
           %td= pc_procedure.start_date
           %td= pc_procedure.customer
@@ -22,7 +24,6 @@
           %td= pc_procedure.workpiece.picnum
           %td= link_to 'Edit', edit_pc_procedure_path(pc_procedure)
           %td= link_to 'Destroy', pc_procedure, :method => :delete, :data => { :confirm => 'Are you sure?' }
-        - if pc_procedure.stages.exists?
           .table-responsive
             = render 'procedure_stage', pc_procedure: pc_procedure
 
