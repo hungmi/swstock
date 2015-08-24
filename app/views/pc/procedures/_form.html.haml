@@ -1,4 +1,4 @@
-= simple_form_for @pc_procedure do |f|
+= simple_form_for @pc_procedure, url: pc_procedures_path, method: :post do |f|
   - if @pc_procedure.errors.any?
     #error_explanation
       %h2= "#{pluralize(@pc_procedure.errors.count, "error")} prohibited this pc_procedure from being saved:"
@@ -6,11 +6,14 @@
         - @pc_procedure.errors.full_messages.each do |msg|
           %li= msg
 
+  /= @pc_procedure.workpiece.picnum
   = f.input :sourcing_type
   = f.input :start_date
   = f.input :customer
   = f.input :material_spec
-  = f.input :amount
+  = f.input :procedure_amount
 
   .actions
     = f.submit 'Save'
+
+  = render 'pc/procedures/stages/form', pc_stages: @stages

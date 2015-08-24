@@ -1,3 +1,30 @@
 // Place all the styles related to the pc::procedures controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+table.procedure-table {
+  thead tr th { text-align: center; }
+}
+
+#procedure-stage-panel {
+  .form-group, .table {
+    margin-bottom: 0px;
+  }
+  .panel-heading .table {
+    td {
+      border-top: 0px;
+      padding: 0px 8px 0px 8px;
+    }
+  }
+  .panel-body {
+    padding: 0px;
+  }
+  tbody {
+    border-top: 0px;
+  }
+  .panel-heading {
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+}

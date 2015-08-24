@@ -1,4 +1,4 @@
-<%= simple_form_for(@item, html: { class: 'form-horizontal well', :id => 'itemForm'}, :wrapper => :horizontal_form) do |f| %>
+<%= simple_form_for(@item, html: { :id => 'itemForm'}) do |f| %>
 
   <%= f.input :location, :label => '櫃位', :hint => '此欄位為必填' %>
   <%= f.input :item_type, :label => '品項' %>

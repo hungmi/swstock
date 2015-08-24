@@ -1,23 +1,24 @@
-%thead
-  %tr.text-center
-    %th arrival_date
-    %th amount
-    %th factory
-    %th estimated
-    %th finish_date
-    %th 提醒
-    %th 成品
-    %th 半成品
-
-%tbody
-  - pc_procedure.stages.each do |stage|
-    - status = stage.finish_date.present? ? 'success' : ''
-    %tr{ class: status }
-      %td= stage.arrival_date
-      %td= stage.amount
-      %td= stage.factory_name
-      %td= stage.estimated_date
-      %td= stage.finish_date
-      %td= stage.note
-      %td= stage.finished
-      %td= stage.broken
+%table.table.stage-table{ class: pc_procedure.workpiece.picnum }
+  %thead
+    %tr
+      %th arrival_date
+      %th amount
+      %th factory
+      %th estimated
+      %th finish_date
+      %th 提醒
+      %th 成品
+      %th 半成品
+  %tbody
+    - pc_procedure.stages.each do |stage|
+      - status = stage.finish_date.present? ? 'success' : ''
+      = simple_form_for stage, url: pc_procedure_stage_path(pc_procedure, stage), wrapper: :horizontal_table_form do |f|
+        %tr{ class: status }
+          = f.input :arrival_date
+          = f.input :amount
+          = f.input :factory_name
+          = f.input :estimated_date
+          = f.input :finish_date
+          = f.input :note
+          = f.input :finished
+          = f.input :broken

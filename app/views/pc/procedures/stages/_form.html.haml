@@ -1,0 +1,3 @@
+- pc_stages.each do |stage|
+  = simple_form_for stage, url: pc_procedure_stages_path(@pc_procedure) do |f|
+    = f.input :factory_name

@@ -68,9 +68,20 @@ SimpleForm.setup do |config|
     end
   end
 
-  config.wrappers :horizontal_table_form, tag: 'td', class: 'center', error_class: 'has-error' do |b|
+  config.wrappers :horizontal_table_form_with_label, tag: 'td', error_class: 'has-error' do |b|
     b.use :html5
-    b.use :input
+    b.wrapper tag: 'div', class: 'form-group' do |ba|
+      ba.use :label, class: 'col-sm-5 control-label'
+      ba.wrapper tag: 'div', class: 'col-sm-7' do |baa|
+        baa.use :input, class: 'form-control'
+      end
+    end
+  end
+
+  config.wrappers :horizontal_table_form, tag: 'td', class: 'form-group', error_class: 'has-error' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.use :input, class: 'form-control'
   end
 
   config.wrappers :horizontal_file_input, tag: 'div', class: 'form-group', error_class: 'has-error' do |b|
@@ -132,7 +143,7 @@ SimpleForm.setup do |config|
   # Check the Bootstrap docs (http://getbootstrap.com)
   # to learn about the different styles for forms and inputs,
   # buttons and other elements.
-  config.default_wrapper = :horizontal_table_form
+  config.default_wrapper = :horizontal_form
   config.wrapper_mappings = {
     check_boxes: :vertical_radio_and_checkboxes,
     radio_buttons: :vertical_radio_and_checkboxes,

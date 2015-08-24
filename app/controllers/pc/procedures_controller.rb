@@ -1,4 +1,5 @@
 class Pc::ProceduresController < PcController
+  layout 'pc/procedures'
   before_action :set_pc_procedure, only: [:show, :edit, :update, :destroy]
 
   # GET /pc/procedures
@@ -14,7 +15,13 @@ class Pc::ProceduresController < PcController
 
   # GET /pc/procedures/new
   def new
-    @pc_procedure = Pc::Procedure.new
+    if params[:copy_id]
+      @pc_procedure = Pc::Procedure.new(Pc::Procedure.find(params[:copy_id]).attributes)
+      @stages = Pc::Stage.where(@pc_procedure.id)
+      @pc_procedure.id = nil
+    else
+      @pc_procedure = Pc::Procedure.new
+    end
   end
 
   # GET /pc/procedures/1/edit
@@ -24,7 +31,8 @@ class Pc::ProceduresController < PcController
   # POST /pc/procedures
   # POST /pc/procedures.json
   def create
-    @pc_procedure = Pc::Procedure.new(pc_procedure_params)
+    @pc_procedure = Pc::Procedure.new(Pc::Procedure.find(params[:copy_id]).attributes)
+    @pc_procedure.id = nil
 
     respond_to do |format|
       if @pc_procedure.save
@@ -68,7 +76,11 @@ class Pc::ProceduresController < PcController
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
+    def copied_procedure_params
+      params.require(:copied_procedure).permit(:material_spec, :customer, :workpiece_id)
+    end
+
     def pc_procedure_params
-      params.require(:pc_procedure).permit(:sourcing_type, :start_date, :customer, :material_spec, :amount, :pc_workpiece_id)
+      params.require(:pc_procedure).permit(:sourcing_type, :start_date, :customer, :material_spec, :amount, :workpiece_id)
     end
 end
