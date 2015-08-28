@@ -1,20 +1,20 @@
 - @pc_procedures.each do |pc_procedure|
   / if a procedure has no stage then skip it !!!
-  = pc_procedure
+  /= pc_procedure
   - if pc_procedure.stages.exists?
     - status = pc_procedure.stages.where(finish_date: nil).present? ? 'primary' : 'success'
     = simple_form_for pc_procedure, wrapper: :horizontal_table_form do |f|
       .panel#procedure-stage-panel{ class: "panel-#{status}" }
         .panel-heading{ data: { picnum: pc_procedure.workpiece.picnum } }
-          - current_stage = pc_procedure.stages.where(finish_date: nil).first
+          - current_stage = pc_procedure.stages.where(finish_date: nil).first || pc_procedure.stages.last
           - number = current_stage.try(:amount)
           - name = current_stage.try(:factory_name)
-          - date = current_stage.try(:arrival_date)
+          - date = current_stage.try(:arrival_date) || current_stage.try(:finish_date)
           .text-center
-            - if number
-              ="#{date.to_date}，有#{number}個#{pc_procedure.workpiece.picnum[-7..-1]}在#{name}"
+            - if number && pc_procedure.stages.where(finish_date: nil).first
+              = "#{Date.strptime(date, '%m/%d/%Y')}，有#{number}個#{pc_procedure.workpiece.picnum[-7..-1]}在#{name}"
             - else
-              Finish
+              = "#{Date.strptime(date, '%m/%d/%Y')} | #{pc_procedure.workpiece.picnum[-7..-1]} | Finish"
             %span.glyphicon.glyphicon-resize-full.show-stages
         .panel-body
           %table.table.procedure-table

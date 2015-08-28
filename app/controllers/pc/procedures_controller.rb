@@ -31,8 +31,7 @@ class Pc::ProceduresController < PcController
   # POST /pc/procedures
   # POST /pc/procedures.json
   def create
-    @pc_procedure = Pc::Procedure.new(Pc::Procedure.find(params[:copy_id]).attributes)
-    @pc_procedure.id = nil
+    @pc_procedure = Pc::Procedure.new(pc_procedure_params)
 
     respond_to do |format|
       if @pc_procedure.save
@@ -81,6 +80,7 @@ class Pc::ProceduresController < PcController
     end
 
     def pc_procedure_params
-      params.require(:pc_procedure).permit(:sourcing_type, :start_date, :customer, :material_spec, :amount, :workpiece_id)
+      params[:pc_procedure]
+      #params.require(:pc_procedure).permit(:sourcing_type, :start_date, :customer, :material_spec, :procedure_amount, :workpiece_id)
     end
 end

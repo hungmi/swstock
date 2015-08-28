@@ -11,14 +11,24 @@
       %th 半成品
   %tbody
     - pc_procedure.stages.each do |stage|
-      - status = stage.finish_date.present? ? 'success' : ''
-      = simple_form_for stage, url: pc_procedure_stage_path(pc_procedure, stage), wrapper: :horizontal_table_form do |f|
-        %tr{ class: status }
-          = f.input :arrival_date
-          = f.input :amount
-          = f.input :factory_name
-          = f.input :estimated_date
-          = f.input :finish_date
-          = f.input :note
-          = f.input :finished
-          = f.input :broken
+      - if stage.finish_date.present?
+        %tr.success
+          %th= stage.arrival_date
+          %th= stage.amount
+          %th= stage.factory_name
+          %th= stage.estimated_date
+          %th= stage.finish_date
+          %th= stage.note
+          %th= stage.finished
+          %th= stage.broken
+      - else
+        = simple_form_for stage, url: pc_procedure_stage_path(pc_procedure, stage), wrapper: :horizontal_table_form do |f|
+          %tr
+            = f.input :arrival_date
+            = f.input :amount
+            = f.input :factory_name
+            = f.input :estimated_date
+            = f.input :finish_date
+            = f.input :note
+            = f.input :finished
+            = f.input :broken

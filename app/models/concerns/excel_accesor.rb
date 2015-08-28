@@ -9,7 +9,7 @@ module ExcelAccesor
       (2..spreadsheet.last_row).each do |i|
         row = Hash[[header, spreadsheet.row(i)].transpose]
         parameters = ActionController::Parameters.new(row.to_hash)
-        next if parameters[:start_date].include?('接單日期')
+        next if parameters[:factory_name].include?('製程')
         # w = first || second, w will = first if first is executable
         workpiece = Pc::Workpiece.find_by_picnum(parameters[:picnum]) || Pc::Workpiece.new
         unless workpiece.persisted?
