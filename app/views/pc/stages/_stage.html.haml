@@ -1,0 +1,21 @@
+- if stage.finish_date.present?
+  %tr.success
+    %td= stage.arrival_date
+    %td= stage.amount
+    %td= stage.factory_name
+    %td= stage.estimated_date
+    %td= stage.finish_date
+    %td= stage.note
+    %td= stage.finished
+    %td= stage.broken
+- else
+  = simple_form_for stage, url: pc_procedure_stage_path(pc_procedure, stage), wrapper: :horizontal_table_form do |f|
+    %tr
+      = f.input :arrival_date
+      = f.input :amount
+      = f.input :factory_name
+      = f.input :estimated_date
+      = f.input :finish_date
+      = f.input :note
+      = f.input :finished
+      = f.input :broken
