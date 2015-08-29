@@ -14,8 +14,6 @@
 //= require bootstrap-sprockets
 //= require jquery.turbolinks
 //= require jquery_ujs
+//= require cocoon
 //= require turbolinks
 //= require_tree .
-
-$(document).ready(function(){
-});

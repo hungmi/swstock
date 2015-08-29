@@ -1,52 +1,56 @@
-- @pc_procedures.each do |pc_procedure|
-  / if a procedure has no stage then skip it !!!
-  /= pc_procedure
-  - @stages = pc_procedure.stages
+.container
+  - @pc_procedures.each do |pc_procedure|
+    / if a procedure has no stage then skip it !!!
+    /= pc_procedure
+    - @stages = pc_procedure.stages
 
-  - if @stages.exists?
+    - if @stages.exists?
 
-    - @picnum = pc_procedure.workpiece.picnum
-    - status = @stages.where(finish_date: nil).present? ? 'primary' : 'success'
+      - @picnum = pc_procedure.workpiece.picnum
+      - status = @stages.where(finish_date: nil).present? ? 'primary' : 'success'
 
-    = simple_form_for pc_procedure, wrapper: :horizontal_table_form do |f|
+      = simple_form_for pc_procedure, wrapper: :horizontal_table_form do |f|
 
-      .panel#procedure-stage-panel{ class: "panel-#{status}" }
-        .panel-heading{ data: { picnum: @picnum } }
-          - current_stage = @stages.where(finish_date: nil).first || @stages.last
-          - number = current_stage.try(:amount)
-          - name = current_stage.try(:factory_name)
-          - date = current_stage.try(:arrival_date) || current_stage.try(:finish_date)
-          .text-center
-            - if number && @stages.where(finish_date: nil).first
-              = "#{Date.strptime(date, '%m/%d/%Y')}，有#{number}個#{@picnum[-7..-1]}在#{name}"
-            - else
-              = "#{Date.strptime(date, '%m/%d/%Y')} | #{@picnum[-7..-1]} | Finish"
+        .panel#procedure-stage-panel{ class: "panel-#{status}" }
+          .panel-heading{ data: { picnum: @picnum } }
+            / - current_stage = @stages.where(finish_date: nil).first || @stages.last
+            / - number = current_stage.try(:amount)
+            / - name = current_stage.try(:factory_name)
+            / - date = current_stage.try(:arrival_date) || current_stage.try(:finish_date)
+            / .text-center
+            /   - if number && @stages.where(finish_date: nil).first
+            /     = "#{Date.strptime(date, '%m/%d/%Y')}，有#{number}個#{@picnum[-7..-1]}在#{name}"
+            /   - else
+            /     = "#{Date.strptime(date, '%m/%d/%Y')} | #{@picnum[-7..-1]} | Finish"
+            = @picnum[-7..-1]
             %span.glyphicon.glyphicon-resize-full.show-stages
-        .panel-body
-          %table.table.procedure-table
+          .panel-body
+            %table.table.procedure-table
+              %tbody
+                %tr{ class: status }
+                  = f.input :sourcing_type, placeholder: 'sourcing_type'
+                  = f.input :start_date
+                  = f.input :customer
+                  = f.input :material_spec, placeholder: 'material_spec'
+                  = f.input :procedure_amount
+                  %td= link_to 'Edit', edit_pc_procedure_path(pc_procedure)
+                  %td= link_to 'Destroy', pc_procedure, :method => :delete, :data => { :confirm => 'Are you sure?' }
+                  %td= link_to 'New Proc', new_pc_procedure_path(copy_id: pc_procedure)
+
+          %table.table.stage-table{ class: @picnum }
+            %thead
+              %tr
+                %th arrival_date
+                %th amount
+                %th factory
+                %th estimated
+                %th finish_date
+                %th 提醒
+                %th 成品
+                %th 半成品
             %tbody
-              %tr{ class: status }
-                = f.input :sourcing_type, placeholder: 'sourcing_type'
-                = f.input :start_date
-                = f.input :customer
-                = f.input :material_spec, placeholder: 'material_spec'
-                = f.input :procedure_amount
-                %td= link_to 'Edit', edit_pc_procedure_path(pc_procedure)
-                %td= link_to 'Destroy', pc_procedure, :method => :delete, :data => { :confirm => 'Are you sure?' }
-                %td= link_to 'New Proc', new_pc_procedure_path(copy_id: pc_procedure)
+              = render @stages, pc_procedure: pc_procedure
 
-        %table.table.stage-table{ class: @picnum }
-          %thead
-            %tr
-              %th arrival_date
-              %th amount
-              %th factory
-              %th estimated
-              %th finish_date
-              %th 提醒
-              %th 成品
-              %th 半成品
-          %tbody
-            = render @stages, pc_procedure: pc_procedure
+  = will_paginate @pc_procedures, renderer: BootstrapPagination::Rails
 
-= link_to 'New Blank Procedure', new_pc_procedure_path
+  = link_to 'New Blank Procedure', new_pc_procedure_path

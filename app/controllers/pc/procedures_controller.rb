@@ -5,7 +5,7 @@ class Pc::ProceduresController < PcController
   # GET /pc/procedures
   # GET /pc/procedures.json
   def index
-    @pc_procedures = Pc::Procedure.all
+    @pc_procedures = Pc::Procedure.all.paginated(params[:page])
   end
 
   # GET /pc/procedures/1
@@ -15,13 +15,20 @@ class Pc::ProceduresController < PcController
 
   # GET /pc/procedures/new
   def new
-    if params[:copy_id]
-      @pc_procedure = Pc::Procedure.new(Pc::Procedure.find(params[:copy_id]).attributes)
-      @stages = Pc::Stage.where(@pc_procedure.id)
-      @pc_procedure.id = nil
-    else
+    # if params[:copy_id]
+    #   @pc_procedure = Pc::Procedure.new(Pc::Procedure.find(params[:copy_id]).attributes)
+    #   @stages = Pc::Stage.where(@pc_procedure.id)
+    #   @pc_procedure.id = nil
+    # else
       @pc_procedure = Pc::Procedure.new
-    end
+      if params[:copy_id]
+        @copy_procedure = Pc::Procedure.find(params[:copy_id])
+        @copy_stages = @copy_procedure.try(:stages)
+        @copy_stages.try(:each) do |stage|
+          @pc_procedure.stages.new(stage.attributes)
+        end
+      end
+    #end
   end
 
   # GET /pc/procedures/1/edit
@@ -80,7 +87,6 @@ class Pc::ProceduresController < PcController
     end
 
     def pc_procedure_params
-      params[:pc_procedure]
-      #params.require(:pc_procedure).permit(:sourcing_type, :start_date, :customer, :material_spec, :procedure_amount, :workpiece_id)
+      params.require(:pc_procedure).permit(:sourcing_types, :start_date, :customer, :material_spec, :procedure_amount, :workpiece_id, stages_attributes: [:id, :factory_name, :note, :procedure_id])
     end
 end

@@ -4,6 +4,6 @@
 $ ->
   $('.stage-table').children('thead, tbody').toggle()
   $("#procedure-stage-panel .panel-heading").click ->
-    target_stages = $('.stage-table.' + $(this).data('picnum')).children('thead, tbody')
+    target_stages = $(this).siblings('.stage-table.' + $(this).data('picnum')).children('thead, tbody')
     target_stages.toggle('fast')
     $(this).find('span.glyphicon').toggleClass('glyphicon-resize-small')

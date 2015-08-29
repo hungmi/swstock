@@ -1,3 +1,6 @@
+- @copy_procedure = Pc::Procedure.find(params[:copy_id]) if params[:copy_id]
+- @copy_stages = @copy_procedure.try(:stages)
+
 = simple_form_for @pc_procedure, url: pc_procedures_path, method: :post do |f|
   - if @pc_procedure.errors.any?
     #error_explanation
@@ -6,14 +9,18 @@
         - @pc_procedure.errors.full_messages.each do |msg|
           %li= msg
 
-  /= @pc_procedure.workpiece.picnum
-  = f.input :sourcing_type
-  = f.input :start_date
-  = f.input :customer
-  = f.input :material_spec
-  = f.input :procedure_amount
+  .row
+    .col-sm-offset-2.col-sm-3
+      = f.association :workpiece, label_method: :picnum, value_method: :id, selected: @copy_procedure.workpiece.id
+      = f.input :sourcing_type, input_html: { value: @copy_procedure.sourcing_type }
+      = f.input :start_date, input_html: { value: Date.today.to_s }
+      = f.input :customer, input_html: { value: @copy_procedure.customer }
+      = f.input :material_spec, input_html: { value: @copy_procedure.material_spec }
+      = f.input :procedure_amount, input_html: { value: @copy_procedure.procedure_amount }
 
-  .actions
-    = f.submit 'Save'
-
-  = render 'pc/procedures/stages/form', pc_stages: @stages
+      .actions
+        = f.submit 'Save'
+        = link_to 'Back', pc_procedures_path
+        = link_to_add_association 'Add stage', f, :stages, id: 'add-stage-btn', render_options: { wrapper: 'horizontal_table_form' }
+    .col-sm-6      
+      = render 'stage_form', f: f

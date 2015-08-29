@@ -1,7 +1,7 @@
 @import "variable";
 
 #pc_header {
-  margin-bottom: $table_header_height;
+  //margin-bottom: $table_header_height;
 }
 
 body.dark #pc_stock_table {
@@ -19,6 +19,7 @@ body.dark #pc_stock_table {
     background-color: #111;
   }
 
+  padding-top: 30px;
   width: $pc_table_width;
   font-size: 22px;
   color: whitesmoke;
