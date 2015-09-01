@@ -15,20 +15,12 @@ class Pc::ProceduresController < PcController
 
   # GET /pc/procedures/new
   def new
-    # if params[:copy_id]
-    #   @pc_procedure = Pc::Procedure.new(Pc::Procedure.find(params[:copy_id]).attributes)
-    #   @stages = Pc::Stage.where(@pc_procedure.id)
-    #   @pc_procedure.id = nil
-    # else
-      @pc_procedure = Pc::Procedure.new
-      if params[:copy_id]
-        @copy_procedure = Pc::Procedure.find(params[:copy_id])
-        @copy_stages = @copy_procedure.try(:stages)
-        @copy_stages.try(:each) do |stage|
-          @pc_procedure.stages.new(stage.attributes)
-        end
-      end
-    #end
+    @pc_procedure = if params[:copy_id]
+      @copy_procedure = Pc::Procedure.find(params[:copy_id])
+      @copy_procedure.fork
+    else
+      Pc::Procedure.new
+    end
   end
 
   # GET /pc/procedures/1/edit
@@ -39,7 +31,9 @@ class Pc::ProceduresController < PcController
   # POST /pc/procedures.json
   def create
     @pc_procedure = Pc::Procedure.new(pc_procedure_params)
-
+    @pc_procedure.stages.each do |stage|
+      stage.amount = @pc_procedure.procedure_amount
+    end
     respond_to do |format|
       if @pc_procedure.save
         format.html { redirect_to @pc_procedure, notice: 'Procedure was successfully created.' }
@@ -87,6 +81,6 @@ class Pc::ProceduresController < PcController
     end
 
     def pc_procedure_params
-      params.require(:pc_procedure).permit(:sourcing_types, :start_date, :customer, :material_spec, :procedure_amount, :workpiece_id, stages_attributes: [:id, :factory_name, :note, :procedure_id])
+      params.require(:pc_procedure).permit(:sourcing_type, :start_date, :customer, :material_spec, :procedure_amount, :workpiece_id, stages_attributes: [:id, :factory_name, :note, :procedure_id, :_destroy])
     end
 end
