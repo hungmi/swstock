@@ -6,6 +6,7 @@ class CreatePcStages < ActiveRecord::Migration
       t.text :note
       t.references :procedure, index: true, foreign_key: true
       #t.references :factory, index: true, foreign_key: true
+      t.string :aasm_state
 
       t.timestamps null: false
     end

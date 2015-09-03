@@ -4,6 +4,7 @@ class CreatePcProcedures < ActiveRecord::Migration
       t.string :sourcing_type, :start_date, :customer, :material_spec
       t.integer :procedure_amount
       t.references :workpiece, index: true, foreign_key: true
+      t.string :aasm_state
 
       t.timestamps null: false
     end

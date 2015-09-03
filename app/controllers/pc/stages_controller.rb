@@ -69,6 +69,6 @@ class Pc::StagesController < PcController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def pc_stage_params
-      params[:pc_stage]
+      params.require(:pc_stage).permit(:arrival_date, :amount, :factory_name, :estimated_date, :finish_date, :note, :finished, :broken)
     end
 end

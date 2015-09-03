@@ -1,17 +1,16 @@
 .container
   - @pc_procedures.each do |pc_procedure|
     / if a procedure has no stage then skip it !!!
-    /= pc_procedure
-    - @stages = pc_procedure.stages
+    /- @stages = pc_procedure.stages
 
-    - if @stages.exists?
+    - if pc_procedure.stages
 
       - @picnum = pc_procedure.workpiece.picnum
-      - status = @stages.where(finish_date: nil).present? ? 'primary' : 'success'
+      /- status = @stages.where(finish_date: nil).present? ? 'primary' : 'success'
 
       = simple_form_for pc_procedure, wrapper: :horizontal_table_form do |f|
 
-        .panel#procedure-stage-panel{ class: "panel-#{status}" }
+        .panel#procedure-stage-panel{ class: "panel-primary" }
           .panel-heading{ data: { picnum: @picnum } }
             / - current_stage = @stages.where(finish_date: nil).first || @stages.last
             / - number = current_stage.try(:amount)
@@ -27,7 +26,7 @@
           .panel-body
             %table.table.procedure-table
               %tbody
-                %tr{ class: status }
+                %tr{ class: 'primary' }
                   = f.input :sourcing_type, placeholder: 'sourcing_type'
                   = f.input :start_date
                   = f.input :customer
@@ -36,6 +35,7 @@
                   %td= link_to 'Edit', edit_pc_procedure_path(pc_procedure)
                   %td= link_to 'Destroy', pc_procedure, :method => :delete, :data => { :confirm => 'Are you sure?' }
                   %td= link_to 'New Proc', new_pc_procedure_path(copy_id: pc_procedure)
+                  %td= f.submit
 
           %table.table.stage-table{ class: @picnum }
             %thead
@@ -48,9 +48,12 @@
                 %th 提醒
                 %th 成品
                 %th 半成品
+                %th Status
             %tbody
-              = render @stages, pc_procedure: pc_procedure
+              = render pc_procedure.stages, pc_procedure: pc_procedure
 
-  = will_paginate @pc_procedures, renderer: BootstrapPagination::Rails
+  /= will_paginate @pc_procedures, renderer: BootstrapPagination::Rails
 
   = link_to 'New Blank Procedure', new_pc_procedure_path
+
+  = console

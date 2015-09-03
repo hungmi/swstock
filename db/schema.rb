@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20150819052121) do
     t.string   "material_spec"
     t.integer  "procedure_amount"
     t.integer  "workpiece_id"
+    t.string   "aasm_state"
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
   end
@@ -55,6 +56,7 @@ ActiveRecord::Schema.define(version: 20150819052121) do
     t.integer  "broken"
     t.text     "note"
     t.integer  "procedure_id"
+    t.string   "aasm_state"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end

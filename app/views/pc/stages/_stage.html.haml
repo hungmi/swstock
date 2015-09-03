@@ -8,8 +8,9 @@
     %td= stage.note
     %td= stage.finished
     %td= stage.broken
+    %td= stage.aasm_state
 - else
-  = simple_form_for stage, url: pc_procedure_stage_path(pc_procedure, stage), wrapper: :horizontal_table_form do |f|
+  = simple_form_for [pc_procedure, stage], wrapper: :horizontal_table_form do |f|
     %tr
       = f.input :arrival_date
       = f.input :amount
@@ -19,3 +20,5 @@
       = f.input :note
       = f.input :finished
       = f.input :broken
+      %td= stage.aasm_state
+      %td= f.submit

@@ -5,7 +5,7 @@ class Pc::ProceduresController < PcController
   # GET /pc/procedures
   # GET /pc/procedures.json
   def index
-    @pc_procedures = Pc::Procedure.all.paginated(params[:page])
+    @pc_procedures = Pc::Procedure.all#.joins(:stages).where( :pc_stages => { finish_date: nil } ).all
   end
 
   # GET /pc/procedures/1
@@ -36,7 +36,7 @@ class Pc::ProceduresController < PcController
     end
     respond_to do |format|
       if @pc_procedure.save
-        format.html { redirect_to @pc_procedure, notice: 'Procedure was successfully created.' }
+        format.html { redirect_to pc_procedures_path, notice: 'Procedure was successfully created.' }
         format.json { render :show, status: :created, location: @pc_procedure }
       else
         format.html { render :new }
@@ -50,10 +50,10 @@ class Pc::ProceduresController < PcController
   def update
     respond_to do |format|
       if @pc_procedure.update(pc_procedure_params)
-        format.html { redirect_to @pc_procedure, notice: 'Procedure was successfully updated.' }
+        format.html { redirect_to pc_procedures_path, notice: 'Procedure was successfully updated.' }
         format.json { render :show, status: :ok, location: @pc_procedure }
       else
-        format.html { render :edit }
+        format.html { render :index }
         format.json { render json: @pc_procedure.errors, status: :unprocessable_entity }
       end
     end

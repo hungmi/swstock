@@ -1,7 +1,4 @@
-- @copy_procedure = Pc::Procedure.find(params[:copy_id]) if params[:copy_id]
-- @copy_stages = @copy_procedure.try(:stages)
-
-= simple_form_for @pc_procedure, url: pc_procedures_path, method: :post do |f|
+= simple_form_for @pc_procedure do |f|
   - if @pc_procedure.errors.any?
     #error_explanation
       %h2= "#{pluralize(@pc_procedure.errors.count, "error")} prohibited this pc_procedure from being saved:"
@@ -11,12 +8,12 @@
 
   .row
     .col-sm-offset-2.col-sm-3
-      = f.association :workpiece, label_method: :picnum, value_method: :id, selected: @copy_procedure.workpiece.id
-      = f.input :sourcing_type, input_html: { value: @copy_procedure.sourcing_type }
-      = f.input :start_date, input_html: { value: Date.today.to_s }
-      = f.input :customer, input_html: { value: @copy_procedure.customer }
-      = f.input :material_spec, input_html: { value: @copy_procedure.material_spec }
-      = f.input :procedure_amount, input_html: { value: @copy_procedure.procedure_amount }
+      = f.association :workpiece, label_method: :picnum, value_method: :id
+      = f.input :sourcing_type
+      = f.input :start_date
+      = f.input :customer
+      = f.input :material_spec
+      = f.input :procedure_amount
 
       .actions
         = f.submit 'Save'

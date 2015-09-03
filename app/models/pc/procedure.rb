@@ -1,5 +1,26 @@
 class Pc::Procedure < ActiveRecord::Base
-  scope :paginated, -> (page) { paginate(:per_page => 5, :page => page) }
+  include AASM
+
+  aasm :whiny_transitions => false do
+    state :sleeping, :initial => true
+    state :running
+    state :paused
+    state :finished
+
+    event :run do
+      transitions from: [:sleeping, :paused], to: :running
+    end
+
+    event :finish do
+      transitions from: :running, to: :finished
+    end
+
+    event :pause do
+      transitions from: :running, to: :paused
+    end
+  end
+
+  scope :paginated, -> (page) { paginate(:per_page => 1, :page => page) }
 
   has_many :stages
   accepts_nested_attributes_for :stages, reject_if: :all_blank, allow_destroy: true
