@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20150819052121) do
     t.string   "customer"
   end
 
-  create_table "pc_procedures", force: :cascade do |t|
+  create_table "procedures", force: :cascade do |t|
     t.string   "sourcing_type"
     t.string   "start_date"
     t.string   "customer"
@@ -44,9 +44,9 @@ ActiveRecord::Schema.define(version: 20150819052121) do
     t.datetime "updated_at",       null: false
   end
 
-  add_index "pc_procedures", ["workpiece_id"], name: "index_pc_procedures_on_workpiece_id"
+  add_index "procedures", ["workpiece_id"], name: "index_procedures_on_workpiece_id"
 
-  create_table "pc_stages", force: :cascade do |t|
+  create_table "stages", force: :cascade do |t|
     t.string   "factory_name"
     t.string   "arrival_date"
     t.string   "estimated_date"
@@ -61,9 +61,9 @@ ActiveRecord::Schema.define(version: 20150819052121) do
     t.datetime "updated_at",     null: false
   end
 
-  add_index "pc_stages", ["procedure_id"], name: "index_pc_stages_on_procedure_id"
+  add_index "stages", ["procedure_id"], name: "index_stages_on_procedure_id"
 
-  create_table "pc_workpieces", force: :cascade do |t|
+  create_table "workpieces", force: :cascade do |t|
     t.string   "wp_type"
     t.string   "picnum"
     t.string   "spec"

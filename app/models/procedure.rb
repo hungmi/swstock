@@ -1,4 +1,6 @@
-class Pc::Procedure < ActiveRecord::Base
+class Procedure < ActiveRecord::Base
+  include ExcelAccesor
+  
   include AASM
 
   aasm :whiny_transitions => false do

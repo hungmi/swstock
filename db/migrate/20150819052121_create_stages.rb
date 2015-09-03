@@ -1,6 +1,6 @@
-class CreatePcStages < ActiveRecord::Migration
+class CreateStages < ActiveRecord::Migration
   def change
-    create_table :pc_stages do |t|      
+    create_table :stages do |t|      
       t.string :factory_name, :arrival_date, :estimated_date, :finish_date
       t.integer :amount, :finished, :broken
       t.text :note

@@ -1,14 +1,14 @@
 .container
-  - @pc_procedures.each do |pc_procedure|
+  - @procedures.each do |procedure|
     / if a procedure has no stage then skip it !!!
-    /- @stages = pc_procedure.stages
+    /- @stages = procedure.stages
 
-    - if pc_procedure.stages
+    - if procedure.stages
 
-      - @picnum = pc_procedure.workpiece.picnum
+      - @picnum = procedure.workpiece.picnum
       /- status = @stages.where(finish_date: nil).present? ? 'primary' : 'success'
 
-      = simple_form_for pc_procedure, wrapper: :horizontal_table_form do |f|
+      = simple_form_for procedure, wrapper: :horizontal_table_form do |f|
 
         .panel#procedure-stage-panel{ class: "panel-primary" }
           .panel-heading{ data: { picnum: @picnum } }
@@ -32,9 +32,9 @@
                   = f.input :customer
                   = f.input :material_spec, placeholder: 'material_spec'
                   = f.input :procedure_amount
-                  %td= link_to 'Edit', edit_pc_procedure_path(pc_procedure)
-                  %td= link_to 'Destroy', pc_procedure, :method => :delete, :data => { :confirm => 'Are you sure?' }
-                  %td= link_to 'New Proc', new_pc_procedure_path(copy_id: pc_procedure)
+                  %td= link_to 'Edit', edit_procedure_path(procedure)
+                  %td= link_to 'Destroy', procedure, :method => :delete, :data => { :confirm => 'Are you sure?' }
+                  %td= link_to 'New Proc', new_procedure_path(copy_id: procedure)
                   %td= f.submit
 
           %table.table.stage-table{ class: @picnum }
@@ -50,10 +50,23 @@
                 %th 半成品
                 %th Status
             %tbody
-              = render pc_procedure.stages, pc_procedure: pc_procedure
+              /= render procedure.stages, procedure: procedure
+              - procedure.stages.each do |stage|
+                = simple_form_for [procedure, stage], wrapper: :horizontal_table_form do |s|
+                  %tr
+                    = s.input :arrival_date
+                    = s.input :amount
+                    = s.input :factory_name
+                    = s.input :estimated_date
+                    = s.input :finish_date
+                    = s.input :note
+                    = s.input :finished
+                    = s.input :broken
+                    %td= stage.aasm_state
+                    %td= s.submit
 
-  /= will_paginate @pc_procedures, renderer: BootstrapPagination::Rails
+  /= will_paginate @procedures, renderer: BootstrapPagination::Rails
 
-  = link_to 'New Blank Procedure', new_pc_procedure_path
+  = link_to 'New Blank Procedure', new_procedure_path
 
   = console

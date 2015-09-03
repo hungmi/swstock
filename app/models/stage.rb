@@ -1,4 +1,4 @@
-class Pc::Stage < ActiveRecord::Base
+class Stage < ActiveRecord::Base
   include AASM
 
   aasm :whiny_transitions => false do

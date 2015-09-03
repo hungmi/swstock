@@ -1,6 +1,6 @@
-class CreatePcProcedures < ActiveRecord::Migration
+class CreateProcedures < ActiveRecord::Migration
   def change
-    create_table :pc_procedures do |t|
+    create_table :procedures do |t|
       t.string :sourcing_type, :start_date, :customer, :material_spec
       t.integer :procedure_amount
       t.references :workpiece, index: true, foreign_key: true

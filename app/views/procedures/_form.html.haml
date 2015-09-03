@@ -1,9 +1,9 @@
-= simple_form_for @pc_procedure do |f|
-  - if @pc_procedure.errors.any?
+= simple_form_for @procedure do |f|
+  - if @procedure.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@pc_procedure.errors.count, "error")} prohibited this pc_procedure from being saved:"
+      %h2= "#{pluralize(@procedure.errors.count, "error")} prohibited this procedure from being saved:"
       %ul
-        - @pc_procedure.errors.full_messages.each do |msg|
+        - @procedure.errors.full_messages.each do |msg|
           %li= msg
 
   .row
@@ -17,7 +17,7 @@
 
       .actions
         = f.submit 'Save'
-        = link_to 'Back', pc_procedures_path
+        = link_to 'Back', procedures_path
         = link_to_add_association 'Add stage', f, :stages, id: 'add-stage-btn', render_options: { wrapper: 'horizontal_table_form' }
     .col-sm-6      
       = render 'stage_form', f: f

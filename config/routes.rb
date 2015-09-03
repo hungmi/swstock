@@ -7,12 +7,13 @@ Rails.application.routes.draw do
     resources :items, only: [:index] do
       get :search, on: :collection
     end
-    resources :workpieces do
-      post :import, on: :collection
-    end
-    resources :procedures do
-      resources :stages
-    end
+  end
+
+  resources :workpieces
+
+  resources :procedures do
+    post :import, on: :collection
+    resources :stages
   end
 
   resources :items do

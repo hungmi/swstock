@@ -10,7 +10,7 @@
     %td= stage.broken
     %td= stage.aasm_state
 - else
-  = simple_form_for [pc_procedure, stage], wrapper: :horizontal_table_form do |f|
+  = simple_form_for [procedure, stage], wrapper: :horizontal_table_form do |f|
     %tr
       = f.input :arrival_date
       = f.input :amount

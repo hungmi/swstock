@@ -1,0 +1,22 @@
+.container
+  - @procedures.each do |procedure|
+    - if procedure.stages
+      - @picnum = procedure.workpiece.picnum
+      = simple_form_for procedure do |f|
+        = @picnum[-7..-1]
+        = f.input :sourcing_type, placeholder: 'sourcing_type'
+        = f.input :start_date
+        = f.input :customer
+        = f.input :material_spec, placeholder: 'material_spec'
+        = f.input :procedure_amount
+        = link_to 'Edit', edit_procedure_path(procedure)
+        = link_to 'Destroy', procedure, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        = link_to 'New Proc', new_procedure_path(copy_id: procedure)
+        = f.submit
+
+      
+        = f.simple_fields_for :stages do |stage|
+          = render partial:'stage_fields', locals: { f: stage }
+    %hr
+
+  = link_to 'New Blank Procedure', new_procedure_path
