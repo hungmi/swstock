@@ -1,4 +1,4 @@
-%h1 Listing pc_workpieces
+%h1 Listing workpieces
 
 %table
   %thead
@@ -11,15 +11,15 @@
       %th
 
   %tbody
-    - @pc_workpieces.each do |pc_workpiece|
+    - @workpieces.each do |workpiece|
       %tr
-        %td= pc_workpiece.wp_type
-        %td= pc_workpiece.picnum
-        %td= pc_workpiece.spec
-        %td= link_to 'Show', pc_workpiece
-        %td= link_to 'Edit', edit_pc_workpiece_path(pc_workpiece)
-        %td= link_to 'Destroy', pc_workpiece, :method => :delete, :data => { :confirm => 'Are you sure?' }
+        %td= workpiece.wp_type
+        %td= workpiece.picnum
+        %td= workpiece.spec
+        %td= link_to 'Show', workpiece
+        %td= link_to 'Edit', edit_workpiece_path(workpiece)
+        %td= link_to 'Destroy', workpiece, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
 
-= link_to 'New Workpiece', new_pc_workpiece_path
+= link_to 'New Workpiece', new_workpiece_path

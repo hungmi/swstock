@@ -1,6 +1,12 @@
 %tr.nested-fields
-  = f.input :factory_name, label: false
-  = f.input :note, label: false
+  = f.input :arrival_date
+  = f.input :amount
+  = f.input :factory_name
+  = f.input :estimated_date
+  = f.input :finish_date
+  = f.input :note
+  = f.input :finished
+  = f.input :broken
   %td{ style: 'vertical-align: middle;' }
     = link_to_remove_association f do 
       %i.fa.fa-times{ style: 'font-size: 26px; vertical-align: middle;' }

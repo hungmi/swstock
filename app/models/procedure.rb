@@ -24,7 +24,7 @@ class Procedure < ActiveRecord::Base
 
   scope :paginated, -> (page) { paginate(:per_page => 1, :page => page) }
 
-  has_many :stages
+  has_many :stages, dependent: :destroy
   accepts_nested_attributes_for :stages, reject_if: :all_blank, allow_destroy: true
   
   belongs_to :workpiece

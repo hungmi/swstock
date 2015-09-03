@@ -31,7 +31,7 @@ class Stage < ActiveRecord::Base
     if finished.present? && finish_date.present?
       self.finish
     elsif arrival_date.present?
-      self.run
+      true #self.run
     end
   end
 

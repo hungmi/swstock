@@ -69,6 +69,6 @@ class WorkpiecesController < PcController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def workpiece_params
-      params[:workpiece]
+      params.require(:workpiece).permit(:wp_type, :picnum, :spec)
     end
 end

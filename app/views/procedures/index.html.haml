@@ -2,21 +2,39 @@
   - @procedures.each do |procedure|
     - if procedure.stages
       - @picnum = procedure.workpiece.picnum
-      = simple_form_for procedure do |f|
-        = @picnum[-7..-1]
-        = f.input :sourcing_type, placeholder: 'sourcing_type'
-        = f.input :start_date
-        = f.input :customer
-        = f.input :material_spec, placeholder: 'material_spec'
-        = f.input :procedure_amount
-        = link_to 'Edit', edit_procedure_path(procedure)
-        = link_to 'Destroy', procedure, :method => :delete, :data => { :confirm => 'Are you sure?' }
-        = link_to 'New Proc', new_procedure_path(copy_id: procedure)
-        = f.submit
+      = simple_form_for procedure, wrapper: :horizontal_table_form do |f|
+        .panel#procedure-stage-panel{ class: "panel-primary" }
+          .panel-heading{ data: { picnum: @picnum } }
+            = @picnum[-7..-1]
+            %span.glyphicon.glyphicon-resize-full.show-stages
+          .panel-body
+            %table.table.procedure-table
+              %tbody
+                %tr
+                  = f.input :sourcing_type, placeholder: 'sourcing_type'
+                  = f.input :start_date
+                  = f.input :customer
+                  = f.input :material_spec, placeholder: 'material_spec'
+                  = f.input :procedure_amount
+                  %td= link_to 'Edit', edit_procedure_path(procedure)
+                  %td= link_to 'Destroy', procedure, :method => :delete, :data => { :confirm => 'Are you sure?' }
+                  %td= link_to 'New Proc', new_procedure_path(copy_id: procedure)
+                  %td= f.button 'submit'
 
-      
-        = f.simple_fields_for :stages do |stage|
-          = render partial:'stage_fields', locals: { f: stage }
-    %hr
+          %table.table.stage-table{ class: @picnum }
+            %thead
+              %tr
+                %th arrival_date
+                %th amount
+                %th factory
+                %th estimated
+                %th finish_date
+                %th 提醒
+                %th 成品
+                %th 半成品
+                %th Status
+            = f.simple_fields_for :stages do |stage|
+              %tbody
+                = render partial:'stage_fields', locals: { f: stage }
 
   = link_to 'New Blank Procedure', new_procedure_path

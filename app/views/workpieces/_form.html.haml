@@ -1,10 +1,13 @@
-= form_for @pc_workpiece do |f|
-  - if @pc_workpiece.errors.any?
+= simple_form_for @workpiece do |f|
+  - if @workpiece.errors.any?
     #error_explanation
-      %h2= "#{pluralize(@pc_workpiece.errors.count, "error")} prohibited this pc_workpiece from being saved:"
+      %h2= "#{pluralize(@workpiece.errors.count, "error")} prohibited this workpiece from being saved:"
       %ul
-        - @pc_workpiece.errors.full_messages.each do |msg|
+        - @workpiece.errors.full_messages.each do |msg|
           %li= msg
+  = f.input :wp_type
+  = f.input :picnum
+  = f.input :spec
 
   .actions
     = f.submit 'Save'
