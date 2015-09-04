@@ -32,24 +32,22 @@ class Stage < ActiveRecord::Base
 
   after_save :update_status
 
-  private
-
   def update_status
-    if finished_amount.present? && finished_date.present?
-      self.finish!
+    if finished_date.present? # && finished_amount.present?
+      self.finish! # self.move!
       if self.next.nil?
         if self.procedure.finish!
           self.note = "it's me"
           self.save
         end
       else
-        if self.next.arrival_date
-          self.run!
+        if self.next.arrival_date.present?
+          self.next.run!
         else
           self.move!
         end
       end
-    elsif arrival_date.present?      
+    elsif arrival_date.present? || self.previous.nil?
       self.run!
     end
   end

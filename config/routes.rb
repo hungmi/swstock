@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
   scope :stages, controller: :stages do
     patch ':id/finish' => :finish, as: :finish_stage
+    patch ':id/arrive' => :arrive, as: :arrive_stage
   end
 
   resources :items do

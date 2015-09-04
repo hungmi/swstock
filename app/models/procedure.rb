@@ -33,11 +33,17 @@ class Procedure < ActiveRecord::Base
     end
     forked_proc
   end
-  
-  def self.run_first_stage
-    self.all.each do |procedure|
-      procedure.stages.first.run!
+
+  after_save :update_status_if_any_stage
+
+  def update_status_if_any_stage
+    if self.stages.exists?
+      self.stages.each do |stage|
+        stage.update_status
+        stage.note = 'from Procedure'
+        stage.save
+      end
     end
-  end
+  end 
 
 end

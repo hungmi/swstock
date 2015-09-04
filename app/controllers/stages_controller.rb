@@ -1,5 +1,5 @@
 class StagesController < PcController
-  before_action :set_stage, only: [:show, :edit, :update, :destroy, :finish]
+  before_action :set_stage, only: [:show, :edit, :update, :destroy, :finish, :arrive]
 
   def index
     @stages = Stage.all
@@ -51,8 +51,12 @@ class StagesController < PcController
 
   def finish
     @stage.update(finished_date: Date.today.to_s)
-    @stage.move!
-    @stage.next.update(arrival_date: Date.today.tomorrow.to_s)
+    @stage.next.update(arrival_date: Date.today.to_s)
+    redirect_to procedures_path
+  end
+
+  def arrive
+    @stage.update(arrival_date: Date.today.to_s)
     redirect_to procedures_path
   end
 

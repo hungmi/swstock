@@ -1,5 +1,5 @@
 %tr.nested-fields
-  - if f.object.moving?
+  - if f.object.finished? || f.object.moving? && action_name != 'edit'
     %td= f.object.arrival_date
     %td= f.object.factory_name
     %td= f.object.arrival_amount
@@ -9,7 +9,10 @@
     %td= f.object.finished_amount
     %td= f.object.broken_amount
   - else
-    = f.input :arrival_date
+    - if f.object.arrival_date
+      = f.input :arrival_date
+    - elsif f.object.persisted?
+      %td= link_to 'Arrive', arrive_stage_path(f.object), method: :patch
     = f.input :factory_name
     - if f.object.persisted?
       = f.input :arrival_amount

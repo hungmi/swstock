@@ -4,7 +4,6 @@ class ProceduresController < PcController
   
   def import
     Procedure.import_sourcing(params[:file])
-    Procedure.run_first_stage
     redirect_to procedures_path
     flash[:success] = '已成功載入所有項目'
   end
@@ -83,6 +82,6 @@ class ProceduresController < PcController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def procedure_params
-      params.require(:procedure).permit(:sourcing_type, :start_date, :customer, :material_spec, :procedure_amount, :workpiece_id, stages_attributes: [:id, :factory_name, :note, :arrival_date, :amount, :estimated_date, :finish_date, :finished, :broken, :procedure_id, :_destroy])
+      params.require(:procedure).permit(:sourcing_type, :start_date, :customer, :material_spec, :procedure_amount, :workpiece_id, stages_attributes: [:id, :factory_name, :note, :arrival_date, :arrival_amount, :estimated_date, :finished_date, :finished_amount, :broken_amount, :procedure_id, :_destroy])
     end
 end
