@@ -16,6 +16,10 @@ Rails.application.routes.draw do
     resources :stages
   end
 
+  scope :stages, controller: :stages do
+    patch ':id/finish' => :finish, as: :finish_stage
+  end
+
   resources :items do
     collection do
       post :import

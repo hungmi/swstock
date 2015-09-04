@@ -20,13 +20,11 @@ module ExcelAccesor
         procedure = workpiece.procedures.find_by_start_date(parameters[:start_date]) || workpiece.procedures.new
         unless procedure.persisted?
           procedure.attributes = parameters.permit(:sourcing_type, :start_date, :customer, :material_spec, :procedure_amount)
-          #procedure.pc_workpiece_id = workpiece.id
           procedure.save
         end
 
-        stage = procedure.stages.new#find_by_id(row["id"]) || new
-        #之後要匯入ID的話要修改這邊
-        stage.attributes = parameters.permit(:factory_name, :amount, :arrival_date, :estimated_date, :note, :finish_date, :finished, :broken)
+        stage = procedure.stages.new
+        stage.attributes = parameters.permit(:factory_name, :arrival_amount, :arrival_date, :estimated_date, :note, :finished_date, :finished_amount, :broken_amount)
         stage.save
       end
     end

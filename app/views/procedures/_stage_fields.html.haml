@@ -1,12 +1,24 @@
 %tr.nested-fields
-  = f.input :arrival_date
-  = f.input :amount
-  = f.input :factory_name
-  = f.input :estimated_date
-  = f.input :finish_date
-  = f.input :note
-  = f.input :finished
-  = f.input :broken
+  - if f.object.moving?
+    %td= f.object.arrival_date
+    %td= f.object.factory_name
+    %td= f.object.arrival_amount
+    %td= f.object.note
+    %td= f.object.estimated_date
+    %td= f.object.finished_date
+    %td= f.object.finished_amount
+    %td= f.object.broken_amount
+  - else
+    = f.input :arrival_date
+    = f.input :factory_name
+    - if f.object.persisted?
+      = f.input :arrival_amount
+      = f.input :note
+      = f.input :estimated_date
+      = f.input :finished_amount
+      %td= link_to 'Finish', finish_stage_path(f.object), method: :patch
+      = f.input :broken_amount
+  %td= f.object.aasm_state
   %td{ style: 'vertical-align: middle;' }
     = link_to_remove_association f do 
       %i.fa.fa-times{ style: 'font-size: 26px; vertical-align: middle;' }

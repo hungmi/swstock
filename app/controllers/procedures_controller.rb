@@ -4,6 +4,7 @@ class ProceduresController < PcController
   
   def import
     Procedure.import_sourcing(params[:file])
+    Procedure.run_first_stage
     redirect_to procedures_path
     flash[:success] = '已成功載入所有項目'
   end
@@ -37,7 +38,7 @@ class ProceduresController < PcController
   def create
     @procedure = Procedure.new(procedure_params)
     @procedure.stages.each do |stage|
-      stage.amount = @procedure.procedure_amount
+      stage.arrival_amount = @procedure.procedure_amount
     end
     respond_to do |format|
       if @procedure.save

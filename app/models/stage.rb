@@ -1,37 +1,56 @@
 class Stage < ActiveRecord::Base
-  include AASM
-
-  aasm :whiny_transitions => false do
-    state :sleeping, :initial => true
-    state :running
-    state :paused
-    state :finished
-
-    event :run do
-      transitions from: [:sleeping, :paused], to: :running
-    end
-
-    event :finish do
-      transitions from: :running, to: :finished
-    end
-
-    event :pause do
-      transitions from: :running, to: :paused
-    end
-  end
-
   scope :paginated, -> (page) { paginate(:per_page => 20, :page => page) }
 
   belongs_to :procedure
   belongs_to :factory
 
-  before_save :update_status
+  include AASM
+  aasm :whiny_transitions => false do
+    state :sleeping, initial: true
+    state :moving
+    state :running
+    state :finished
 
-  def update_status    
-    if finished.present? && finish_date.present?
-      self.finish
-    elsif arrival_date.present?
-      true #self.run
+    event :run do
+      transitions from: :sleeping, to: :running
+    end
+    event :move do
+      transitions from: :running, to: :moving
+    end
+    event :finish do
+      transitions from: [:sleeping, :running], to: :finished
+    end
+  end
+
+  def next
+    self.procedure.stages.order(:id).where("id > ?", id).first
+  end
+
+  def previous
+    self.procedure.stages.order(:id).where("id < ?", id).last
+  end
+
+  after_save :update_status
+
+  private
+
+  def update_status
+    if finished_amount.present? && finished_date.present?
+      self.finish!
+      if self.next.nil?
+        if self.procedure.finish!
+          self.note = "it's me"
+          self.save
+        end
+      else
+        if self.next.arrival_date
+          self.run!
+        else
+          self.move!
+        end
+      end
+    elsif arrival_date.present?      
+      self.run!
     end
   end
 

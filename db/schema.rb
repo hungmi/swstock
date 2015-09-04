@@ -50,15 +50,15 @@ ActiveRecord::Schema.define(version: 20150819052121) do
     t.string   "factory_name"
     t.string   "arrival_date"
     t.string   "estimated_date"
-    t.string   "finish_date"
-    t.integer  "amount"
-    t.integer  "finished"
-    t.integer  "broken"
+    t.string   "finished_date"
+    t.integer  "arrival_amount"
+    t.integer  "finished_amount"
+    t.integer  "broken_amount"
     t.text     "note"
     t.integer  "procedure_id"
     t.string   "aasm_state"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   add_index "stages", ["procedure_id"], name: "index_stages_on_procedure_id"

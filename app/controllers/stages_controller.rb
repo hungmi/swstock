@@ -1,5 +1,5 @@
 class StagesController < PcController
-  before_action :set_stage, only: [:show, :edit, :update, :destroy]
+  before_action :set_stage, only: [:show, :edit, :update, :destroy, :finish]
 
   def index
     @stages = Stage.all
@@ -49,6 +49,13 @@ class StagesController < PcController
     end
   end
 
+  def finish
+    @stage.update(finished_date: Date.today.to_s)
+    @stage.move!
+    @stage.next.update(arrival_date: Date.today.tomorrow.to_s)
+    redirect_to procedures_path
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_stage
@@ -57,6 +64,6 @@ class StagesController < PcController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def stage_params
-      params.require(:stage).permit(:arrival_date, :amount, :factory_name, :estimated_date, :finish_date, :note, :finished, :broken)
+      params.require(:stage).permit(:arrival_date, :arrival_amount, :factory_name, :estimated_date, :finished_date, :note, :finished_amount, :broken_amount)
     end
 end

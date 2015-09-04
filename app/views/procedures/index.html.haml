@@ -1,40 +1,42 @@
-.container
-  - @procedures.each do |procedure|
-    - if procedure.stages
-      - @picnum = procedure.workpiece.picnum
-      = simple_form_for procedure, wrapper: :horizontal_table_form do |f|
-        .panel#procedure-stage-panel{ class: "panel-primary" }
-          .panel-heading{ data: { picnum: @picnum } }
-            = @picnum[-7..-1]
-            %span.glyphicon.glyphicon-resize-full.show-stages
-          .panel-body
-            %table.table.procedure-table
-              %tbody
-                %tr
-                  = f.input :sourcing_type, placeholder: 'sourcing_type'
-                  = f.input :start_date
-                  = f.input :customer
-                  = f.input :material_spec, placeholder: 'material_spec'
-                  = f.input :procedure_amount
-                  %td= link_to 'Edit', edit_procedure_path(procedure)
-                  %td= link_to 'Destroy', procedure, :method => :delete, :data => { :confirm => 'Are you sure?' }
-                  %td= link_to 'New Proc', new_procedure_path(copy_id: procedure)
-                  %td= f.button 'submit'
 
-          %table.table.stage-table{ class: @picnum }
-            %thead
+- @procedures.each do |procedure|
+  - if procedure.stages
+    - @picnum = procedure.workpiece.picnum
+    = simple_form_for procedure, wrapper: :horizontal_table_form do |f|
+      .panel#procedure-stage-panel{ class: "panel-primary" }
+        .panel-heading.text-center{ data: { picnum: @picnum } }
+          %span= @picnum[-7..-1]
+          %span.glyphicon.glyphicon-resize-full.show-stages
+          %span= procedure.aasm_state
+        .panel-body
+          %table.table.procedure-table
+            %tbody
               %tr
-                %th arrival_date
-                %th amount
-                %th factory
-                %th estimated
-                %th finish_date
-                %th 提醒
-                %th 成品
-                %th 半成品
-                %th Status
-            = f.simple_fields_for :stages do |stage|
-              %tbody
-                = render partial:'stage_fields', locals: { f: stage }
+                = f.input :sourcing_type, placeholder: 'sourcing_type'
+                = f.input :start_date
+                = f.input :customer
+                = f.input :material_spec, placeholder: 'material_spec'
+                = f.input :procedure_amount
+                %td= link_to 'Edit', edit_procedure_path(procedure)
+                %td= link_to 'Destroy', procedure, :method => :delete, :data => { :confirm => 'Are you sure?' }
+                %td= link_to 'New Proc', new_procedure_path(copy_id: procedure)
+                %td= f.button 'submit'
 
-  = link_to 'New Blank Procedure', new_procedure_path
+        %table.table.stage-table{ class: @picnum }
+          %thead
+            %tr
+              %th= t '.arrival_date'
+              %th= t '.factory'
+              %th= t '.arrival_amount'
+              %th= t '.note'
+              %th= t '.estimated_date'
+              %th= t '.finished_date'
+              %th= t '.finished_amount'
+              %th= t '.broken_amount'
+              %th= t '.aasm_state'
+              %th= t '.action'
+          = f.simple_fields_for :stages do |stage|
+            %tbody
+              = render partial:'stage_fields', locals: { f: stage }
+
+= link_to 'New Blank Procedure', new_procedure_path

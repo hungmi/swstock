@@ -53,6 +53,8 @@ gem "cocoon"
 
 gem 'aasm'
 
+gem 'rails-i18n', github: 'svenfuchs/rails-i18n', branch: 'master'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
