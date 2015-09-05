@@ -1,26 +1,12 @@
-%tr.nested-fields
-  - if f.object.finished? || f.object.moving? && action_name != 'edit'
-    %td= f.object.arrival_date
-    %td= f.object.factory_name
-    %td= f.object.arrival_amount
-    %td= f.object.note
-    %td= f.object.estimated_date
-    %td= f.object.finished_date
-    %td= f.object.finished_amount
-    %td= f.object.broken_amount
-  - else
-    - if f.object.arrival_date
-      = f.input :arrival_date
-    - elsif f.object.persisted?
-      %td= link_to 'Arrive', arrive_stage_path(f.object), method: :patch
-    = f.input :factory_name
-    - if f.object.persisted?
-      = f.input :arrival_amount
-      = f.input :note
-      = f.input :estimated_date
-      = f.input :finished_amount
-      %td= link_to 'Finish', finish_stage_path(f.object), method: :patch
-      = f.input :broken_amount
+%tr.nested-fields  
+  = render_link_or_text('arrive', arrive_stage_path(f.object), f.object, 'arrival_date')
+  = render_input_or_text(f, f.object, 'factory_name')
+  = render_input_or_text(f, f.object, 'arrival_amount')
+  = render_input_or_text(f, f.object, 'note')
+  = render_input_or_text(f, f.object, 'estimated_date')
+  = render_link_or_text('Finish', finish_stage_path(f.object), f.object, 'finished_date')
+  = render_input_or_text(f, f.object, 'finished_amount')
+  = render_input_or_text(f, f.object, 'broken_amount')
   %td= f.object.aasm_state
   %td{ style: 'vertical-align: middle;' }
     = link_to_remove_association f do 

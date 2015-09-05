@@ -32,6 +32,9 @@ class StagesController < PcController
   def update
     respond_to do |format|
       if @stage.update(stage_params)
+        if @stage.finished_amount.present?
+          @stage.finish!
+        end
         format.html { redirect_to procedures_path, notice: 'Stage was successfully updated.' }
         #format.json { render :show, status: :ok, location: @stage }
       else

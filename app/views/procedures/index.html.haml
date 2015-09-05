@@ -12,11 +12,16 @@
           %table.table.procedure-table
             %tbody
               %tr
-                = f.input :sourcing_type, placeholder: 'sourcing_type'
-                = f.input :start_date
-                = f.input :customer
-                = f.input :material_spec, placeholder: 'material_spec'
-                = f.input :procedure_amount
+                = render_input_or_text(f, procedure, 'sourcing_type')
+                = render_input_or_text(f, procedure, 'start_date')
+                = render_input_or_text(f, procedure, 'customer')
+                = render_input_or_text(f, procedure, 'material_spec')
+                = render_input_or_text(f, procedure, 'procedure_amount')
+                / = f.input :sourcing_type, placeholder: 'sourcing_type'
+                / = f.input :start_date
+                / = f.input :customer
+                / = f.input :material_spec, placeholder: 'material_spec'
+                / = f.input :procedure_amount
                 %td= link_to 'Edit', edit_procedure_path(procedure)
                 %td= link_to 'Destroy', procedure, :method => :delete, :data => { :confirm => 'Are you sure?' }
                 %td= link_to 'New Proc', new_procedure_path(copy_id: procedure)
