@@ -1,13 +1,14 @@
-%tr.nested-fields  
-  = render_link_or_text('arrive', arrive_stage_path(f.object), f.object, 'arrival_date')
-  = render_input_or_text(f, f.object, 'factory_name')
-  = render_input_or_text(f, f.object, 'arrival_amount')
-  = render_input_or_text(f, f.object, 'note')
-  = render_input_or_text(f, f.object, 'estimated_date')
-  = render_link_or_text('Finish', finish_stage_path(f.object), f.object, 'finished_date')
-  = render_input_or_text(f, f.object, 'finished_amount')
-  = render_input_or_text(f, f.object, 'broken_amount')
-  %td= f.object.aasm_state
-  %td{ style: 'vertical-align: middle;' }
-    = link_to_remove_association f do 
-      %i.fa.fa-times{ style: 'font-size: 26px; vertical-align: middle;' }
+%tr.nested-fields
+  = simple_form_for [procedure, stage], wrapper: :horizontal_table_form do |f|
+    = render_link_or_text('arrive', arrive_stage_path(f.object), f.object, 'arrival_date')
+    = render_input_or_text(f, f.object, 'factory_name')
+    = render_input_or_text(f, f.object, 'arrival_amount')
+    = render_input_or_text(f, f.object, 'note')
+    = render_input_or_text(f, f.object, 'estimated_date')    
+    = render_input_or_text(f, f.object, 'finished_amount')
+    = render_input_or_text(f, f.object, 'broken_amount')
+    = render_link_or_text('Finish', finish_stage_path(f.object), f.object, 'finished_date')
+    %td= f.object.aasm_state
+    %td{ style: 'vertical-align: middle;' }
+      = link_to_remove_association f do 
+        %i.fa.fa-times{ style: 'font-size: 26px; vertical-align: middle;' }

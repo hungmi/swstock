@@ -30,33 +30,33 @@ class Stage < ActiveRecord::Base
     self.procedure.stages.order(:id).where("id < ?", id).last
   end
 
-  # after_save :update_status
+  after_save :update_status
   
-  # def update_status
-  #   if finished_amount.present?
-  #     self.finish! # self.move!
-  #     if self.next.nil?
-  #       if self.procedure.finish!
-  #         self.note = "it's me"
-  #         self.save
-  #       end
-  #     else
-  #       if self.next.arrival_date.present?
-  #         self.next.run!
-  #       else
-  #         self.move!
-  #       end
-  #     end
-  #   elsif arrival_date.present? || self.previous.nil?
-  #     self.run!
-  #   end
-  # end
+  def update_status
+    # if finished_amount.present?
+    #   self.finish! # self.move!
+    #   if self.next.nil?
+    #     if self.procedure.finish!
+    #       self.note = "it's me"
+    #       self.save
+    #     end
+    #   else
+    #     if self.next.arrival_date.present?
+    #       self.next.run!
+    #     else
+    #       self.move!
+    #     end
+    #   end
+    # elsif arrival_date.present? || self.previous.nil?
+    #   self.run!
+    # end
+  end
 
   private
 
   def update_finish_columns
     self.update(finished_date: Date.today.to_s)
-    self.next.update(arrival_date: Date.today.to_s)
+    self.next.try(:update, arrival_date: Date.today.to_s)
   end
 
 end
