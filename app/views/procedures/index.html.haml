@@ -34,8 +34,7 @@
             %th= t '.finished_date'
             %th= t '.aasm_state'
             %th= t '.action'
-        %tbody
-          - procedure.stages.each do |stage|
-            = render partial:'stage_fields', locals: { procedure: procedure, stage: stage }
+      - procedure.stages.each do |stage|
+        = render partial:'stage_fields', locals: { procedure: procedure, stage: stage, picnum: @picnum }
 
 = link_to 'New Blank Procedure', new_procedure_path

@@ -1,14 +1,17 @@
-%tr.nested-fields
-  = simple_form_for [procedure, stage], wrapper: :horizontal_table_form do |f|
-    = render_link_or_text('arrive', arrive_stage_path(f.object), f.object, 'arrival_date')
-    = render_input_or_text(f, f.object, 'factory_name')
-    = render_input_or_text(f, f.object, 'arrival_amount')
-    = render_input_or_text(f, f.object, 'note')
-    = render_input_or_text(f, f.object, 'estimated_date')    
-    = render_input_or_text(f, f.object, 'finished_amount')
-    = render_input_or_text(f, f.object, 'broken_amount')
-    = render_link_or_text('Finish', finish_stage_path(f.object), f.object, 'finished_date')
-    %td= f.object.aasm_state
-    %td{ style: 'vertical-align: middle;' }
-      = link_to_remove_association f do 
-        %i.fa.fa-times{ style: 'font-size: 26px; vertical-align: middle;' }
+= simple_form_for [procedure, stage], wrapper: :horizontal_table_form do |f|
+  %table.table.nested-fields.stage-table{ class: "#{picnum} edit#{stage.id}" }
+    %tbody
+      %tr
+        %td= stage.arrival_date
+        %td= stage.factory_name
+        %td= stage.arrival_amount
+        = f.input :note
+        %td= stage.estimated_date
+        = f.input :finished_amount
+        %td= stage.broken_amount
+        /%td= button_to 'Finish', finish_stage_path(stage), method: :patch
+        %td= stage.aasm_state
+        %td= f.submit 'Update'
+        %td{ style: 'vertical-align: middle;' }
+          = link_to edit_procedure_stage_path(procedure, stage), remote: true, data: { stage: "#{stage.id}" } do
+            %i.fa.fa-pencil

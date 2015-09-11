@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $ ->
-  $('.stage-table').children('thead, tbody').toggle()
+  #$('.stage-table').children('thead, tbody').toggle()
   $("#procedure-stage-panel .panel-heading").click ->
     target_stages = $(this).siblings('.stage-table.' + $(this).data('picnum')).children('thead, tbody')
     target_stages.toggle('fast')

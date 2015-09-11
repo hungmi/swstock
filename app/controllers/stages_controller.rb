@@ -13,6 +13,12 @@ class StagesController < PcController
   end
 
   def edit
+    respond_to do |format|
+      @procedure = Procedure.find(params[:procedure_id])
+      @stage = @procedure.stages.find(params[:id]) if @procedure
+      @picnum = @procedure.workpiece.picnum    
+      format.js {}
+    end
   end
 
   def create

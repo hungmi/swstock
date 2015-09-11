@@ -1,0 +1,17 @@
+= simple_form_for [procedure, stage], wrapper: :horizontal_table_form do |f|
+  %table.table.nested-fields.stage-table{ class: "#{picnum} edit#{stage.id}" }
+    %tbody
+      %tr
+        %td= f.input :arrival_date
+        %td= f.input :factory_name
+        %td= f.input :arrival_amount
+        %td= f.input :note
+        %td= f.input :estimated_date
+        %td= f.input :finished_amount
+        %td= f.input :broken_amount
+        %td= f.input :finished_date
+        %td= f.object.aasm_state
+        %td= f.submit 'Update'
+        %td{ style: 'vertical-align: middle;' }
+          = link_to_remove_association f do 
+            %i.fa.fa-times{ style: 'font-size: 26px; vertical-align: middle;' }
