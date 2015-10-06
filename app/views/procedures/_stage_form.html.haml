@@ -1,5 +1,5 @@
 = simple_form_for [procedure, stage], wrapper: :horizontal_table_form do |f|
-  %table.table.nested-fields.stage-table{ class: "#{picnum} edit#{stage.id}" }
+  %table.table.nested-fields.stage-table{ class: "#{procedure.workpiece.picnum} edit#{stage.id}" }
     %tbody
       %tr
         %td= f.input :arrival_date
