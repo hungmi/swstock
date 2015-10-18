@@ -1,4 +1,6 @@
 class WorkpiecesController < PcController
+  layout 'pc/procedures'
+
   before_action :set_workpiece, only: [:show, :edit, :update, :destroy]
 
   # GET /pc/workpieces

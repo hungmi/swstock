@@ -1,23 +1,29 @@
-%h1 Listing workpieces
-
-%table
+%table.table.table-hover
   %thead
     %tr
-      %th wp_type
-      %th picnum
-      %th spec
-      %th
-      %th
-      %th
-
+      %th 工件種類
+      %th 圖號
+      %th 規格
+      %th 此次下單數量
+      %th 訂單數量
+      %th 發包中數量
+      %th 庫存量
+      %th 殘餘數量
+      %th 預計發包數量
   %tbody
     - @workpieces.each do |workpiece|
       %tr
         %td= workpiece.wp_type
         %td= workpiece.picnum
         %td= workpiece.spec
-        %td= link_to 'Show', workpiece
-        %td= link_to 'Edit', edit_workpiece_path(workpiece)
+        %td 0
+        %td 從發包分析表來
+        %td= link_to workpiece.procedures.to_a.sum(&:procedure_amount), search_procedures_path(q: workpiece.picnum)
+        %td= link_to '查看庫存', search_items_path(q: workpiece.picnum)
+        %td
+        %td
+        /%td= link_to 'Show', workpiece
+        /%td= link_to 'Edit', edit_workpiece_path(workpiece)
         %td= link_to 'Destroy', workpiece, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
