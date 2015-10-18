@@ -1,1 +1,1 @@
-$('<%= j "table.nested-fields.edit#{@stage.id}" %>').replaceWith('<%= j(render partial: "procedures/stage_form", locals: { procedure: @procedure, stage: @stage }) %>');
+$('<%= j "tr#stage_#{@stage.id}" %>').replaceWith('<%= j(render partial: "procedures/stage_form", locals: { procedure: @procedure, stage: @stage }) %>');

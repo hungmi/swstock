@@ -23,6 +23,10 @@ header {
   height: 100px;
 }
 
+body {
+  line-height: 1.42857143 !important;
+}
+
 body.white {
   mark {
       background-color: #FFD700 !important;

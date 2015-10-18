@@ -1,17 +1,45 @@
-= simple_form_for [procedure, stage], wrapper: :horizontal_table_form do |f|
-  %table.table.nested-fields.stage-table{ class: "#{procedure.workpiece.picnum} edit#{stage.id}" }
-    %tbody
-      %tr
-        %td= f.input :arrival_date
-        %td= f.input :factory_name
-        %td= f.input :arrival_amount
-        %td= f.input :note
-        %td= f.input :estimated_date
-        %td= f.input :finished_amount
-        %td= f.input :broken_amount
-        %td= f.input :finished_date
-        %td= f.object.aasm_state
-        %td= f.submit 'Update'
-        %td{ style: 'vertical-align: middle;' }
-          = link_to_remove_association f do 
-            %i.fa.fa-times{ style: 'font-size: 26px; vertical-align: middle;' }
+/ = simple_form_for [procedure, stage], wrapper: :horizontal_table_form do |f|
+/   %table.table.nested-fields.stage-table{ class: "#{procedure.workpiece.picnum} edit#{stage.id}" }
+/     %tbody
+/       %tr
+/         %td= f.input :arrival_date
+/         %td= f.input :factory_name
+/         %td= f.input :arrival_amount
+/         %td= f.input :note
+/         %td= f.input :estimated_date
+/         %td= f.input :finished_amount
+/         %td= f.input :broken_amount
+/         %td= f.input :finished_date
+/         %td= f.object.aasm_state
+/         %td= f.submit 'Update'
+/         %td{ style: 'vertical-align: middle;' }
+/           = link_to_remove_association f do 
+/             %i.fa.fa-times{ style: 'font-size: 26px; vertical-align: middle;' }
+
+%tr
+  - ['arrival_date', 'factory_name', 'arrival_amount', 'note', 'estimated_date', 'finished_amount', 'broken_amount'].each do |attribute|
+    %td
+      = simple_form_for [procedure, stage], wrapper: :vertical_form do |f|
+        = f.input attribute.to_sym, label: false#, input_html: { size: '3x4' }
+        .hidden= f.submit "update #{attribute}"
+  / %td= stage.arrival_date
+  / %td= stage.factory_name
+  / %td= stage.arrival_amount
+  / %td
+  /   = simple_form_for [procedure, stage], wrapper: :vertical_form do |f|
+  /     = f.input :note, label: false#, input_html: { size: '3x4' }
+  /     .hidden= f.submit 'update note'
+  / %td
+  /   = simple_form_for [procedure, stage], wrapper: :vertical_form do |f|
+  /     = f.input :estimated_date, label: false#, input_html: { size: '3x4' }
+  /     .hidden= f.submit 'update estimated_date'
+  / %td= stage.finished_amount
+  / %td
+  /   = simple_form_for [procedure, stage], wrapper: :vertical_form do |f|
+  /     = f.input :broken_amount, label: false#, input_html: { size: '3x4' }
+  /     .hidden= f.submit 'update broken_amount'
+  %td= button_to 'Finish', finish_stage_path(stage), method: :patch
+  %td= stage.aasm_state
+  %td{ style: 'vertical-align: middle;' }
+    = link_to edit_procedure_stage_path(procedure, stage), remote: true, data: { stage: "#{stage.id}" } do
+      %i.fa.fa-pencil

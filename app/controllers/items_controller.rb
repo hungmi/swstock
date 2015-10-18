@@ -107,13 +107,6 @@ class ItemsController < ApplicationController
       @item = Item.find(params[:id])
     end
 
-    def validate_search_key
-      # params[:q].class => string
-      # Items_helper need @query_array
-      @query_array = params[:q].gsub(/\\|\'|\/|\?/, "").strip.split(/\s+/) if params[:q].present?
-      search_criteria(@query_array) if @query_array.present? # !!!
-    end
-
     def search_criteria(query_string)
       { :location_or_item_type_or_picnum_or_oldpicnum_or_note_or_finished_or_unfinished_or_customer_cont_any => query_string }
     end

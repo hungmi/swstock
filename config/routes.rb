@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :workpieces
 
   resources :procedures do
+    get :search, on: :collection
     post :import, on: :collection
     resources :stages
   end

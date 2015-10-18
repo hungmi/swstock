@@ -1,6 +1,7 @@
 class ProceduresController < PcController
   layout 'pc/procedures'
   before_action :set_procedure, only: [:show, :edit, :update, :destroy]
+  before_action :validate_search_key, only: [:search]
   
   def import
     Procedure.import_sourcing(params[:file])
@@ -10,7 +11,13 @@ class ProceduresController < PcController
   # GET /pc/procedures
   # GET /pc/procedures.json
   def index
-    @procedures = Procedure.all#.joins(:stages).where( :stages => { finish_date: nil } ).all
+    @procedures = Procedure.all.paginated(params[:page])#.joins(:stages).where( :stages => { finish_date: nil } ).all
+  end
+
+  def search
+    @workpieces = Workpiece.ransack(validate_search_key).result if params[:q].present?
+    #@procedures = Workpiece.ransack(validate_search_key).result if params[:q].present?
+    #render :index
   end
 
   # GET /pc/procedures/1
@@ -78,6 +85,10 @@ class ProceduresController < PcController
     # Use callbacks to share common setup or constraints between actions.
     def set_procedure
       @procedure = Procedure.find(params[:id])
+    end
+
+    def search_criteria(query_string)
+      { :picnum_cont_any => query_string }
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

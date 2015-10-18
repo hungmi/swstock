@@ -1,0 +1,38 @@
+- if procedure.stages
+  - @picnum = procedure.workpiece.picnum    
+  .panel#procedure-stage-panel{ class: "panel-primary" }
+    .panel-heading.text-center{ data: { picnum: @picnum } }
+      %span= @picnum#[-7..-1]
+      %span.glyphicon.glyphicon-resize-full.show-stages
+      %span= procedure.aasm_state
+    .panel-body
+      %table.table.procedure-table
+        %tbody
+          = simple_form_for procedure, wrapper: :horizontal_table_form do |f|
+            %tr
+              = render_input_or_text(f, procedure, 'sourcing_type')
+              = render_input_or_text(f, procedure, 'start_date')
+              = render_input_or_text(f, procedure, 'customer')
+              = render_input_or_text(f, procedure, 'material_spec')
+              = render_input_or_text(f, procedure, 'procedure_amount')
+              %td= link_to 'Edit', edit_procedure_path(procedure)
+              %td= link_to 'Destroy', procedure, :method => :delete, :data => { :confirm => 'Are you sure?' }
+              %td= link_to 'New Proc', new_procedure_path(copy_id: procedure)
+              %td= f.button 'submit'
+
+    %table.table.stage-table{ class: @picnum }
+      %thead
+        %tr
+          %th= t '.arrival_date'
+          %th= t '.factory'
+          %th= t '.arrival_amount'
+          %th= t '.note'
+          %th= t '.estimated_date'
+          %th= t '.finished_amount'
+          %th= t '.broken_amount'
+          %th= t '.finished_date'
+          %th= t '.aasm_state'
+          %th= t '.action'
+      %tbody
+        - procedure.stages.each do |stage|
+          = render partial:'stage_fields', locals: { procedure: procedure, stage: stage, picnum: @picnum }

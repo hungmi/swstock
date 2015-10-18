@@ -1,6 +1,5 @@
 class Procedure < ActiveRecord::Base
   include ExcelAccesor
-  
   include AASM
 
   aasm :whiny_transitions => false do
@@ -12,7 +11,7 @@ class Procedure < ActiveRecord::Base
     end
   end
 
-  scope :paginated, -> (page) { paginate(:per_page => 1, :page => page) }
+  scope :paginated, -> (page) { paginate(:per_page => 5, :page => page) }
 
   has_many :stages, dependent: :destroy
   accepts_nested_attributes_for :stages, reject_if: :all_blank, allow_destroy: true

@@ -1,4 +1,4 @@
-= simple_form_for @procedure do |f|
+= simple_form_for @procedure, html: { class: 'form-horizontal' } do |f|
   - if @procedure.errors.any?
     #error_explanation
       %h2= "#{pluralize(@procedure.errors.count, "error")} prohibited this procedure from being saved:"

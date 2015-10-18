@@ -7,6 +7,7 @@ table {
 }
 
 #procedure-stage-panel {
+  margin-bottom: 60px;
   .form-group, .table {
     margin-bottom: 0px;
   }
@@ -26,6 +27,12 @@ table {
     font-size: 30px;
     font-weight: bold;
     cursor: pointer;
+  }
+  td input.form-control, td textarea.form-control {
+    border: none;
+    border-bottom: 1px solid black;
+    border-radius: 0px;
+    box-shadow: none;
   }
 }
 
