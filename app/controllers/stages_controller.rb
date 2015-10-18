@@ -59,9 +59,11 @@ class StagesController < PcController
   end
 
   def finish
-    @stage.update(finished_date: Date.today.to_s)
-    @stage.next.update(arrival_date: Date.today.to_s)
-    redirect_to procedures_path
+    respond_to do |format|
+      @stage.finish! if @stage.may_finish?
+      @stage.next.try(:run!) if @stage.next.try(:may_run?)
+      format.js {}
+    end
   end
 
   def arrive

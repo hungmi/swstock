@@ -11,5 +11,9 @@ class ApplicationController < ActionController::Base
       @query_array = params[:q].gsub(/\\|\'|\/|\?/, "").strip.split(/\s+/) if params[:q].present?
       search_criteria(@query_array) if @query_array.present? # !!!
     end
+
+    def previous_page
+      session[:last_page] = request.env['HTTP_REFERER']
+    end
     
 end

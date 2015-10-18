@@ -11,7 +11,7 @@ class ProceduresController < PcController
   # GET /pc/procedures
   # GET /pc/procedures.json
   def index
-    @procedures = Procedure.all.paginated(params[:page])#.joins(:stages).where( :stages => { finish_date: nil } ).all
+    @procedures = Procedure.all.order('updated_at DESC').paginated(params[:page])#.joins(:stages).where( :stages => { finish_date: nil } ).all
   end
 
   def search
@@ -76,7 +76,7 @@ class ProceduresController < PcController
   def destroy
     @procedure.destroy
     respond_to do |format|
-      format.html { redirect_to procedures_url, notice: 'Procedure was successfully destroyed.' }
+      format.html { redirect_to request.referrer || procedures_url, notice: 'Procedure was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

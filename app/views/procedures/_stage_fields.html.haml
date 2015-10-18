@@ -1,5 +1,5 @@
 %tr{ id: "stage_#{stage.id}" }
-  %td= stage.arrival_date
+  %td.arrive{ data: { stage_id: stage.id } }= stage.arrival_date
   %td= stage.factory_name
   %td= stage.arrival_amount
   %td
@@ -15,8 +15,13 @@
     = simple_form_for [procedure, stage], wrapper: :vertical_form do |f|
       = f.input :broken_amount, label: false#, input_html: { size: '3x4' }
       .hidden= f.submit 'update broken_amount'
-  %td= button_to 'Finish', finish_stage_path(stage), method: :patch
-  %td= stage.aasm_state
+  %td.finish{ data: { stage_id: stage.id } }
+    - if stage.finished?
+      = stage.finished_date
+    - else
+      = button_to 'Finish', finish_stage_path(stage), method: :patch, remote: true
+
+  %td.state{ data: { stage_id: stage.id } }= stage.aasm_state
   %td{ style: 'vertical-align: middle;' }
     = link_to edit_procedure_stage_path(procedure, stage), remote: true, data: { stage: "#{stage.id}" } do
       %i.fa.fa-pencil

@@ -1,0 +1,5 @@
+$('td.finish[data-stage-id = <%= @stage.id %>]').replaceWith('<td><%= @stage.finished_date %></td>');
+$('td.state[data-stage-id = <%= @stage.id %>]').replaceWith('<td><%= @stage.aasm_state %></td>');
+
+$('td.arrive[data-stage-id = <%= @stage.try(:next).try(:id) %>]').replaceWith('<td><%= @stage.try(:next).try(:arrival_date) %></td>');
+$('td.state[data-stage-id = <%= @stage.try(:next).try(:id) %>]').replaceWith('<td><%= @stage.try(:next).try(:aasm_state) %></td>');

@@ -6,10 +6,6 @@ class ItemsController < ApplicationController
   before_action :previous_page, only: [:newest, :index, :edit]
   before_action :validate_search_key, only: [:search]
 
-  def previous_page
-    session[:last_page] = request.env['HTTP_REFERER']
-  end
-
   def search
     @items = Item.ransack(validate_search_key).result if params[:q].present?
     render :index

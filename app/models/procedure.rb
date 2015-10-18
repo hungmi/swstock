@@ -11,7 +11,7 @@ class Procedure < ActiveRecord::Base
     end
   end
 
-  scope :paginated, -> (page) { paginate(:per_page => 5, :page => page) }
+  scope :paginated, -> (page) { paginate(:per_page => 3, :page => page) }
 
   has_many :stages, dependent: :destroy
   accepts_nested_attributes_for :stages, reject_if: :all_blank, allow_destroy: true
@@ -38,7 +38,7 @@ class Procedure < ActiveRecord::Base
   def update_status_if_any_stage
     if self.stages.exists?
       self.stages.each do |stage|
-        stage.update_status
+        #stage.update_status
         stage.note = 'from Procedure'
         stage.save
       end
