@@ -11,9 +11,10 @@ module ExcelAccesor
         parameters = ActionController::Parameters.new(row.to_hash)
         next if parameters[:factory_name].include?('製程')
         # w = first || second, w will = first if first is executable
-        workpiece = Workpiece.find_by_picnum(parameters[:picnum]) || Workpiece.new
+        workpiece = Workpiece.find_by_picnum(parameters[:picnum].to_s.lstrip.rstrip) || Workpiece.new
         unless workpiece.persisted?
           workpiece.attributes = parameters.permit(:wp_type, :picnum, :spec)
+          workpiece.picnum = workpiece.picnum.to_s.lstrip.rstrip
           workpiece.save
         end
 

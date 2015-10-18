@@ -7,8 +7,11 @@ class ItemsController < ApplicationController
   before_action :validate_search_key, only: [:search]
 
   def search
-    @items = Item.ransack(validate_search_key).result if params[:q].present?
-    render :index
+    respond_to do |format|
+      @items = Item.ransack(validate_search_key).result if params[:q].present?
+      format.html { render :index }
+      format.js {}
+    end
   end
 
   # GET /items

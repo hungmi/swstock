@@ -1,6 +1,7 @@
 %table.table.table-hover
   %thead
     %tr
+      %th ID
       %th 工件種類
       %th 圖號
       %th 規格
@@ -13,19 +14,20 @@
   %tbody
     - @workpieces.each do |workpiece|
       %tr
+        %td= workpiece.id
         %td= workpiece.wp_type
         %td= workpiece.picnum
         %td= workpiece.spec
         %td 0
         %td 從發包分析表來
         %td= link_to workpiece.procedures.to_a.sum(&:procedure_amount), search_procedures_path(q: workpiece.picnum)
-        %td= link_to '查看庫存', search_items_path(q: workpiece.picnum)
+        %td.check-stock{ data: { picnum: workpiece.picnum } }= link_to '查看庫存', search_items_path(q: workpiece.picnum), remote: true, class: 'check-stock-link'
         %td
         %td
         /%td= link_to 'Show', workpiece
         /%td= link_to 'Edit', edit_workpiece_path(workpiece)
         %td= link_to 'Destroy', workpiece, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
-%br
 
 = link_to 'New Workpiece', new_workpiece_path
+

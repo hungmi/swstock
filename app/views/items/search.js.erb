@@ -1,0 +1,3 @@
+var target_td = $('td.check-stock[ data-picnum = <%= params[:q] %>]');
+target_td.html("<%= j render 'workpieces/stock_detail' %>");
+console.log('<%= params[:q] %>');

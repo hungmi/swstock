@@ -1,0 +1,6 @@
+.stock-detail
+  - @items.each do |item|
+    %span.picnum=link_to item.picnum, item_path(item)
+    %i.fa.fa-arrow-right
+    %span.finished= item.finished
+    %br
