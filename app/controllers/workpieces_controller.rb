@@ -1,5 +1,5 @@
 class WorkpiecesController < PcController
-  layout 'pc/procedures'
+  #layout 'pc/procedures'
 
   before_action :set_workpiece, only: [:show, :edit, :update, :destroy]
 

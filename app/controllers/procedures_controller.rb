@@ -1,5 +1,5 @@
 class ProceduresController < PcController
-  layout 'pc/procedures'
+  #layout 'pc/procedures'
   before_action :set_procedure, only: [:show, :edit, :update, :destroy]
   before_action :validate_search_key, only: [:search]
   

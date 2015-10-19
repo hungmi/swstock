@@ -8,7 +8,7 @@
 
 </head>
 
-<body class="dark" data-no-turbolink="true">
+<body class="<%= current_page?(pc_items_path) ? 'dark' : ''%>" data-no-turbolink="true">
 
   <%= render 'common/pc/header' %>
 

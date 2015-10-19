@@ -1,6 +1,5 @@
-class FactoriesController < ApplicationController
+class FactoriesController < PcController
   before_action :set_factory, only: [:show, :edit, :update, :destroy]
-  layout 'pc/application'
   # GET /factories
   # GET /factories.json
   def index

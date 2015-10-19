@@ -1,0 +1,4 @@
+- if obj.public_send(attribute)
+  = content_tag(:td, obj.public_send(attribute)) 
+- else
+  = f.input attribute.to_sym, placeholder: attribute

@@ -15,11 +15,15 @@
         <%= link_to pc_items_path, class:'pull-left', "data-dark-logo" => "/assets/cat.png" do %>
             <%= image_tag("cat.png", size:"96x96", alt: "SWdurables") %>
         <% end %>
-        <a class="navbar-brand hidden-xs" href="/">你好~我是信為生管小幫手</a>
-        <a class="navbar-brand visible-xs" href="/">SW</a>
+        <%= link_to '你好~我是信為生管小幫手', pc_items_path, class: 'navbar-brand hidden-xs' %>
+        <%= link_to 'SW', pc_items_path, class: 'navbar-brand visible-xs' %>
         <!-- #logo end -->
 
-        <%= render 'common/pc/search_bar' %>
+        <% if current_page?(pc_items_path) %>
+          <%= render 'common/search_bar', url: search_pc_items_path %>
+        <% else %>
+          <%= render 'common/search_bar', url: search_procedures_path %>
+        <% end %>
 
       </div>
 
@@ -27,6 +31,7 @@
         <ul class="nav navbar-nav navbar-right">
           <%= render_nav_link('倉管區', items_path) %>
           <%= render_nav_link('追料區', procedures_path) %>
+          <%= render_nav_link('發包分析', workpieces_path) %>
         </ul>
       </div>
 

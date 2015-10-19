@@ -1,6 +1,12 @@
-.stock-detail
-  - @items.each do |item|
-    %span.picnum=link_to item.picnum, item_path(item)
-    %i.fa.fa-arrow-right
-    %span.finished= item.finished
-    %br
+%table.table.table-hover.stock-detail
+  %thead
+    %tr
+      %th 圖號
+      %th 成品
+      %th 半成品
+  %tbody
+    - @items.each do |item|
+      %tr
+        %td.picnum=link_to raw(break_into_lines(item.picnum)), item_path(item)
+        %td.finished= item.finished
+        %td.finished= item.unfinished

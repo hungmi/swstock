@@ -1,4 +1,4 @@
-<%= form_tag search_items_path, method: "get", :class => "navbar-form pull-left" do %>
+<%= form_tag url, method: "get", :class => "navbar-form pull-left" do %>
   <div class="input-group">
     <%= text_field_tag :q, params[:q], :class => "form-control", :placeholder => 'Search', :autofocus => 'true', :onClick => "this.select();" %>
     <div class="input-group-btn hidden" id="searchBtn">

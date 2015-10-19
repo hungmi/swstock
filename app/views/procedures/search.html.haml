@@ -1,2 +1,6 @@
 - @workpieces.each do |workpiece|
   = render partial: 'procedure', collection: workpiece.procedures
+
+:coffee
+  $ ->
+    $('.stage-table').children('thead, tbody').toggle()
