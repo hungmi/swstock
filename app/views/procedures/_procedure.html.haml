@@ -10,8 +10,7 @@
         %tbody
           = simple_form_for procedure, wrapper: :horizontal_table_form do |f|
             %tr
-              = render 'input_or_text', f: f, obj: procedure, attribute: 'sourcing_type'
-              /= render_input_or_text(f, procedure, 'sourcing_type')
+              = render_input_or_text(f, procedure, 'sourcing_type')
               = render_input_or_text(f, procedure, 'start_date')
               = render_input_or_text(f, procedure, 'customer')
               = render_input_or_text(f, procedure, 'material_spec')
