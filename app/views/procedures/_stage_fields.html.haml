@@ -1,27 +1,30 @@
-%tr{ id: "stage_#{stage.id}" }
-  %td.arrive{ data: { stage_id: stage.id } }= stage.arrival_date
-  %td= stage.factory_name
-  %td= stage.arrival_amount
-  %td
-    = simple_form_for [procedure, stage], wrapper: :vertical_form do |f|
-      = f.input :note, label: false#, input_html: { size: '3x4' }
-      .hidden= f.submit 'update note'
-  %td
-    = simple_form_for [procedure, stage], wrapper: :vertical_form do |f|
-      = f.input :estimated_date, label: false#, input_html: { size: '3x4' }
-      .hidden= f.submit 'update estimated_date'
-  %td= stage.finished_amount
-  %td
-    = simple_form_for [procedure, stage], wrapper: :vertical_form do |f|
-      = f.input :broken_amount, label: false#, input_html: { size: '3x4' }
-      .hidden= f.submit 'update broken_amount'
-  %td.finish{ data: { stage_id: stage.id } }
-    - if stage.finished?
-      = stage.finished_date
-    - else
-      = button_to 'Finish', finish_stage_path(stage), method: :patch, remote: true
+目前改用_stage_form.html.haml
+/ %tr{ id: "stage_#{stage.id}", class: 'ajax-input' }
+/   %td.arrive{ data: { stage_id: stage.id } }= stage.arrival_date
+/   %td= stage.factory_name
+/   %td= stage.arrival_amount
+/   %td
+/     = simple_form_for [procedure, stage], wrapper: :vertical_form, remote: true do |f|
+/       = f.input :note, label: false, input_html: { data: { value: stage.note }, style: 'min-width: 300px;' }
+/       .hidden= f.submit 'update note'
+/   %td
+/     = simple_form_for [procedure, stage], wrapper: :vertical_form, remote: true do |f|
+/       = f.input :estimated_date, label: false, input_html: { data: { value: stage.estimated_date } }, as: :date, discard_year: true
+/       .hidden= f.submit 'update estimated_date'
+/   %td
+/     = simple_form_for [procedure, stage], wrapper: :vertical_form, remote: true do |f|
+/       = f.input :finished_amount, label: false, input_html: { data: { value: stage.finished_amount }, class: 'center' }
+/   %td
+/     = simple_form_for [procedure, stage], wrapper: :vertical_form, remote: true do |f|
+/       = f.input :broken_amount, label: false, input_html: { data: { value: stage.broken_amount }, class: 'center' }
+/       .hidden= f.submit 'update broken_amount'
+/   %td.finish{ data: { stage_id: stage.id } }
+/     - if stage.finished?
+/       = stage.finished_date
+/     - else
+/       = button_to 'Finish', finish_stage_path(stage), method: :patch, remote: true, class: 'btn btn-success'
 
-  %td.state{ data: { stage_id: stage.id } }= stage.aasm_state
-  %td{ style: 'vertical-align: middle;' }
-    = link_to edit_procedure_stage_path(procedure, stage), remote: true, data: { stage: "#{stage.id}" } do
-      %i.fa.fa-pencil
+/   %td.state{ data: { stage_id: stage.id } }= stage.aasm.human_state
+/   %td{ style: 'vertical-align: middle;' }
+/     = link_to edit_procedure_stage_path(procedure, stage), remote: true, data: { stage: "#{stage.id}" } do
+/       %i.fa.fa-pencil

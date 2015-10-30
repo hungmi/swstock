@@ -14,8 +14,13 @@ class Procedure < ActiveRecord::Base
   scope :paginated, -> (page) { paginate(:per_page => 3, :page => page) }
 
   has_many :stages, dependent: :destroy
-  accepts_nested_attributes_for :stages, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :stages, allow_destroy: true, reject_if: :all_blank
+  # 此處是給進入製程頁面編輯時使用的stage validation
   
+  # def note_too_long(attributes)
+  #   attributes['note'].length > 10
+  # end
+
   belongs_to :workpiece
 
   def fork

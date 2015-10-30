@@ -7,18 +7,21 @@
           %li= msg
 
   .row
-    .col-sm-offset-2.col-sm-3
-      = f.association :workpiece, label_method: :picnum, value_method: :id
-      = f.input :sourcing_type
-      = f.input :start_date
-      = f.input :customer
-      = f.input :material_spec
-      = f.input :procedure_amount
-      = f.input :aasm_state, disabled: true
+    .col-sm-6
+      %h2.center 製程
+      .well
+        = f.association :workpiece, label_method: :picnum, value_method: :id
+        = f.input :sourcing_type
+        = f.input :start_date
+        = f.input :customer
+        = f.input :material_spec
+        = f.input :procedure_amount
+        = f.input :aasm_state, disabled: true
 
       .actions
         = f.submit 'Save'
         = link_to 'Back', procedures_path
         = link_to_add_association 'Add stage', f, :stages, id: 'add-stage-btn', render_options: { wrapper: 'horizontal_table_form' }, partial: 'new_stage_fields'
-    .col-sm-6      
+    .col-sm-6
+      %h2.center 各站
       = render 'new_stage_form', f: f

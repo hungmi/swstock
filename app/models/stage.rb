@@ -3,6 +3,8 @@ class Stage < ActiveRecord::Base
 
   belongs_to :procedure
   belongs_to :factory
+  # validates :note, length: { in: 3..100 }
+  # OPTIMIZE stage欄位有要排除的的狀況就寫在這裡
 
   include AASM
   aasm :whiny_transitions => false do

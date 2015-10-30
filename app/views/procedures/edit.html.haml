@@ -1,7 +1,10 @@
-%h1 Editing procedure
+.panel.panel-default#new-procedure-panel
+  .panel-heading{ style: 'background-color: orange;' }
+    %h1.text-center= t '.title'
+  .panel-body
+    .container= render 'form'
 
-= render 'form'
-
-= link_to 'Show', @procedure
-\|
-= link_to 'Back', procedures_path
+.center
+  = link_to 'Show', @procedure
+  \|
+  = link_to 'Back', procedures_path

@@ -7,4 +7,10 @@ table.stage-table {
     vertical-align: middle;
   }
   thead tr th { text-align: center; }
+  .sm-input input {
+    max-width: 100px;
+  }
+  .lg-input input {
+    min-width: 250px;
+  }
 }

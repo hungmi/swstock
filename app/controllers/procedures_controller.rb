@@ -62,7 +62,7 @@ class ProceduresController < PcController
   def update
     respond_to do |format|
       if @procedure.update(procedure_params)
-        format.html { redirect_to procedures_path, notice: 'Procedure was successfully updated.' }
+        format.html { redirect_to session[:last_page] || procedures_path }#, notice: 'Procedure was successfully updated.' }
         format.json { render :show, status: :ok, location: @procedure }
       else
         format.html { redirect_to procedures_path }

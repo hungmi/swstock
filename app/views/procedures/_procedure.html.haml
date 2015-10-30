@@ -4,7 +4,8 @@
     .panel-heading.text-center{ data: { picnum: @picnum } }
       %span= @picnum#[-7..-1]
       %i.fa.fa-expand
-      %span= procedure.aasm_state
+      %span= procedure.aasm.human_state
+      %span.pull-right.ajax-text
     .panel-body
       %table.table.procedure-table
         %tbody
@@ -15,24 +16,31 @@
               = render_input_or_text(f, procedure, 'customer')
               = render_input_or_text(f, procedure, 'material_spec')
               = render_input_or_text(f, procedure, 'procedure_amount')
-              %td= link_to 'Edit', edit_procedure_path(procedure)
-              %td= link_to 'Destroy', procedure, :method => :delete, :data => { :confirm => 'Are you sure?' }
-              %td= link_to 'Copy this Proc', new_procedure_path(copy_id: procedure)
-              %td= f.button 'submit'
+              %td
+                = link_to edit_procedure_path(procedure) do
+                  = t '.edit'
+              %td
+                = link_to procedure, :method => :delete, :data => { :confirm => 'Are you sure?' } do
+                  = t '.destroy'
+              %td
+                = link_to new_procedure_path(copy_id: procedure) do
+                  = t '.copy_this_proc'
+              %td= f.button :submit
 
     %table.table.stage-table{ class: @picnum }
       %thead
         %tr
-          %th= t '.arrival_date'
-          %th= t '.factory'
-          %th= t '.arrival_amount'
-          %th= t '.note'
-          %th= t '.estimated_date'
-          %th= t '.finished_amount'
-          %th= t '.broken_amount'
-          %th= t '.finished_date'
-          %th= t '.aasm_state'
-          %th= t '.action'
+          - I18n.with_options(scope: 'activerecord.attributes.stage') do |i18n|
+            %th= i18n.t :arrival_date
+            %th= i18n.t :factory
+            %th= i18n.t :arrival_amount
+            %th= i18n.t :note
+            %th= i18n.t :estimated_date
+            %th= i18n.t :finished_amount
+            %th= i18n.t :broken_amount
+            %th= i18n.t :finished_date
+            %th= i18n.t :aasm_state
+            %th=# t '.action'
       %tbody
         - procedure.stages.each do |stage|
-          = render partial:'stage_fields', locals: { procedure: procedure, stage: stage, picnum: @picnum }
+          = render partial:'stage_form', locals: { procedure: procedure, stage: stage, picnum: @picnum }

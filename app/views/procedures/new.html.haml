@@ -1,10 +1,10 @@
 .panel.panel-default#new-procedure-panel
-  .panel-heading
-    %h2.text-center 建立新製程
+  .panel-heading{ style: 'background-color: orange;' }
+    %h1.text-center= t '.title'
   .panel-body
-    = render 'form'
-  .container
-    = form_tag import_procedures_path, multipart: true do
-      = file_field_tag "file"
-      = submit_tag "上傳", :class => "btn btn-primary"
-    %strong 匯入excel須轉成csv檔
+    .container
+      = render 'form'
+      = form_tag import_procedures_path, multipart: true do
+        = file_field_tag "file"
+        = submit_tag "上傳", :class => "btn btn-primary"
+      %strong 匯入excel須轉成csv檔

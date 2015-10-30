@@ -1,7 +1,7 @@
 module StagesHelper
   def render_input_or_text(f, obj, attribute)
     return content_tag(:td, obj.public_send(attribute)) if obj.public_send(attribute).present?
-    f.input attribute.to_sym, placeholder: attribute
+    f.input attribute.to_sym#, placeholder: :translate
   end
   def render_link_or_text(link_text, link, obj, attribute)
     return content_tag(:td, obj.public_send(attribute)) if obj.public_send(attribute)

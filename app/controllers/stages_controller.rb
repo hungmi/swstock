@@ -41,11 +41,12 @@ class StagesController < PcController
         if @stage.finished_amount.present?
           @stage.finish!
         end
-        format.html { redirect_to procedures_path, notice: 'Stage was successfully updated.' }
-        #format.json { render :show, status: :ok, location: @stage }
+        format.html { redirect_to procedures_path }#, notice: 'Stage was successfully updated.' }
+        format.json { render :show, status: :ok, location: @stage }
       else
         format.html { redirect_to procedures_path }
-        format.json { render json: @stage.errors, status: :unprocessable_entity }
+        format.js { render :json => { :error => @stage.errors.full_messages }, :status => 422 }
+        #format.js { render json: @stage.errors, status: :unprocessable_entity }
       end
     end
   end

@@ -1,2 +1,56 @@
-zh-tw:
-  #Views
+zh-TW:
+  procedures:
+    new:
+      title: 建立新製程
+    edit:
+      title: 編輯製程
+    procedure:
+      # stage 欄位名稱
+      arrival_date: 到料日
+      factory: 執行者
+      arrival_amount: 到料數量
+      note: 筆記
+      estimated_date: 預估完工日
+      finished_amount: 完工數量
+      broken_amount: 做壞數量
+      finished_date: 完工日
+      aasm_state: 狀態
+      #action: 操作
+      # 連結翻譯
+      edit: 去編輯製程
+      destroy: 刪除製程
+      copy_this_proc: 用此製程發包
+
+  activerecord:
+    attributes:
+      procedure:
+        # aasm_state:
+        #   sleeping: 未開始
+        #   running: 製作中
+        #   finished: 完工
+        aasm_state: 狀態
+        aasm_state/sleeping: 未開始
+        aasm_state/running: 製作中
+        aasm_state/finished: 完工
+      stage:
+        arrival_date: 到料日
+        factory: 執行者
+        arrival_amount: 到料數量
+        note: 筆記
+        estimated_date: 預估完工日
+        finished_amount: 完工數量
+        broken_amount: 做壞數量
+        finished_date: 完工日
+        aasm_state: 狀態
+        aasm_state/sleeping: 未開始
+        aasm_state/running: 製作中
+        aasm_state/finished: 完工
+        # aasm_state:
+        #   sleeping: 未開始
+        #   running: 製作中
+        #   finished: 完工
+  helpers:
+    submit:
+      procedure:
+        create: 開始發包
+        update: 更新製程

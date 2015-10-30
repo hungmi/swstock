@@ -1,9 +1,11 @@
 %table.table#stages
   %thead
     %tr
-      %th arrival_date
-      %th factory
-      %th action
+      - I18n.with_options(scope: 'activerecord.attributes.stage') do |i18n|
+        %th= i18n.t :arrival_date
+        %th= i18n.t :factory
+        %th= i18n.t :note
+        %th
   %tbody{ style: 'border-top: 0px;' }
     = f.simple_fields_for :stages, wrapper: :horizontal_table_form do |stage|
       = render 'new_stage_fields', f: stage

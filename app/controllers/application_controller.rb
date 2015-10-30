@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :null_session
+  before_action :previous_page
 
   private
 
@@ -13,7 +14,7 @@ class ApplicationController < ActionController::Base
     end
 
     def previous_page
-      session[:last_page] = request.env['HTTP_REFERER']
+      session[:last_page] = request.env['HTTP_REFERER'] if !['create', 'update'].include?(action_name)
     end
     
 end
