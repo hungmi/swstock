@@ -27,6 +27,7 @@ module ExcelAccesor
         stage = procedure.stages.new
         stage.attributes = parameters.permit(:factory_name, :arrival_amount, :arrival_date, :estimated_date, :note, :finished_date, :finished_amount, :broken_amount)
         stage.save
+        stage.update_status_after_import
       end
     end
 

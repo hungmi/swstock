@@ -6,11 +6,16 @@ table.stage-table {
     padding: 2px;
     vertical-align: middle;
   }
+  tr.ajax-input * { transition: background-color 0.6s; }
+  tr.ajax-input.ajax-processing * { background-color: pink; color: white; border-color: white; }
+  tr.ajax-input.ajax-error * { background-color: red; color: white; border-color: white;}
+  tr.finished * { background-color: LIGHTSEAGREEN; color: white; }
+  tr.danger * { background-color: red !important; color: white; }
   thead tr th { text-align: center; }
-  .sm-input input {
-    max-width: 100px;
-  }
-  .lg-input input {
-    min-width: 250px;
-  }
+  // .sm-input input {
+  //   max-width: 100px;
+  // }
+  // .lg-input input {
+  //   min-width: 250px;
+  // }
 }

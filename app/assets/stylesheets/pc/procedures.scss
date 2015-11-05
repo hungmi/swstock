@@ -9,6 +9,15 @@ table {
 #procedure-stage-panel {
   margin-bottom: 60px;
   border-radius: 0px;
+  &.danger .panel-heading { background-color: red; }
+  &.finished .panel-heading { background-color: LIGHTSEAGREEN; }
+  &.processing .panel-heading { background-color: DODGERBLUE; }
+  .panel-heading {
+    color: white; 
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+  }
   .form-group, .table {
     margin-bottom: 0px;
   }
@@ -24,16 +33,16 @@ table {
   tbody {
     border-top: 0px;
   }
-  .panel-heading {
-    font-size: 30px;
-    font-weight: bold;
-    cursor: pointer;
-  }
   td input.form-control, td textarea.form-control {
     border: none;
     border-bottom: 1px solid black;
     border-radius: 0px;
     box-shadow: none;
+  }
+  tr.finished {
+    td input.form-control, td textarea.form-control {
+      border-bottom: 1px solid white;
+    }
   }
 }
 

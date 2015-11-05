@@ -1,3 +1,4 @@
+$(' tr#stage_<%= @stage.id %>').addClass('finished')
 $('td.finish[data-stage-id = <%= @stage.id %>]').replaceWith('<td><%= @stage.finished_date %></td>');
 $('td.state[data-stage-id = <%= @stage.id %>]').replaceWith('<td><%= @stage.aasm.human_state %></td>');
 

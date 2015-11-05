@@ -7,8 +7,12 @@ class Procedure < ActiveRecord::Base
     state :finished
 
     event :finish do
-      transitions from: :running, to: :finished
+      transitions from: :running, to: :finished, after: :finish_forgotten_stages
     end
+  end
+
+  def finish_forgotten_stages
+    self.stages.update_all(aasm_state: 'finished')
   end
 
   scope :paginated, -> (page) { paginate(:per_page => 3, :page => page) }
@@ -31,6 +35,7 @@ class Procedure < ActiveRecord::Base
       new_stage = forked_proc.stages.new
       if forked_proc.stages.size == 1
         new_stage.arrival_date = today
+        new_stage.run
       end
       new_stage.factory_name = stage.factory_name
       new_stage.note = stage.note
@@ -48,6 +53,10 @@ class Procedure < ActiveRecord::Base
         stage.save
       end
     end
-  end 
+  end
+
+  def danger?
+    ((start_date < 30.days.ago) || stages.danger.exists?) && running?
+  end
 
 end

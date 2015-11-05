@@ -1,5 +1,6 @@
 class Stage < ActiveRecord::Base
   scope :paginated, -> (page) { paginate(:per_page => 20, :page => page) }
+  scope :danger, -> { where.not( arrival_date: "" ).where( 'arrival_date < ?', 7.days.ago ) }
 
   belongs_to :procedure
   belongs_to :factory
@@ -32,11 +33,20 @@ class Stage < ActiveRecord::Base
     self.procedure.stages.order(:id).where("id < ?", id).last
   end
 
+  def danger?
+    running? && (arrival_date < 7.days.ago if arrival_date.present?)
+  end
+
+  def update_status_after_import
+    finish! if finished_amount.present? && !finished_amount.zero?
+  end
+
   private
 
   def update_finish_columns
     self.update(finished_date: Date.today.to_s)
     self.next.try(:update, arrival_date: Date.today.to_s)
+    self.procedure.finish! unless self.next
   end
 
 end

@@ -1,6 +1,6 @@
 - if procedure.stages
   - @picnum = procedure.workpiece.picnum    
-  .panel#procedure-stage-panel{ class: "panel-primary" }
+  .panel#procedure-stage-panel{ class: render_procedure_color(procedure) }
     .panel-heading.text-center{ data: { picnum: @picnum } }
       %span= @picnum#[-7..-1]
       %i.fa.fa-expand
@@ -43,4 +43,5 @@
             %th=# t '.action'
       %tbody
         - procedure.stages.each do |stage|
-          = render partial:'stage_form', locals: { procedure: procedure, stage: stage, picnum: @picnum }
+          %tr{ id: "stage_#{stage.id}", class: "ajax-input #{render_stage_color(stage)}" }
+            = render partial:'stage_form', locals: { procedure: procedure, stage: stage }

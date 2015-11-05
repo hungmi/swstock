@@ -40,13 +40,13 @@ class StagesController < PcController
       if @stage.update(stage_params)
         if @stage.finished_amount.present?
           @stage.finish!
+          @stage.next.run! if @stage.next
+          format.js { render 'stages/finish.js.erb' }
+        else
+          format.js {}
         end
-        format.html { redirect_to procedures_path }#, notice: 'Stage was successfully updated.' }
-        format.json { render :show, status: :ok, location: @stage }
       else
-        format.html { redirect_to procedures_path }
         format.js { render :json => { :error => @stage.errors.full_messages }, :status => 422 }
-        #format.js { render json: @stage.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -61,9 +61,11 @@ class StagesController < PcController
 
   def finish
     respond_to do |format|
-      @stage.finish! if @stage.may_finish?
-      @stage.next.try(:run!) if @stage.next.try(:may_run?)
-      format.js {}
+      if @stage.finished_amount.present?
+        @stage.finish! if @stage.may_finish?
+        @stage.next.try(:run!) if @stage.next.try(:may_run?)
+        format.js {}
+      end
     end
   end
 

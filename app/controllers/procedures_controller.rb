@@ -15,7 +15,7 @@ class ProceduresController < PcController
   end
 
   def search
-    @workpieces = Workpiece.ransack(validate_search_key).result if params[:q].present?
+    @workpieces = Workpiece.ransack(validate_search_key).result.includes(:procedures).order('procedures.start_date DESC') if params[:q].present?
     #@procedures = Workpiece.ransack(validate_search_key).result if params[:q].present?
     #render :index
   end
@@ -43,12 +43,13 @@ class ProceduresController < PcController
   # POST /pc/procedures.json
   def create
     @procedure = Procedure.new(procedure_params)
-    @procedure.stages.each do |stage|
+    @procedure.stages.each_with_index do |stage, i|
+      stage.run! if i == 0
       stage.arrival_amount = @procedure.procedure_amount
     end
     respond_to do |format|
       if @procedure.save
-        format.html { redirect_to procedures_path, notice: 'Procedure was successfully created.' }
+        format.html { redirect_to procedures_path }
         format.json { render :show, status: :created, location: @procedure }
       else
         format.html { render :new }
@@ -62,7 +63,7 @@ class ProceduresController < PcController
   def update
     respond_to do |format|
       if @procedure.update(procedure_params)
-        format.html { redirect_to session[:last_page] || procedures_path }#, notice: 'Procedure was successfully updated.' }
+        format.html { redirect_to session[:last_page] || procedures_path }
         format.json { render :show, status: :ok, location: @procedure }
       else
         format.html { redirect_to procedures_path }

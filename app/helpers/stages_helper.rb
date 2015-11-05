@@ -9,4 +9,9 @@ module StagesHelper
       button_to link_text, link, method: :patch
     end
   end
+  def render_stage_color(stage)
+    return 'finished' if stage.finished?
+    return 'danger' if stage.danger?
+    #return 'processing' if stage.running?
+  end
 end

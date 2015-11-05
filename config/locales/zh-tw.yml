@@ -42,7 +42,7 @@ zh-TW:
         broken_amount: 做壞數量
         finished_date: 完工日
         aasm_state: 狀態
-        aasm_state/sleeping: 未開始
+        aasm_state/sleeping: ''
         aasm_state/running: 製作中
         aasm_state/finished: 完工
         # aasm_state:
