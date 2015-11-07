@@ -4,7 +4,7 @@
     .panel-heading.text-center{ data: { picnum: @picnum } }
       %span= @picnum#[-7..-1]
       %i.fa.fa-expand
-      %span= procedure.aasm.human_state
+      %span.procedure_state_text= procedure.aasm.human_state
       %span.pull-right.ajax-text
     .panel-body
       %table.table.procedure-table

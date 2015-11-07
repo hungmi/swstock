@@ -12,8 +12,12 @@ table.stage-table {
   tr.finished * { background-color: LIGHTSEAGREEN; color: white; }
   tr.danger * { background-color: red !important; color: white; }
   thead tr th { text-align: center; }
-  td.sm-input, td.date_picker {
-    max-width: 150px;
+  td.sm-input {
+    max-width: 120px;
+    width: 8%;
+  }
+  td.date_picker {
+    min-width: 150px;
     width: 10%;
   }
 }

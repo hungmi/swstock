@@ -1,6 +1,10 @@
-$(' tr#stage_<%= @stage.id %>').addClass('finished')
-$('td.finish[data-stage-id = <%= @stage.id %>]').replaceWith('<td><%= @stage.finished_date %></td>');
-$('td.state[data-stage-id = <%= @stage.id %>]').replaceWith('<td><%= @stage.aasm.human_state %></td>');
+$('tr#stage_<%= @stage.id %>').addClass('finished')
+<% if @stage.procedure.finished? %>
+  $('tr#stage_<%= @stage.id %>').closest('#procedure-stage-panel').toggleClass('processing').toggleClass('finished')
+  $('tr#stage_<%= @stage.id %>').closest('#procedure-stage-panel').find('.procedure_state_text').html('<%= @stage.procedure.aasm.human_state %>')
+<% end %>
+$('td.finish[data-stage-id = <%= @stage.id %>]').html('<td><%= @stage.finished_date %></td>');
+$('td.state[data-stage-id = <%= @stage.id %>]').html('<td><%= @stage.aasm.human_state %></td>');
 
-$('td.arrive[data-stage-id = <%= @stage.try(:next).try(:id) %>]').replaceWith('<td><%= @stage.try(:next).try(:arrival_date) %></td>');
-$('td.state[data-stage-id = <%= @stage.try(:next).try(:id) %>]').replaceWith('<td><%= @stage.try(:next).try(:aasm).try(:human_state) %></td>');
+$('td.arrive[data-stage-id = <%= @stage.try(:next).try(:id) %>]').html('<td><%= @stage.try(:next).try(:arrival_date) %></td>');
+$('td.state[data-stage-id = <%= @stage.try(:next).try(:id) %>]').html('<td><%= @stage.try(:next).try(:aasm).try(:human_state) %></td>');
