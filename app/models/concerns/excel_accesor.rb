@@ -14,11 +14,11 @@ module ExcelAccesor
         workpiece = Workpiece.find_by_picnum(parameters[:picnum].to_s.strip) || Workpiece.new
         unless workpiece.persisted?
           workpiece.attributes = parameters.permit(:wp_type, :picnum, :spec)
-          workpiece.picnum = workpiece.picnum.to_s.lstrip.rstrip
+          workpiece.picnum = workpiece.picnum.to_s.strip
           workpiece.save
         end
 
-        procedure = workpiece.procedures.find_by_start_date(parameters[:start_date]) || workpiece.procedures.new
+        procedure = workpiece.procedures.find_by_start_date(parameters[:start_date].to_date) || workpiece.procedures.new
         unless procedure.persisted?
           procedure.attributes = parameters.permit(:sourcing_type, :start_date, :customer, :material_spec, :procedure_amount)
           procedure.save
@@ -27,8 +27,16 @@ module ExcelAccesor
         stage = procedure.stages.new
         stage.attributes = parameters.permit(:factory_name, :arrival_amount, :arrival_date, :estimated_date, :note, :finished_date, :finished_amount, :broken_amount)
         stage.save
-        stage.update_status_after_import
       end
+
+      Procedure.find_each do |p|
+        #p.finish! if p.stages.last.finished?
+        p.stages.find_each do |s|
+          s.update_status_after_import
+        end
+      end
+      #Procedure.all.update_all(start_date: start_date.to_date)
+      #self.procedure.finish! unless self.next
     end
 
     def import_stock(file)

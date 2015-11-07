@@ -34,9 +34,9 @@ ActiveRecord::Schema.define(version: 20150819052121) do
 
   create_table "procedures", force: :cascade do |t|
     t.string   "sourcing_type"
-    t.string   "start_date"
     t.string   "customer"
     t.string   "material_spec"
+    t.date     "start_date"
     t.integer  "procedure_amount"
     t.integer  "workpiece_id"
     t.string   "aasm_state"
@@ -48,9 +48,9 @@ ActiveRecord::Schema.define(version: 20150819052121) do
 
   create_table "stages", force: :cascade do |t|
     t.string   "factory_name"
-    t.string   "arrival_date"
-    t.string   "estimated_date"
-    t.string   "finished_date"
+    t.date     "arrival_date"
+    t.date     "estimated_date"
+    t.date     "finished_date"
     t.integer  "arrival_amount"
     t.integer  "finished_amount"
     t.integer  "broken_amount"

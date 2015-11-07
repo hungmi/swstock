@@ -31,7 +31,8 @@ class ProceduresController < PcController
       @copy_procedure = Procedure.find(params[:copy_id])
       @copy_procedure.fork
     else
-      Procedure.new
+      @procedure = Procedure.new
+      #@procedure.stages.new
     end
   end
 
@@ -94,6 +95,6 @@ class ProceduresController < PcController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def procedure_params
-      params.require(:procedure).permit(:sourcing_type, :start_date, :customer, :material_spec, :procedure_amount, :workpiece_id, stages_attributes: [:id, :factory_name, :note, :arrival_date, :arrival_amount, :estimated_date, :finished_date, :finished_amount, :broken_amount, :procedure_id, :_destroy])
+      params.require(:procedure).permit(:sourcing_type, :start_date, :customer, :material_spec, :procedure_amount, :workpiece_id, :aasm_state, stages_attributes: [:id, :factory_name, :note, :arrival_date, :arrival_amount, :estimated_date, :finished_date, :finished_amount, :broken_amount, :aasm_state, :procedure_id, :_destroy])
     end
 end

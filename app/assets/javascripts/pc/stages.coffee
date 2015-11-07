@@ -1,7 +1,8 @@
 $ ->
   $("#add-stage-btn").
-    data("association-insertion-method", 'after').
-    data("association-insertion-node", '#stages tr.nested-fields:last-child')
+    data("association-insertion-method", 'append').
+    data("data-association-insertion-traversal", 'children').
+    data("association-insertion-node", '#stages tbody')
 
 
   $(".ajax-input").on("ajax:send", (xhr) ->

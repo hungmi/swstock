@@ -1,6 +1,8 @@
 - @workpieces.each do |workpiece|
   = render partial: 'procedure', collection: workpiece.procedures
 
+.text-center= link_to t('procedures.index.new_blank_procedure'), new_procedure_path, class: 'btn btn-primary btn-lg'
+
 :coffee
   $ ->
     $('.stage-table').children('thead, tbody').toggle()

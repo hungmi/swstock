@@ -1,5 +1,7 @@
 zh-TW:
   procedures:
+    index:
+      new_blank_procedure: 我要新發包
     new:
       title: 建立新製程
     edit:
@@ -20,6 +22,8 @@ zh-TW:
       edit: 去編輯製程
       destroy: 刪除製程
       copy_this_proc: 用此製程發包
+      add_stage: 加入新站
+      back: 返回
 
   activerecord:
     attributes:

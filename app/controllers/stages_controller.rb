@@ -38,7 +38,7 @@ class StagesController < PcController
   def update
     respond_to do |format|
       if @stage.update(stage_params)
-        if @stage.finished_amount.present?
+        if @stage.may_finish?
           @stage.finish!
           @stage.next.run! if @stage.next
           format.js { render 'stages/finish.js.erb' }
@@ -59,15 +59,15 @@ class StagesController < PcController
     end
   end
 
-  def finish
-    respond_to do |format|
-      if @stage.finished_amount.present?
-        @stage.finish! if @stage.may_finish?
-        @stage.next.try(:run!) if @stage.next.try(:may_run?)
-        format.js {}
-      end
-    end
-  end
+  # def finish
+  #   respond_to do |format|
+  #     if @stage.finished_amount.present?
+  #       @stage.finish! if @stage.may_finish?
+  #       @stage.next.try(:run!) if @stage.next.try(:may_run?)
+  #       format.js {}
+  #     end
+  #   end
+  # end
 
   def arrive
     @stage.update(arrival_date: Date.today.to_s)

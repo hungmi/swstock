@@ -7,5 +7,5 @@
         %th= i18n.t :note
         %th
   %tbody{ style: 'border-top: 0px;' }
-    = f.simple_fields_for :stages, wrapper: :horizontal_table_form do |stage|
-      = render 'new_stage_fields', f: stage
+    = f.simple_fields_for :stages, wrapper: :horizontal_table_form do |ff|
+      = render 'new_stage_fields', f: ff

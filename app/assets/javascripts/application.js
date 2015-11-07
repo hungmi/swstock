@@ -13,6 +13,10 @@
 //= require jquery
 //= require bootstrap-sprockets
 //= require semantic-ui
+//= require moment
+//= require moment/zh-tw
+//= require bootstrap-datetimepicker
+//= require pickers
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require cocoon

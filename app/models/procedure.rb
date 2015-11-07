@@ -1,4 +1,11 @@
 class Procedure < ActiveRecord::Base
+  scope :paginated, -> (page) { paginate(:per_page => 3, :page => page) }
+
+  after_save :auto_arrive_first_stage
+
+  has_many :stages, dependent: :destroy
+  accepts_nested_attributes_for :stages, allow_destroy: true, reject_if: :all_blank
+
   include ExcelAccesor
   include AASM
 
@@ -11,14 +18,13 @@ class Procedure < ActiveRecord::Base
     end
   end
 
+  def auto_arrive_first_stage
+    self.stages.try(:first).try(:update, arrival_date: start_date) if self.stages.first.arrival_date.nil?
+  end
+
   def finish_forgotten_stages
     self.stages.update_all(aasm_state: 'finished')
   end
-
-  scope :paginated, -> (page) { paginate(:per_page => 3, :page => page) }
-
-  has_many :stages, dependent: :destroy
-  accepts_nested_attributes_for :stages, allow_destroy: true, reject_if: :all_blank
   # 此處是給進入製程頁面編輯時使用的stage validation
   
   # def note_too_long(attributes)
@@ -41,18 +47,6 @@ class Procedure < ActiveRecord::Base
       new_stage.note = stage.note
     end
     forked_proc
-  end
-
-  after_save :update_status_if_any_stage
-
-  def update_status_if_any_stage
-    if self.stages.exists?
-      self.stages.each do |stage|
-        #stage.update_status
-        stage.note = 'from Procedure'
-        stage.save
-      end
-    end
   end
 
   def danger?

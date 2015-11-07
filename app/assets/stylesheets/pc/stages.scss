@@ -12,10 +12,8 @@ table.stage-table {
   tr.finished * { background-color: LIGHTSEAGREEN; color: white; }
   tr.danger * { background-color: red !important; color: white; }
   thead tr th { text-align: center; }
-  // .sm-input input {
-  //   max-width: 100px;
-  // }
-  // .lg-input input {
-  //   min-width: 250px;
-  // }
+  td.sm-input, td.date_picker {
+    max-width: 150px;
+    width: 10%;
+  }
 }
