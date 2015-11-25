@@ -75,7 +75,7 @@ class ItemsController < ApplicationController
   def update
     if @item.update(item_params)
       flash[:success] = "資料更新成功!"
-      redirect_to session[:last_page]  # ajax
+      #redirect_to session[:last_page]  # ajax
     else
       flash[:danger] = "資料更新失敗!"
       render 'edit'
