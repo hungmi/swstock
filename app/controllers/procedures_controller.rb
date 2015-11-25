@@ -29,9 +29,11 @@ class ProceduresController < PcController
   def new
     @procedure = if params[:copy_id]
       @copy_procedure = Procedure.find(params[:copy_id])
+      @workpiece = @copy_procedure.workpiece
       @copy_procedure.fork
     else
-      @procedure = Procedure.new
+      @workpiece = Workpiece.new
+      @procedure = @workpiece.procedures.new
       #@procedure.stages.new
     end
   end
@@ -43,7 +45,8 @@ class ProceduresController < PcController
   # POST /pc/procedures
   # POST /pc/procedures.json
   def create
-    @procedure = Procedure.new(procedure_params)
+    @workpiece = Workpiece.where(picnum: params[:procedure][:workpiece][:picnum]).first_or_create(wp_type: params[:procedure][:workpiece][:wp_type])
+    @procedure = @workpiece.procedures.new(procedure_params)
     @procedure.stages.each_with_index do |stage, i|
       stage.run! if i == 0
       stage.arrival_amount = @procedure.procedure_amount
@@ -64,7 +67,7 @@ class ProceduresController < PcController
   def update
     respond_to do |format|
       if @procedure.update(procedure_params)
-        format.html { redirect_to session[:last_page] || procedures_path }
+        format.html { redirect_to procedures_path }
         format.json { render :show, status: :ok, location: @procedure }
       else
         format.html { redirect_to procedures_path }
@@ -78,7 +81,7 @@ class ProceduresController < PcController
   def destroy
     @procedure.destroy
     respond_to do |format|
-      format.html { redirect_to request.referrer || procedures_url, notice: 'Procedure was successfully destroyed.' }
+      format.html { redirect_to procedures_path, notice: 'Procedure was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

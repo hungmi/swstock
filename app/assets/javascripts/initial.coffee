@@ -1,3 +1,4 @@
 $ ->
   #$('.datepicker').datepicker({'dateFormat': 'yy-mm-dd'})
-  #$('.ui.dropdown').dropdown()
+  console.log 123
+  $('.ui.dropdown').dropdown()

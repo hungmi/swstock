@@ -35,13 +35,13 @@ ActiveRecord::Schema.define(version: 20150819052121) do
   create_table "procedures", force: :cascade do |t|
     t.string   "sourcing_type"
     t.string   "customer"
-    t.string   "material_spec"
+    t.string   "material_spec",    default: "ɸ"
     t.date     "start_date"
     t.integer  "procedure_amount"
     t.integer  "workpiece_id"
     t.string   "aasm_state"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
   end
 
   add_index "procedures", ["workpiece_id"], name: "index_procedures_on_workpiece_id"

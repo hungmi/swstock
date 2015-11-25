@@ -1,4 +1,9 @@
 zh-TW:
+  workpieces:
+    new:
+      title: 增加新品項
+    index:
+      new_workpiece: 新工件
   procedures:
     index:
       new_blank_procedure: 我要新發包

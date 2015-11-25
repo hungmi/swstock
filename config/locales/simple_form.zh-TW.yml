@@ -11,13 +11,20 @@ zh-TW:
     error_notification:
       default_message: 請確認以下問題
     placeholders:
+      workpiece:
+        picnum: '318279404342'
+        wp_type: 四瓣爪、攻牙主軸...
       procedure:
-        sourcing_type: 發包種類
+        sourcing_type: A圖號末五碼+B圖號末五碼
         start_date: 開始日
-        customer: 客戶
-        material_spec: 原料規格
+        customer: 東台、金玉、富暘...
+        material_spec: 100ɸ
         procedure_amount: 製程數量
     labels:
+      workpiece:
+        picnum: 圖號
+        wp_type: 工件類別
+        spec: 材料
       procedure:
         workpiece: 工件
         sourcing_type: 發包種類

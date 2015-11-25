@@ -10,11 +10,13 @@
     .col-sm-6
       %h2.center 製程
       .well
-        = f.association :workpiece, label_method: :picnum, value_method: :id, required: true#, input_html: { class: 'ui search dropdown' }
+        = f.fields_for @workpiece do |ff|
+          = ff.input :picnum, required: true
+          = ff.input :wp_type
         = f.input :procedure_amount, required: true
         = f.input :material_spec
         = f.input :sourcing_type
-        = f.input :start_date, as: :date_picker
+        = f.input :start_date, as: :date_picker, input_html: { value: Time.now }
         = f.input :customer
         /= f.input :aasm_state, disabled: true
 
