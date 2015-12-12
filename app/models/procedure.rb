@@ -19,7 +19,9 @@ class Procedure < ActiveRecord::Base
   end
 
   def auto_arrive_first_stage
-    self.stages.try(:first).try(:update, arrival_date: start_date) if self.stages.first.arrival_date.nil?
+    if self.stages.present? && self.stages.first.arrival_date.nil?
+      self.stages.try(:first).try(:update, arrival_date: start_date)
+    end
   end
 
   def finish_forgotten_stages
