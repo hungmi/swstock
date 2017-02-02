@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150819052121) do
+ActiveRecord::Schema.define(version: 20170202072741) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "customers", force: :cascade do |t|
+    t.string   "name"
+    t.string   "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "factories", force: :cascade do |t|
     t.string   "name"
@@ -32,6 +42,13 @@ ActiveRecord::Schema.define(version: 20150819052121) do
     t.string   "customer"
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.string   "picnum"
+    t.string   "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "procedures", force: :cascade do |t|
     t.string   "sourcing_type"
     t.string   "customer"
@@ -44,7 +61,7 @@ ActiveRecord::Schema.define(version: 20150819052121) do
     t.datetime "updated_at",                     null: false
   end
 
-  add_index "procedures", ["workpiece_id"], name: "index_procedures_on_workpiece_id"
+  add_index "procedures", ["workpiece_id"], name: "index_procedures_on_workpiece_id", using: :btree
 
   create_table "stages", force: :cascade do |t|
     t.string   "factory_name"
@@ -61,7 +78,7 @@ ActiveRecord::Schema.define(version: 20150819052121) do
     t.datetime "updated_at",      null: false
   end
 
-  add_index "stages", ["procedure_id"], name: "index_stages_on_procedure_id"
+  add_index "stages", ["procedure_id"], name: "index_stages_on_procedure_id", using: :btree
 
   create_table "workpieces", force: :cascade do |t|
     t.string   "wp_type"
@@ -71,4 +88,6 @@ ActiveRecord::Schema.define(version: 20150819052121) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "procedures", "workpieces"
+  add_foreign_key "stages", "procedures"
 end

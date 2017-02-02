@@ -33,8 +33,8 @@ module StockTableHelper
     
   end
 =end
-  def style_customer(customer_name)
-    style_customer = "background-color:#{@customer_colors[customer_name]}"
+  def style_customer(customer_color)
+    style_customer = "background-color:#{customer_color}"
   end
   
   def item_id_to_tag_id(item)

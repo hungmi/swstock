@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   
   resources :factories
 
+  resources :customers
+
   namespace :pc do
     resources :items, only: [:index] do
       get :search, on: :collection

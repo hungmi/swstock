@@ -7,4 +7,8 @@ class Item < ActiveRecord::Base
 
   include ExcelAccesor
 
+  def customer_color
+  	return Customer.find_by_name(self.customer).try(:color)
+  end
+
 end

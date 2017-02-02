@@ -1,0 +1,17 @@
+<%= simple_form_for(@customer, html: { :id => 'itemForm', class: 'form-horizontal' }) do |f| %>
+	<%= f.input :name, label: "名稱" %>
+	<div class="form-group">
+		<%= f.label :color, "顏色", class: "string required col-sm-3 control-label" %>
+		<div class="col-sm-1">
+			<%= f.color_field :color, class: "form-control" %>
+		</div>
+	</div>
+
+	<div class="form-group center">
+
+    <%= f.button :button, :class => "btn btn-primary" do %>
+      <%= @submit_text %><i class="fa fa-check"></i>
+    <% end %>
+
+  </div>
+<% end %>

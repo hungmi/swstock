@@ -5,7 +5,7 @@
   <% submit_id = item_id_to_tag_id(item) %>
 
   <%= form_for(item, remote: true) do |f| %>
-    <tr <%= "style=#{style_customer(item.customer)}" %> >
+    <tr <%= "style=#{style_customer(item.customer_color)}" %> >
 
       <td class="smCell center">
         <%= f.text_field :location, size: 7, id: submit_id %>

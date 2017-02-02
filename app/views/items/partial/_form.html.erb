@@ -7,7 +7,8 @@
   <%= f.input :finished, :label => '成品數量', as: :text %>
   <%= f.input :unfinished, :label => '半成品數量', as: :text %>
   <%= f.input :note, :label => '提醒', as: :text, :input_html => { :rows => 7 } %>
-  <%= f.input :customer, :label => '客戶', :collection => @customer_names, as: :select, include_blank: '不指定' %>
+  <%= f.input :customer, :label => '客戶', :collection => @customers, as: :select, include_blank: '不指定' %>
+  <%= link_to "新增客戶", new_customer_path, class: "btn btn-default", style: "margin-left: 25%; border: 1px solid black;" %>
 
   <div class="form-group center">
 
