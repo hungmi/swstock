@@ -9,6 +9,7 @@ module StockTableInitializer
   def set_customers
     # items/partial/_form.html.erb need
     # @customer_colors = {'富暘' => 'palegreen', '油機' => 'lightcoral', '東台' => 'steelblue', '金玉' => 'darkorange'}
+    # #98fb98, #f08080, #4682b4, #ff8c00
     @customers =  Customer.all.pluck(:name) # ['富暘', '油機', '東台', '金玉']
     # Not to use one hash because when select customer, the stored value would be colors.
     #   which results in unsearchable customers.
