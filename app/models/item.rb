@@ -11,4 +11,12 @@ class Item < ActiveRecord::Base
   	return Customer.find_by_name(self.customer).try(:color)
   end
 
+  def clipboard_picnum
+  	result = self.picnum.gsub("+","")
+  	first = self.location
+  	second = result.scan(/\D+/).join("\r\n\"")
+  	third = result.scan(/[0-9]+/).join("\r\n\"")
+  	return result = first + "\t\"" + second + "\t\"" + third
+  end
+
 end
