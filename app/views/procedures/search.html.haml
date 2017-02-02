@@ -1,5 +1,5 @@
-- @workpieces.each do |workpiece|
-  = render partial: 'procedure', collection: workpiece.procedures
+
+= render partial: 'procedure', collection: @procedures
 
 .text-center= link_to t('procedures.index.new_blank_procedure'), new_procedure_path, class: 'btn btn-primary btn-lg'
 

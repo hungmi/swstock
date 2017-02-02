@@ -2,7 +2,7 @@
 %td
   = simple_form_for [procedure, stage], wrapper: :vertical_form, remote: true do |f|
     = f.input :factory_name, label: false, input_html: { data: { value: stage.factory_name }, class: 'center' }
-%td.sm-input
+%td.sm-input.arrival_amount{ data: { stage_id: stage.id } }
   = simple_form_for [procedure, stage], wrapper: :vertical_form, remote: true do |f|
     = f.input :arrival_amount, label: false, input_html: { data: { value: stage.arrival_amount }, class: 'center' }
 %td
@@ -13,10 +13,10 @@
   = simple_form_for [procedure, stage], wrapper: :vertical_form, remote: true do |f|
     = f.input :estimated_date, label: false, as: :date_picker
     .hidden= f.submit 'update estimated_date'
-%td.sm-input
+%td.sm-input.finished_amount{ data: { stage_id: stage.id } }
   = simple_form_for [procedure, stage], wrapper: :vertical_form, remote: true do |f|
     = f.input :finished_amount, label: false, input_html: { data: { value: stage.finished_amount }, class: 'center' }
-%td.sm-input
+%td.sm-input.broken{ data: { stage_id: stage.id } }
   = simple_form_for [procedure, stage], wrapper: :vertical_form, remote: true do |f|
     = f.input :broken_amount, label: false, input_html: { data: { value: stage.broken_amount }, class: 'center' }
     .hidden= f.submit 'update broken_amount'

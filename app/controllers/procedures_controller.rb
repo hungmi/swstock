@@ -40,6 +40,7 @@ class ProceduresController < PcController
 
   # GET /pc/procedures/1/edit
   def edit
+    @workpiece = @procedure.workpiece
   end
 
   # POST /pc/procedures
@@ -93,7 +94,7 @@ class ProceduresController < PcController
     end
 
     def search_criteria(query_string)
-      { :picnum_cont_any => query_string }
+      { :picnum_or_procedures_customer_cont_any => query_string }
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

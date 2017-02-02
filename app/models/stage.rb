@@ -15,7 +15,7 @@ class Stage < ActiveRecord::Base
     state :finished
 
     event :run do
-      transitions from: :sleeping, to: :running
+      transitions from: :sleeping, to: :running, guard: :valid_run_amount?
     end
     event :move do
       transitions from: :running, to: :moving
@@ -25,8 +25,12 @@ class Stage < ActiveRecord::Base
     end
   end
 
+  def valid_run_amount?
+    arrival_amount.present? && !arrival_amount.zero?
+  end
+
   def valid_finished_amount?
-    finished_amount.present? && !finished_amount.zero?
+    finished_amount.present? && !(finished_amount < 1)
   end
 
   def update_status_after_import
@@ -48,8 +52,15 @@ class Stage < ActiveRecord::Base
   private
 
   def update_finish_columns
-    self.update(finished_date: Date.today)
-    self.next.try(:update, arrival_date: Date.today)
+    self.update(finished_date: Date.today) if self.finished_date.blank?
+    if self.finished_amount < self.arrival_amount
+      if self.broken_amount.blank? || self.broken_amount < 1
+        self.update(broken_amount: self.arrival_amount - self.finished_amount)
+      end 
+    end
+    self.next.try(:update, arrival_date: Date.today) if self.next.arrival_date.blank? if self.next
+    self.next.try(:update, arrival_amount: self.finished_amount) if self.next
+    self.next.run! if self.next
     self.procedure.finish! unless self.next
   end
 

@@ -1,0 +1,2 @@
+$('tr#stage_<%= @stage.id %>').closest('tbody').html("<%= j(render(partial:'procedures/stages_tbody', locals: { procedure: @stage.procedure })) %>")
+$('tr#stage_<%= @stage.id %>').closest('#procedure-stage-panel').find('.ajax-text').text("已存檔")

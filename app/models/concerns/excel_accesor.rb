@@ -27,6 +27,10 @@ module ExcelAccesor
         stage = procedure.stages.new
         stage.attributes = parameters.permit(:factory_name, :arrival_amount, :arrival_date, :estimated_date, :note, :finished_date, :finished_amount, :broken_amount)
         stage.save
+
+        if parameters[:material_spec].present? && parameters[:material_spec].include?('實')
+          stage.procedure.workpiece.update_column(:spec, parameters[:material_spec]) if stage.procedure.workpiece.spec.blank?
+        end
       end
 
       Procedure.find_each do |p|

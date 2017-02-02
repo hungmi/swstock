@@ -1,0 +1,3 @@
+- procedure.stages.each do |stage|
+  %tr{ id: "stage_#{stage.id}", class: "ajax-input #{render_stage_color(stage)}" }
+    = render partial:'procedures/stage_form', locals: { procedure: procedure, stage: stage }
