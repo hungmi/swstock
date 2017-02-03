@@ -15,21 +15,22 @@
         <%= link_to pc_items_path, class:'pull-left', "data-dark-logo" => "/assets/cat.png" do %>
             <%= image_tag("cat.png", size:"96x96", alt: "SWdurables") %>
         <% end %>
-        <%= link_to '你好~我是信為生管小幫手', pc_items_path, class: 'navbar-brand hidden-xs' %>
+        <%= link_to '你好~我是信為生管小幫手', pc_items_path, class: 'navbar-brand hidden-xs', style: "color: LIGHTYELLOW;" %>
         <%= link_to 'SW', pc_items_path, class: 'navbar-brand visible-xs' %>
         <!-- #logo end -->
 
-        <% if current_page?(pc_items_path) %>
+        <% if true # 先不要用製程搜尋～ current_page?(pc_items_path) %>
           <%= render 'common/search_bar', url: search_pc_items_path %>
-        <% else %>
-          <%= render 'common/search_bar', url: search_procedures_path %>
         <% end %>
+        <% # else %>
+          <%#= render 'common/search_bar', url: search_procedures_path %>
+        <% # end %>
 
       </div>
 
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
-          <%= render_nav_link('倉管區', items_path) %>
+          <%= render_nav_link('回到倉管區', items_path) %>
           <%#= render_nav_link('追料區', procedures_path) %>
           <%#= render_nav_link('發包分析', workpieces_path) %>
         </ul>

@@ -1,13 +1,13 @@
 .white {
   color: white;
-  a {
-    color: LIGHTYELLOW;
-  }
-  a:hover {
-    background-color: rgba(255,255,255,0);
-    color: white;
-    text-decoration: none;
-  }
+  // a:not(.btn) {
+  //   color: LIGHTYELLOW;
+  // }
+  // a:not(.btn):hover {
+  //   background-color: rgba(255,255,255,0);
+  //   color: white;
+  //   text-decoration: none;
+  // }
 }
 
 .white_text_border {
@@ -26,14 +26,14 @@ hr.black_sm {
 
 .dark {
   color: black;
-  a {
-    color: blue;
-  }
-  a:hover {
-    background-color: rgba(255,255,255,0);
-    color: CYAN;
-    text-decoration: none;
-  }
+  // a:not(.btn) {
+  //   color: blue;
+  // }
+  // a:not(.btn):hover {
+  //   background-color: rgba(255,255,255,0);
+  //   color: CYAN;
+  //   text-decoration: none;
+  // }
 }
 
 a:hover {
