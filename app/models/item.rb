@@ -21,7 +21,13 @@ class Item < ActiveRecord::Base
       picnums << picnum
       names << name_and_picnum.gsub(picnum, "").to_s
     end
-    return result = first + "\t\"" + names.join("\r\n\"") + "\t\"" + picnums.join("\r\n\"")
+    if names.size == 1 && picnums.size == 1
+      return result = first + "\t\"" + names.join("\r\n\"") + "\t\"\t\"" + picnums.join("\r\n\"")
+    elsif names.size == 3 && picnums.size == 3 # 會有問題～但這是 google 的 bug，他只能給斷一行，兩行以上斷不了
+      return result = first + "\t\"" + names.join("\r\n\"") + "\t\"\t\"" + picnums.join("\r\n\"")
+    else
+      return result = first + "\t\"" + names.join("\r\n\"") + "\t\"" + picnums.join("\r\n\"")
+    end
    #  picnums = self.picnum.scan(/[0-9]{4,}/)
    #  picnums.each do |ps|
    #    result = result.gsub(ps, "")
