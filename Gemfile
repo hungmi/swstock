@@ -1,9 +1,9 @@
 source 'https://rubygems.org'
 
-ruby "2.2.3"
+ruby "2.6.8"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.1'
+gem 'rails', '4.2.11.3'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', group: :development
 gem 'awesome_rails_console'
@@ -42,7 +42,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'slim'
 gem "slim-rails"
 gem "haml-rails", "~> 0.9"
-gem 'simple_form'
+gem 'simple_form', "~> 3.5"
 
 gem 'roo', '~> 2.0.0'
 gem 'roo-xls'
@@ -51,13 +51,13 @@ gem 'will_paginate-bootstrap'
 
 gem "font-awesome-rails"
 
-gem "ransack"
+gem "ransack", '~> 1.8'
 
 gem "cocoon"
 
-gem 'aasm'
+gem 'aasm', '~> 4.11'
 
-gem 'rails-i18n', github: 'svenfuchs/rails-i18n', branch: 'master'
+gem 'rails-i18n', '~> 4.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
